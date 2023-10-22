@@ -30,9 +30,12 @@
               "projects/nest-admin/src/assets"
             ],
             "styles": [
-              "projects/nest-admin/src/styles.scss"
+              "projects/nest-admin/src/styles.scss",
+              "projects/nest-admin/src/assest/scss/main.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "projects/nest-admin/src/assest/js/vendors/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {

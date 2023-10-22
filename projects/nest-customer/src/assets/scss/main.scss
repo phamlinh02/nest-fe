@@ -1,0 +1,63 @@
+/***
+ Theme Name: Nest
+ Description: Grocery, Super Market, eCommerce HTML Template
+ Version: 1.0
+ License: GNU General Public License v2 or later
+ License URI: http://www.gnu.org/licenses/gpl-2.0.html
+==============================
+TABLE CONTENT
+ Import Google Fonts
+ Include Third Party CSS Library
+ GENERAL
+ HEADER
+ Offcanvas Sidebar
+ Search form
+ Main header
+ Mega menu
+ Header layouts
+ Page layouts
+ Pagination
+ Breadcrumb
+ CATEGORY PAGES
+ SINGLE POST
+ Author box
+ comment
+ Post share social
+ WP STYPE
+ Custom amine
+***/
+
+@import "/assets/scss/abstracts/variables";
+@import "/assets/scss/abstracts/functions";
+@import "/assets/scss/abstracts/mixins";
+
+@import "/assets/scss/vendors/vendors-import";
+
+@import "/assets/scss/base/common";
+@import "/assets/scss/base/animation";
+@import "/assets/scss/base/typography";
+
+@import "/assets/scss/components/buttons";
+@import "/assets/scss/components/form";
+@import "/assets/scss/components/slider";
+@import "/assets/scss/components/card";
+@import "/assets/scss/components/tabs";
+@import "/assets/scss/components/misc";
+@import "/assets/scss/components/banners";
+
+@import "/assets/scss/pages/page";
+@import "/assets/scss/pages/shop";
+@import "/assets/scss/pages/blog";
+@import "/assets/scss/pages/print";
+@import "/assets/scss/pages/invoice";
+@import "/assets/scss/pages/vendors";
+@import "/assets/scss/pages/page";
+
+@import "/assets/scss/themes/default";
+
+@import "/assets/scss/layout/header";
+@import "/assets/scss/layout/navigation";
+@import "/assets/scss/layout/sidebar";
+@import "/assets/scss/layout/footer";
+@import "/assets/scss/layout/spacing";
+@import "/assets/scss/layout/responsive";
