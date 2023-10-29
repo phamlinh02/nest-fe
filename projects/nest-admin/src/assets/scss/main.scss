@@ -3,28 +3,30 @@ INCLUDE STYLES AND COMPONENTS
 ===================== */
 
 // 1. Abstracts
-@import
-  'abstracts/import-vendors',
-  'abstracts/mixins',
-  'abstracts/variables';  
+
+@import "../scss/abstracts/import-vendors";
+@import "../scss/abstracts/variables";
+@import "../scss/abstracts/mixins";
+
+@import "../scss/base/helpers";
 
 // 2. Base stuff
 @import
-  'base/helpers',
-  'base/typography';
+  '../scss/base/helpers',
+  '../scss/base/typography';
 
 // 3. Components
 @import
-  'components/navigation',
-  'components/buttons',
-  'components/forms',
-  'components/elements',
-  'components/items',
-  'components/lists';
+  '../scss/components/navigation',
+  '../scss/components/buttons',
+  '../scss/components/forms',
+  '../scss/components/elements',
+  '../scss/components/items',
+  '../scss/components/lists';
 
 // 4. Layout
 @import
-'layout/spacing',
-'layout/layout',
-'layout/layout-dark',
-'layout/responsive';
+'../scss/layout/spacing',
+'../scss/layout/layout',
+'../scss/layout/layout-dark',
+'../scss/layout/responsive';

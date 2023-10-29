@@ -27,37 +27,40 @@ TABLE CONTENT
  Custom amine
 ***/
 
-@import "/assets/scss/abstracts/variables";
-@import "/assets/scss/abstracts/functions";
-@import "/assets/scss/abstracts/mixins";
+@import "../scss/abstracts/variables";
+@import "../scss/abstracts/functions";
+@import "../scss/abstracts/mixins";
 
-@import "/assets/scss/vendors/vendors-import";
+@import "../scss/vendors/vendors-import";
 
-@import "/assets/scss/base/common";
-@import "/assets/scss/base/animation";
-@import "/assets/scss/base/typography";
+@import "../scss/base/common";
+@import "../scss/base/animation";
+@import "../scss/base/typography";
 
-@import "/assets/scss/components/buttons";
-@import "/assets/scss/components/form";
-@import "/assets/scss/components/slider";
-@import "/assets/scss/components/card";
-@import "/assets/scss/components/tabs";
-@import "/assets/scss/components/misc";
-@import "/assets/scss/components/banners";
+@import "../scss/components/buttons";
+@import "../scss/components/form";
+@import "../scss/components/slider";
+@import "../scss/components/card";
+@import "../scss/components/tabs";
+@import "../scss/components/misc";
+@import "../scss/components/banners";
 
-@import "/assets/scss/pages/page";
-@import "/assets/scss/pages/shop";
-@import "/assets/scss/pages/blog";
-@import "/assets/scss/pages/print";
-@import "/assets/scss/pages/invoice";
-@import "/assets/scss/pages/vendors";
-@import "/assets/scss/pages/page";
+@import "../scss/pages/page";
+@import "../scss/pages/shop";
+@import "../scss/pages/blog";
+@import "../scss/pages/print";
+@import "../scss/pages/invoice";
+@import "../scss/pages/vendors";
+@import "../scss/pages/page";
 
-@import "/assets/scss/themes/default";
+@import "../scss/themes/default";
 
-@import "/assets/scss/layout/header";
-@import "/assets/scss/layout/navigation";
-@import "/assets/scss/layout/sidebar";
-@import "/assets/scss/layout/footer";
-@import "/assets/scss/layout/spacing";
-@import "/assets/scss/layout/responsive";
+@import "../scss/layout/responsive";
+@import "../scss/layout/header";
+@import "../scss/layout/navigation";
+@import "../scss/layout/sidebar";
+@import "../scss/layout/footer";
+@import "../scss/layout/spacing";
+
+
+@import "primeicons/primeicons.css";

@@ -9,7 +9,7 @@
     align-items: center;
     flex-basis: content;
     flex-direction: column;
-    background:url(assets/imgs/page/home-6-bg.jpg) no-repeat center center;
+    background:url(../../imgs/page/home-6-bg.jpg) no-repeat center center;
     background-size: cover;
     height: 330px;
      form {
@@ -21,7 +21,7 @@
             border: 0;
             border-radius: 50px 0 0 50px;
             padding-left: 58px;
-            background: url(assets/imgs/theme/icons/icon-search.png) no-repeat 25px center;
+            background: url(../../imgs/theme/icons/icon-search.png) no-repeat 25px center;
         }
         button {
             border: 0;
@@ -117,7 +117,7 @@
 	z-index: 100;
 	position: relative;
     color: #fff;
-    background:url(assets/imgs/page/about-9.png) no-repeat center center;
+    background:url(../../imgs/page/about-9.png) no-repeat center center;
     border-radius: 15px;
     padding: 100px 0;
     overflow: hidden;
@@ -168,7 +168,7 @@
 	&.icon-left {
 		width: 165px;
 		-webkit-box-align: start;
-		-webkit-align-items: start;
+		-webkit-align-items: flex-start;
 		-ms-flex-align: start;
 		align-items: start;
 	}

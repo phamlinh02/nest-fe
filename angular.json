@@ -24,21 +24,39 @@
               "zone.js"
             ],
             "tsConfig": "projects/nest-admin/tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               "projects/nest-admin/src/favicon.ico",
-              "projects/nest-admin/src/assets"
+              "projects/nest-admin/src/assets",
+              "projects/nest-admin/src/app"
             ],
             "styles": [
-              "projects/nest-admin/src/styles.scss",
-              "projects/nest-admin/src/assest/scss/main.scss"
+              "projects/nest-admin/src/assets/css/vendors/bootstrap.min.css",
+              "projects/nest-admin/src/assets/css/vendors/normalize.css",
+              "projects/nest-admin/src/assets/css/vendors/perfect-scrollbar.css",
+              "projects/nest-admin/src/assets/css/vendors/select2.min.css",
+              "projects/nest-admin/src/assets/css/vendors/material-icon-round.css",
+              "projects/nest-admin/src/assets/scss/main.scss",
+              "node_modules/primeicons/primeicons.css"
             ],
             "scripts": [
-              "projects/nest-admin/src/assest/js/vendors/bootstrap.bundle.min.js"
+              "projects/nest-admin/src/assets/js/vendors/bootstrap.bundle.min.js",
+              "projects/nest-admin/src/assets/js/vendors/jquery-3.6.0.min.js",
+              "projects/nest-admin/src/assets/js/vendors/chart.js",
+              "projects/nest-admin/src/assets/js/vendors/jquery.fullscreen.min.js",
+              "projects/nest-admin/src/assets/js/vendors/perfect-scrollbar.js",
+              "projects/nest-admin/src/assets/js/vendors/select2.min.js",
+              "projects/nest-admin/src/assets/js/template.js"
             ]
           },
           "configurations": {
             "production": {
+              "assets": [
+                {
+                  "glob": "**/*.{png,jpg,gif,eot,svg,ttf,woff}",
+                  "input": "projects/nest-admin/src/app/",
+                  "output": "/app/"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -124,18 +142,65 @@
               "zone.js"
             ],
             "tsConfig": "projects/nest-customer/tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               "projects/nest-customer/src/favicon.ico",
-              "projects/nest-customer/src/assets"
+              "projects/nest-customer/src/assets",
+              "projects/nest-customer/src/app"
             ],
             "styles": [
-              "projects/nest-customer/src/styles.scss"
+              "projects/nest-customer/src/assets/scss/main.scss",
+              "projects/nest-customer/src/assets/css/vendors/bootstrap.min.css",
+              "projects/nest-customer/src/assets/css/plugins/animate.css",
+              "projects/nest-customer/src/assets/css/vendors/normalize.css",
+              "projects/nest-customer/src/assets/css/vendors/uicons-regular-straight.css",
+              "projects/nest-customer/src/assets/css/plugins/magnific-popup.css",
+              "projects/nest-customer/src/assets/css/plugins/perfect-scrollbar.css",
+              "projects/nest-customer/src/assets/css/plugins/select2.min.css",
+              "projects/nest-customer/src/assets/css/plugins/slick.css",
+              "projects/nest-customer/src/assets/css/plugins/slider-range.css",
+              "node_modules/primeicons/primeicons.css"
             ],
-            "scripts": []
+            "scripts": [
+              "projects/nest-customer/src/assets/js/vendor/bootstrap.bundle.min.js",
+              "projects/nest-customer/src/assets/js/vendor/jquery-3.6.0.min.js",
+              "projects/nest-customer/src/assets/js/vendor/jquery-migrate-3.3.0.min.js",
+              "projects/nest-customer/src/assets/js/vendor/modernizr-3.6.0.min.js",
+              "projects/nest-customer/src/assets/js/invoice/html2canvas.js",
+              "projects/nest-customer/src/assets/js/invoice/invoice.js",
+              "projects/nest-customer/src/assets/js/invoice/jspdf.min.js",
+              "projects/nest-customer/src/assets/js/plugins/counterup.js",
+              "projects/nest-customer/src/assets/js/plugins/custom-parallax.js",
+              "projects/nest-customer/src/assets/js/plugins/images-loaded.js",
+              "projects/nest-customer/src/assets/js/plugins/isotope.js",
+              "projects/nest-customer/src/assets/js/plugins/jquery.countdown.min.js",
+              "projects/nest-customer/src/assets/js/plugins/jquery.elevatezoom.js",
+              "projects/nest-customer/src/assets/js/plugins/jquery.syotimer.min.js",
+              "projects/nest-customer/src/assets/js/plugins/jquery.theia.sticky.js",
+              "projects/nest-customer/src/assets/js/plugins/jquery.vticker-min.js",
+              "projects/nest-customer/src/assets/js/plugins/jquery-ui.js",
+              "projects/nest-customer/src/assets/js/plugins/leaflet.js",
+              "projects/nest-customer/src/assets/js/plugins/magnific-popup.js",
+              "projects/nest-customer/src/assets/js/plugins/perfect-scrollbar.js",
+              "projects/nest-customer/src/assets/js/plugins/scrollup.js",
+              "projects/nest-customer/src/assets/js/plugins/select2.min.js",
+              "projects/nest-customer/src/assets/js/plugins/slick.js",
+              "projects/nest-customer/src/assets/js/plugins/slider-range.js",
+              "projects/nest-customer/src/assets/js/plugins/TweenMax.min.js",
+              "projects/nest-customer/src/assets/js/plugins/waypoints.js",
+              "projects/nest-customer/src/assets/js/plugins/wow.js",
+              "projects/nest-customer/src/assets/js/template.js",
+              "projects/nest-customer/src/assets/js/shop.js"
+            ]
           },
           "configurations": {
             "production": {
+              "assets": [
+                {
+                  "glob": "**/*.{png,jpg,gif,eot,svg,ttf,woff}",
+                  "input": "projects/nest-customer/src/app/",
+                  "output": "/app/"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
