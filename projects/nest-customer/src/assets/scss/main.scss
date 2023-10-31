@@ -26,41 +26,89 @@ TABLE CONTENT
  WP STYPE
  Custom amine
 ***/
+// 1. Configuration and helpers
+@import
+  'abstracts/variables',
+  'abstracts/functions',
+  'abstracts/mixins';
 
-@import "../scss/abstracts/variables";
-@import "../scss/abstracts/functions";
-@import "../scss/abstracts/mixins";
+// 2. Vendors
+@import
+  'vendors/vendors-import';
 
-@import "../scss/vendors/vendors-import";
+// 3. Base stuff
+@import
+  'base/common',
+  'base/animation',
+  'base/typography';
 
-@import "../scss/base/common";
-@import "../scss/base/animation";
-@import "../scss/base/typography";
+// 4. Components
+@import
+  'components/buttons',
+  'components/form',
+  'components/slider',
+  'components/card',
+  'components/tabs',
+  'components/misc',
+  'components/banners';
 
-@import "../scss/components/buttons";
-@import "../scss/components/form";
-@import "../scss/components/slider";
-@import "../scss/components/card";
-@import "../scss/components/tabs";
-@import "../scss/components/misc";
-@import "../scss/components/banners";
+// 5. Page-specific styles
+@import
+  'pages/page',
+  'pages/shop',
+  'pages/blog',
+  'pages/print',
+  'pages/invoice',
+  'pages/vendors';
 
-@import "../scss/pages/page";
-@import "../scss/pages/shop";
-@import "../scss/pages/blog";
-@import "../scss/pages/print";
-@import "../scss/pages/invoice";
-@import "../scss/pages/vendors";
-@import "../scss/pages/page";
+// 6. Themes
+@import
+  'themes/default';
 
-@import "../scss/themes/default";
-
-@import "../scss/layout/responsive";
-@import "../scss/layout/header";
-@import "../scss/layout/navigation";
-@import "../scss/layout/sidebar";
-@import "../scss/layout/footer";
-@import "../scss/layout/spacing";
+// 7. Layout-related sections
+@import
+'layout/header',
+'layout/navigation',
+'layout/sidebar',
+'layout/footer',
+'layout/spacing',
+'layout/responsive';
 
 
-@import "primeicons/primeicons.css";
+
+// @import "../scss/abstracts/variables";
+// @import "../scss/abstracts/functions";
+// @import "../scss/abstracts/mixins";
+
+// @import "../scss/vendors/vendors-import";
+
+// @import "../scss/base/common";
+// @import "../scss/base/animation";
+// @import "../scss/base/typography";
+
+// @import "../scss/components/buttons";
+// @import "../scss/components/form";
+// @import "../scss/components/slider";
+// @import "../scss/components/card";
+// @import "../scss/components/tabs";
+// @import "../scss/components/misc";
+// @import "../scss/components/banners";
+
+// @import "../scss/pages/page";
+// @import "../scss/pages/shop";
+// @import "../scss/pages/blog";
+// @import "../scss/pages/print";
+// @import "../scss/pages/invoice";
+// @import "../scss/pages/vendors";
+// @import "../scss/pages/page";
+
+// @import "../scss/themes/default";
+
+// @import "../scss/layout/responsive";
+// @import "../scss/layout/header";
+// @import "../scss/layout/navigation";
+// @import "../scss/layout/sidebar";
+// @import "../scss/layout/footer";
+// @import "../scss/layout/spacing";
+
+

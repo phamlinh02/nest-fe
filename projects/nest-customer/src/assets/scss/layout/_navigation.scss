@@ -161,6 +161,11 @@
 									font-size: $font-xl;
 									font-weight: 700;
 									display: block;
+									color: #3BB77E;
+									padding-left: 30px;
+								}
+								&.menu-title:hover{
+									color: $color-brand-2;
 								}
 
 							}

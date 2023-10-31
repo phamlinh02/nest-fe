@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { paths} from '../const';
 
 @Component({
   selector: 'app-header',
@@ -6,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   title = 'nest-customer';
+  paths = paths;
 }

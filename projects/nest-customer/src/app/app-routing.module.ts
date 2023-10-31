@@ -77,7 +77,7 @@ const routes: Routes = [
     component: PrivacyPolicyComponent
   },
   {
-    path: paths.productDetail,
+    path: `${paths.productDetail}/:id`,
     component: ProductDetailComponent
   },
   {
