@@ -28,4 +28,6 @@ export class AccountInfoComponent {
     localStorage.removeItem('user');
   }
 
+  
+
 }

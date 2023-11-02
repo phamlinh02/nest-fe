@@ -27,16 +27,6 @@ export class HeaderComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-
-    //Lấy danh sách sản phẩm
-    this.productService.getAllProducts().subscribe((data: any) => {
-      this.products = data.response.content;
-      console.log(this.products);
-    },
-      (error) => {
-        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
-      });
-
     //Lấy danh mục sản phẩm
     this.categoryService.getAllCategories().subscribe((data: any) => {
       this.categories = data.response.content;
@@ -48,10 +38,6 @@ export class HeaderComponent implements AfterViewInit {
 
       this.showCartItem();
     
-    
-    
-  
-
   }
 
   searchProductByName() {
@@ -61,7 +47,7 @@ export class HeaderComponent implements AfterViewInit {
     }
   }
 
-  //giỏ hàng
+  //Hiển thị thông tin giỏ hàng
   showCartItem(){
     const userString = localStorage.getItem('user');
     if (userString) {
@@ -79,7 +65,11 @@ export class HeaderComponent implements AfterViewInit {
       });
     }
   }
-
+  //Clear Cart
+  clearCart(){
+    this.cartItems = [];
+    this.totalValue = 0;
+  }
   //Kiểm tra trạng thái đăng nhập
   navigateTo(route: string) {
     const userData = localStorage.getItem('user');
@@ -89,6 +79,7 @@ export class HeaderComponent implements AfterViewInit {
     } else {
       // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
       this.router.navigate([`${paths.login}`]);
+      this.clearCart();
     }
   }
 
@@ -96,6 +87,8 @@ export class HeaderComponent implements AfterViewInit {
     // Xóa thông tin người dùng khỏi localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // Xóa thông tin giỏ hàng
+    this.clearCart();
   }
 
 }
