@@ -3,7 +3,6 @@ import {paths} from "../const";
 import {OrderService} from "../service/order.service";
 import {ProductService} from "../service/product.service";
 import {CategoryService} from "../service/category.service";
-import {IResponse} from "../service/response.model";
 import { ActivatedRoute } from '@angular/router';
 
 
