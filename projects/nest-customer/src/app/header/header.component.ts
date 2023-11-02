@@ -36,9 +36,7 @@ export class HeaderComponent implements AfterViewInit {
         console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
       });
 
-      this.showCartItem().then(() => {
-        // Code sau khi dữ liệu giỏ hàng đã được tải hoàn toàn
-      });
+      this.showCartItem();
     
   }
 
@@ -50,26 +48,22 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   //Hiển thị thông tin giỏ hàng
-  showCartItem(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      const userString = localStorage.getItem('user');
-      if (userString) {
-        const userData = JSON.parse(userString).response;
-        this.accountId = userData.id;
-        this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
-          this.cartItems = data.response;
-          this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
-          console.log(this.cartItems, this.totalValue);
-          resolve();
-        },
-        (error) => {
-          console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
-          reject(error);
-        });
-      } else {
-        resolve();
-      }
-    });
+  showCartItem(){
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.accountId = userData.id;
+
+      // Gọi phương thức để lấy danh sách sản phẩm trong giỏ hàng dựa trên accountId
+      this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
+        this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
+        this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+        console.log(this.cartItems, this.totalValue);
+      },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
+      });
+    }
   }
   //Clear Cart
   clearCart(){
