@@ -823,7 +823,7 @@ strong,
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: end;
+  align-items: flex-end;
   margin-bottom: 44px;
   position: relative;
   -webkit-box-pack: justify;
@@ -6186,7 +6186,7 @@ h6.post-title {
 .entry-meta.meta-1.meta-3, .entry-meta.meta-2.meta-3 {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
-          justify-content: start;
+          justify-content: flex-start;
 }
 
 .entry-meta a.read-more {
@@ -11943,7 +11943,7 @@ footer .hotline img {
   .entry-meta.meta-1 {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
-            justify-content: start;
+            justify-content: flex-start;
   }
   .single-header-meta .single-share {
     display: none;
@@ -12043,7 +12043,7 @@ footer .hotline img {
   .nav.right {
     -webkit-box-pack: start;
     -ms-flex-pack: start;
-    justify-content: start;
+    justify-content: flex-start;
   }
   .hero-slider-1.style-2 .single-slider-img {
     display: none;

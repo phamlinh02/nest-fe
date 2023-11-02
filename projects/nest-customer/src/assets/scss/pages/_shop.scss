@@ -18,7 +18,8 @@
 		position: relative;
 		background-color: #fff;
 		overflow: hidden;
-		max-height: 320px;
+		// max-height: 320px;
+		min-height: 250px;
 		padding: 25px 25px 0 25px;
 		.product-action-1 {
 			background-color: #fff;
@@ -34,6 +35,7 @@
 				display: flex;
 				img {
 					width: 100%;
+					height: 230px;
 					&.hover-img {
 						position: absolute;
 						left: 0;
@@ -301,6 +303,7 @@
 				background-color: $background-3;
 				font-size: 14px;
 				font-weight: 700;
+				color: $color-brand;
 				&:hover {
 					background-color: $color-brand;
 					color: #fff;
@@ -309,6 +312,14 @@
 				}
 			}
 		}
+	}
+	.font-small.text-muted a{
+		color: $color-brand;
+		font-weight: 500;
+	}
+	.font-small.text-muted a:hover{
+		color: $color-brand-2;
+		font-weight: 500;
 	}
 	.product-stock {
 		.status-bar {
@@ -875,6 +886,7 @@
 		overflow: hidden;
 		img {
 			border-radius: 17px;
+			height: 140px !important;
 		}
 		&.slick-current {
 			&::before {
@@ -891,6 +903,7 @@
 			}
 			img {
 				border: 2px solid #a2d2c9;
+				height: 140px !important;
 			}
 		}
 	}
@@ -1083,7 +1096,7 @@
 .detail-extralink {
 	& > div {
 		display: inline-block;
-		vertical-align: top;
+		vertical-align: top !important;
 	}
 	.detail-qty {
 		margin: 0 6px 15px 0;
@@ -1192,13 +1205,13 @@
 	}
 	.button.button-add-to-cart {
 		position: relative;
-		padding: 0px 20px;
-		border-radius: 5px;
-		border: 0;
+		padding: 0px 20px !important;
+		border-radius: 5px !important;
+		border: 0 !important;
 		height: 50px;
 		line-height: 50px;
-		font-weight: 700;
-		font-size: $font-md;
+		font-weight: 700 !important;
+		font-size: $font-md !important;
 		font-family: $font-heading;
 		i {
 			margin-right: 10px;
@@ -1263,7 +1276,7 @@
 }
 .detail-gallery .product-image-slider {
 	background-color: #fff;
-	margin-bottom: 30px;
+	// margin-bottom: 30px;
 	border-radius: 15px;
 	border: 1px solid $border-color;
 	overflow: hidden;
@@ -1351,9 +1364,13 @@
 	}
 }
 .progress-bar {
-	background-color: $color-brand;
+	background-color: $color-brand !important;
 
 }
+.progress.mb-5{
+	margin-bottom: 5px !important
+}
+
 .shop-filter-toogle {
 	margin-bottom: 20px;
 	display: inline-flex;
@@ -1586,4 +1603,11 @@ table.no-border {
 }
 .mw-200 {
 	min-width: 200px;
+}
+
+.breadcrumb a{
+	color: #3BB77E;
+}
+.breadcrumb a{
+	color: #3BB77E;
 }
