@@ -50,4 +50,22 @@ export class HeaderComponent implements AfterViewInit{
     }
   }
 
+  //Kiểm tra trạng thái đăng nhập
+  navigateTo(route: string) {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      // Nếu người dùng đã đăng nhập, chuyển hướng đến đường dẫn được cung cấp
+      this.router.navigate([route]);
+    } else {
+      // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+      this.router.navigate([`${paths.login}`]);
+    }
+  }
+
+  logout(){
+    // Xóa thông tin người dùng khỏi localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
+
 }
