@@ -26,7 +26,6 @@ export class AccountInfoComponent {
     // Xóa thông tin người dùng khỏi localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-
   }
 
 }

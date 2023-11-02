@@ -1,45 +1,56 @@
-import {AfterViewInit, Component } from '@angular/core';
-import { paths} from '../const';
-import {ProductService} from "../service/product.service";
+import { AfterViewInit, Component } from '@angular/core';
+import { paths } from '../const';
+import { ProductService } from "../service/product.service";
 import { Router } from '@angular/router';
-import {CategoryService} from "../service/category.service";
+import { CategoryService } from "../service/category.service";
+import { CartService } from '../service/cart.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements AfterViewInit{
+export class HeaderComponent implements AfterViewInit {
   title = 'nest-customer';
   paths = paths;
-  productName: string= "";
+  productName: string = "";
   categories: any[] = [];
   products: any[] = [];
+  cartItems: any[] = [];
+  accountId: number = 0;
+  totalValue: number = 0;
 
   constructor(
-    private router: Router ,
-    private categoryService: CategoryService, 
+    private router: Router,
+    private categoryService: CategoryService,
     private productService: ProductService,
-  ) {}
+    private cartService: CartService
+  ) { }
 
   ngAfterViewInit() {
 
-     //Lấy danh sách sản phẩm
-     this.productService.getAllProducts().subscribe((data: any) => {
+    //Lấy danh sách sản phẩm
+    this.productService.getAllProducts().subscribe((data: any) => {
       this.products = data.response.content;
       console.log(this.products);
     },
-    (error) => {
-      console.error('Lỗi khi tải danh sách sản phẩm: ', error);
-    });
-    
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+
     //Lấy danh mục sản phẩm
     this.categoryService.getAllCategories().subscribe((data: any) => {
       this.categories = data.response.content;
       console.log(this.categories);
     },
-    (error) => {
-      console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
-    });
+      (error) => {
+        console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
+      });
+
+      this.showCartItem();
+    
+    
+    
+  
 
   }
 
@@ -47,6 +58,25 @@ export class HeaderComponent implements AfterViewInit{
     if (this.productName) {
       // Xử lý sự kiện nhập từ khóa và chuyển hướng đến trang shop-filter với từ khóa tìm kiếm
       this.router.navigate([`${paths.shopFilter}/${this.productName}`]);
+    }
+  }
+
+  //giỏ hàng
+  showCartItem(){
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.accountId = userData.id;
+
+      // Gọi phương thức để lấy danh sách sản phẩm trong giỏ hàng dựa trên accountId
+      this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
+        this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
+        this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+        console.log(this.cartItems, this.totalValue);
+      },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
+      });
     }
   }
 
@@ -62,7 +92,7 @@ export class HeaderComponent implements AfterViewInit{
     }
   }
 
-  logout(){
+  logout() {
     // Xóa thông tin người dùng khỏi localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
