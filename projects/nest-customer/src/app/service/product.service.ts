@@ -34,11 +34,11 @@ export class ProductService {
 //     return this.http.post(`${API_URL}/nest/product/update`, productData, this.httpOptions);
 //   }
 
-//   searchProductsByName(productName: string): Observable<any> {
-//     return this.http.get(`${API_URL}/nest/product/search-by-name?productName=${productName}`);
-//   }
+  searchProductsByName(productName: string): Observable<any> {
+    return this.http.get(`${PRODUCT_API}/search-by-name?productName=${productName}`);
+  }
 
-//   showProductsByCategory(categoryId: number): Observable<any> {
-//     return this.http.get(`${API_URL}/nest/product/show-by-category?categoryId=${categoryId}`);
-//   }
+  showProductsByCategory(categoryId: number): Observable<any> {
+    return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}`);
+  }
 }

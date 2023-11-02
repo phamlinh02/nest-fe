@@ -789,14 +789,14 @@ var template = {
       //   });
       // });
       //Elevate Zoom
-      // if ( $(".product-image-slider").length ) {
-      //   $('.product-image-slider .slick-active img').elevateZoom({
-      //     zoomType: "inner",
-      //     cursor: "crosshair",
-      //     zoomWindowFadeIn: 500,
-      //     zoomWindowFadeOut: 750
-      //   });
-      // }
+      if ( $(".product-image-slider").length ) {
+        $('.product-image-slider .slick-active img').elevateZoom({
+          zoomType: "inner",
+          cursor: "crosshair",
+          zoomWindowFadeIn: 500,
+          zoomWindowFadeOut: 750
+        });
+      }
       //Filter color/Size
       $('.list-filter').each(function () {
         $(this).find('a').on('click', function (event) {

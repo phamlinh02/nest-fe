@@ -93,8 +93,12 @@ const routes: Routes = [
     component: ResetPasswordComponent
   },
   {
-    path: paths.shopFilter,
+    path: `${paths.shopFilter}/search/:productName`,
     component: ShopFilterComponent
+  },
+  {
+    path: `${paths.shopFilter}/showByCategory/:categoryId`, 
+    component: ShopFilterComponent,
   },
   {
     path: paths.shopGrid,
