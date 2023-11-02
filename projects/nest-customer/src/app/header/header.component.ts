@@ -27,16 +27,6 @@ export class HeaderComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-
-    //Lấy danh sách sản phẩm
-    this.productService.getAllProducts().subscribe((data: any) => {
-      this.products = data.response.content;
-      console.log(this.products);
-    },
-      (error) => {
-        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
-      });
-
     //Lấy danh mục sản phẩm
     this.categoryService.getAllCategories().subscribe((data: any) => {
       this.categories = data.response.content;
@@ -46,12 +36,10 @@ export class HeaderComponent implements AfterViewInit {
         console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
       });
 
-      this.showCartItem();
+      this.showCartItem().then(() => {
+        // Code sau khi dữ liệu giỏ hàng đã được tải hoàn toàn
+      });
     
-    
-    
-  
-
   }
 
   searchProductByName() {
@@ -61,25 +49,33 @@ export class HeaderComponent implements AfterViewInit {
     }
   }
 
-  //giỏ hàng
-  showCartItem(){
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
-
-      // Gọi phương thức để lấy danh sách sản phẩm trong giỏ hàng dựa trên accountId
-      this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
-        this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
-        this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
-        console.log(this.cartItems, this.totalValue);
-      },
-      (error) => {
-        console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
-      });
-    }
+  //Hiển thị thông tin giỏ hàng
+  showCartItem(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        const userData = JSON.parse(userString).response;
+        this.accountId = userData.id;
+        this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
+          this.cartItems = data.response;
+          this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+          console.log(this.cartItems, this.totalValue);
+          resolve();
+        },
+        (error) => {
+          console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
+          reject(error);
+        });
+      } else {
+        resolve();
+      }
+    });
   }
-
+  //Clear Cart
+  clearCart(){
+    this.cartItems = [];
+    this.totalValue = 0;
+  }
   //Kiểm tra trạng thái đăng nhập
   navigateTo(route: string) {
     const userData = localStorage.getItem('user');
@@ -89,6 +85,7 @@ export class HeaderComponent implements AfterViewInit {
     } else {
       // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
       this.router.navigate([`${paths.login}`]);
+      this.clearCart();
     }
   }
 
@@ -96,6 +93,8 @@ export class HeaderComponent implements AfterViewInit {
     // Xóa thông tin người dùng khỏi localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // Xóa thông tin giỏ hàng
+    this.clearCart();
   }
 
 }
