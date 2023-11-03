@@ -2,7 +2,6 @@ import { AfterViewInit, Component } from '@angular/core';
 import { paths } from '../const';
 import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
-import { CartItem } from '../service/cart-item.model';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +20,6 @@ export class CartComponent implements AfterViewInit {
     private router: Router
   ) { }
   ngAfterViewInit() {
-    //Hiển thị thông tin giỏ hàng
     const userString = localStorage.getItem('user');
     if (userString) {
       const userData = JSON.parse(userString).response;
@@ -33,7 +31,6 @@ export class CartComponent implements AfterViewInit {
           item.totalPrice = item.quantity * item.productId.price;
           return item;
         });
-
         console.log(this.cartItems, this.totalValue, this.totalPrice);
       },
         (error) => {
@@ -46,8 +43,8 @@ export class CartComponent implements AfterViewInit {
     this.cartService.removeById(id).subscribe(
       response => {
         console.log(`Sản phẩm với id ${id} đã được xóa khỏi giỏ hàng`);
-
         this.cartItems = this.cartItems.filter(item => item.id !== id);
+        this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
       },
       error => {
         console.error('Đã xảy ra lỗi khi xóa sản phẩm khỏi giỏ hàng', error);
@@ -63,8 +60,8 @@ export class CartComponent implements AfterViewInit {
       this.cartService.remove(accountId).subscribe(
         response => {
           console.log(`Sản phẩm với id ${accountId} đã được xóa khỏi giỏ hàng`);
-          this.cartItems = this.cartItems.filter(item => item.id !== accountId);
           this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+          this.router.navigate([`${paths.home}`]);
           if (this.cartItems.length === 0) {
             this.cartItems = [];
             this.totalValue = 0;
@@ -90,16 +87,13 @@ export class CartComponent implements AfterViewInit {
     if (userString) {
       const userData = JSON.parse(userString).response;
       this.accountId = userData.id;
-
       this.cartService.update(this.accountId, this.cartItems).subscribe(
         successResponse => {
-          // Xử lý khi thành công
-          this.router.navigate(['/cart']);
           console.log('Update sản phẩm thành công');
+          this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+          this.router.navigate([`${paths.login}`]);
         },
         errorResponse => {
-          this.router.navigate(['/cart']);
-          // Xử lý khi có lỗi
           console.error('Có lỗi khi update sản phẩm', errorResponse);
         }
       );
