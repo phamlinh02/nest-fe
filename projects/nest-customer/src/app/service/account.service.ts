@@ -30,6 +30,10 @@ export class AccountService {
     return this.http.post(`${ACCOUNT_API}/update`, account);
   }
 
+  updateAccountByUser(account: any): Observable<any> {
+    return this.http.post(`${ACCOUNT_API}/updateByUser`, account);
+  }
+
   getUserByUsername(username: string): Observable<any> {
     return this.http.get(`${ACCOUNT_API}/get-user?username=${username}`);
   }
@@ -48,10 +52,6 @@ export class AccountService {
 
   forgetPassword(forgetPassDTO: any): Observable<any> {
     return this.http.post(`${ACCOUNT_API}/forget-pass`, forgetPassDTO);
-  }
-
-  testSendEmail(): Observable<any> {
-    return this.http.get(`${ACCOUNT_API}/test-send-email`);
   }
  
 }

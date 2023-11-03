@@ -3,6 +3,8 @@ import { paths } from '../const';
 import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
 
+declare const template: any;
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -20,6 +22,7 @@ export class CartComponent implements AfterViewInit {
     private router: Router
   ) { }
   ngAfterViewInit() {
+    template.init();
     const userString = localStorage.getItem('user');
     if (userString) {
       const userData = JSON.parse(userString).response;
@@ -45,6 +48,7 @@ export class CartComponent implements AfterViewInit {
         console.log(`Sản phẩm với id ${id} đã được xóa khỏi giỏ hàng`);
         this.cartItems = this.cartItems.filter(item => item.id !== id);
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+        window.location.reload();
       },
       error => {
         console.error('Đã xảy ra lỗi khi xóa sản phẩm khỏi giỏ hàng', error);
@@ -66,6 +70,7 @@ export class CartComponent implements AfterViewInit {
             this.cartItems = [];
             this.totalValue = 0;
           }
+          window.location.reload();
         },
         error => {
           console.error('Đã xảy ra lỗi khi xóa sản phẩm khỏi giỏ hàng', error);
@@ -78,7 +83,7 @@ export class CartComponent implements AfterViewInit {
     if (quantity >= 1) {
       this.cartItems[index].quantity = quantity;
       this.updateCart();
-
+      window.location.reload();
     }
   }
 
@@ -91,7 +96,6 @@ export class CartComponent implements AfterViewInit {
         successResponse => {
           console.log('Update sản phẩm thành công');
           this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
-          this.router.navigate([`${paths.login}`]);
         },
         errorResponse => {
           console.error('Có lỗi khi update sản phẩm', errorResponse);
