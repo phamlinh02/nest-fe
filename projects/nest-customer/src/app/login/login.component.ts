@@ -25,6 +25,7 @@ export class LoginComponent {
     private router: Router,
     private cartService: CartService,
   ) { }
+
   login() {
     template.init();
     const payloadLogin = {
@@ -39,13 +40,13 @@ export class LoginComponent {
 
         this.showCartItem()
         this.router.navigate(['/home']);
-
       },
       (error) => {
         this.errorMessage = 'Đăng nhập không thành công. Vui lòng kiểm tra thông tin đăng nhập.';
       }
     );
   }
+
 
   showCartItem() {
     const userString = localStorage.getItem('user');
@@ -60,6 +61,7 @@ export class LoginComponent {
         (error) => {
           console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
         });
+
     }
   }
 }

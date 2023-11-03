@@ -65,6 +65,7 @@ export class HeaderComponent implements AfterViewInit {
         });
     }
   }
+
   //Xóa sản phẩm bằng id ra khỏi giỏ hàng
   removeCartItem(id: number) {
     this.cartService.removeById(id).subscribe(
@@ -87,6 +88,7 @@ export class HeaderComponent implements AfterViewInit {
     this.cartItems = [];
     this.totalValue = 0;
   }
+
 
   //Kiểm tra trạng thái đăng nhập
   navigateTo(route: string) {
