@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
 import { CartItem } from './cart-item.model';
 
@@ -18,6 +18,12 @@ export class CartService {
     };
 
     constructor(private http: HttpClient) { }
+
+    cartUpdated: Subject<void> = new Subject<void>();
+
+    updateCart() {
+    this.cartUpdated.next();
+    }
 
     getAllCarts(accountId: number): Observable<any[]> {
         return this.http.get<any[]>(`${CART_API}/list?accountId=${accountId}`);

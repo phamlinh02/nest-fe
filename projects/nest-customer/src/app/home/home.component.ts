@@ -3,10 +3,8 @@ import { paths } from "../const";
 import { OrderService } from "../service/order.service";
 import { ProductService } from "../service/product.service";
 import { CategoryService } from "../service/category.service";
-import { ActivatedRoute } from '@angular/router';
-import { CartItem } from '../service/cart-item.model';
 import { CartService } from '../service/cart.service';
-import { CartComponent } from '../cart/cart.component';
+import { Router } from '@angular/router';
 
 
 declare const template: any;
@@ -17,7 +15,7 @@ declare const template: any;
 })
 export class HomeComponent implements AfterViewInit {
   title = 'nest-customer';
-  public readonly paths = paths;
+  paths = paths;
   products: any[] = [];
   categories: any[] = [];
   cartItem: any[] = [];
@@ -28,14 +26,24 @@ export class HomeComponent implements AfterViewInit {
     private orderService: OrderService,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router,
   ) {
   }
   ngAfterViewInit() {
     template.init();
 
     //Lấy danh sách sản phẩm
+    this.showProducts();
+
+    //Lấy danh mục sản phẩm
+    this.showCategories();
+
+    this.orderService.getAllOrder({}).subscribe(response => {
+      console.log(response);
+    });
+  }
+  showProducts(){
     this.productService.getAllProducts().subscribe((data: any) => {
       this.products = data.response.content;
       console.log(this.products);
@@ -43,8 +51,9 @@ export class HomeComponent implements AfterViewInit {
       (error) => {
         console.error('Lỗi khi tải danh sách sản phẩm: ', error);
       });
+  }
 
-    //Lấy danh mục sản phẩm
+  showCategories(){
     this.categoryService.getAllCategories().subscribe((data: any) => {
       this.categories = data.response.content;
       console.log(this.categories);
@@ -52,10 +61,6 @@ export class HomeComponent implements AfterViewInit {
       (error) => {
         console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
       });
-
-    this.orderService.getAllOrder({}).subscribe(response => {
-      console.log(response);
-    });
   }
 
   addToCart(productId: number) {
@@ -69,6 +74,7 @@ export class HomeComponent implements AfterViewInit {
           // Xử lý khi thành công
           console.log('Thêm sản phẩm thành công');
           this.cartItems = this.cartItems.filter(item => item.id !== productId);
+          this.cartService.updateCart();
         },
         errorResponse => {
           // Xử lý khi có lỗi
@@ -76,6 +82,10 @@ export class HomeComponent implements AfterViewInit {
         }
       );
     }
+    else {
+      this.router.navigate([`${paths.login}`]);
+    }
   }
+
 
 }

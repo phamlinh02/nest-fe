@@ -18,7 +18,7 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline !important;
+	vertical-align: baseline;
 }
 thead {font-weight: 600;}
 article, aside, details, figcaption, figure, 
@@ -254,4 +254,10 @@ input[type=number]:focus,
 	li {
 		list-style: inside;
 	}
+}
+.heading_s1 p a{
+	color: $color-brand;
+}
+.heading_s1 p a:hover{
+	color: $color-brand-2;
 }

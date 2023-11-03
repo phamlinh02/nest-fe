@@ -24,7 +24,11 @@ export class HeaderComponent implements AfterViewInit {
     private categoryService: CategoryService,
     private productService: ProductService,
     private cartService: CartService
-  ) { }
+  ) {
+    this.cartService.cartUpdated.subscribe(()=>{
+      this.showCartItem();
+  });
+   }
 
   ngAfterViewInit() {
     //Lấy danh mục sản phẩm
