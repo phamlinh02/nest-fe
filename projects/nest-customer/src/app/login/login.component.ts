@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { paths } from '../const';
 import { CartService } from '../service/cart.service';
 
-declare const template : any;
+declare const template: any;
 
 @Component({
   selector: 'app-login',
@@ -21,11 +21,10 @@ export class LoginComponent {
   cartItems: any[] = [];
 
   constructor(
-    private accountService : AccountService,
-    private router : Router,
-    private cartService : CartService,
-  )
-  {}
+    private accountService: AccountService,
+    private router: Router,
+    private cartService: CartService,
+  ) { }
   login() {
     template.init();
     const payloadLogin = {
@@ -40,7 +39,7 @@ export class LoginComponent {
 
         this.showCartItem()
         this.router.navigate(['/home']);
- 
+
       },
       (error) => {
         this.errorMessage = 'Đăng nhập không thành công. Vui lòng kiểm tra thông tin đăng nhập.';
@@ -48,7 +47,7 @@ export class LoginComponent {
     );
   }
 
-  showCartItem(){
+  showCartItem() {
     const userString = localStorage.getItem('user');
     if (userString) {
       const userData = JSON.parse(userString).response;
@@ -58,9 +57,9 @@ export class LoginComponent {
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
         console.log(this.cartItems, this.totalValue);
       },
-      (error) => {
-        console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
-      });
+        (error) => {
+          console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
+        });
     }
   }
 }

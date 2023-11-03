@@ -36,8 +36,8 @@ export class HeaderComponent implements AfterViewInit {
         console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
       });
 
-      this.showCartItem();
-    
+    this.showCartItem();
+
   }
 
   searchProductByName() {
@@ -48,7 +48,7 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   //Hiển thị thông tin giỏ hàng
-  showCartItem(){
+  showCartItem() {
     const userString = localStorage.getItem('user');
     if (userString) {
       const userData = JSON.parse(userString).response;
@@ -60,16 +60,34 @@ export class HeaderComponent implements AfterViewInit {
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
         console.log(this.cartItems, this.totalValue);
       },
-      (error) => {
-        console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
-      });
+        (error) => {
+          console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
+        });
     }
   }
+  //Xóa sản phẩm bằng id ra khỏi giỏ hàng
+  removeCartItem(id: number) {
+    this.cartService.removeById(id).subscribe(
+      response => {
+        // Xử lý khi thành công
+        console.log(`Sản phẩm với id ${id} đã được xóa khỏi giỏ hàng`);
+
+        // Cập nhật lại danh sách giỏ hàng
+        this.cartItems = this.cartItems.filter(item => item.id !== id);
+        this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+      },
+      error => {
+        // Xử lý khi có lỗi
+        console.error('Đã xảy ra lỗi khi xóa sản phẩm khỏi giỏ hàng', error);
+      }
+    );
+  }
   //Clear Cart
-  clearCart(){
+  clearCart() {
     this.cartItems = [];
     this.totalValue = 0;
   }
+
   //Kiểm tra trạng thái đăng nhập
   navigateTo(route: string) {
     const userData = localStorage.getItem('user');

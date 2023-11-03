@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
+import { CartItem } from './cart-item.model';
 
 const SERVER_URL = environment.SERVER_URL;
 
@@ -22,19 +23,26 @@ export class CartService {
         return this.http.get<any[]>(`${CART_API}/list?accountId=${accountId}`);
     }
 
-    // addToCart(item: CartComponent): Observable<any> {
-    //     return this.http.post(${CART_API}/add, item, this.httpOptions);
-    // }
+    removeById(id: number): Observable<any> {
+        return this.http.delete<any>(`${CART_API}/removeid?id=${id}`);
+    }
 
-    //   updateProduct(productData: any): Observable<any> {
-    //     return this.http.post(${API_URL}/nest/product/update, productData, this.httpOptions);
-    //   }
+    remove(accountId: number): Observable<any[]> {
+        return this.http.delete<any[]>(`${CART_API}/remove?accountId=${accountId}`);
+    }
 
-    // searchProductsByName(productName: string): Observable<any> {
-    //     return this.http.get(${PRODUCT_API}/search-by-name?productName=${productName});
-    // }
+    addToCart(accountId: number, productId: number): Observable<any> {
+        const item: CartItem = {
+            accountId: accountId,
+            productId: productId,
+            quantity: 1
+            // Thông tin khác của sản phẩm
+        };
+        return this.http.post<any>(`${CART_API}/add`, item, this.httpOptions);
+    }
 
-    // showProductsByCategory(categoryId: number): Observable<any> {
-    //     return this.http.get(${PRODUCT_API}/show-by-category?categoryId=${categoryId});
-    // }
+    update(accountId: number, cartItems: CartItem[]): Observable<any> {
+        return this.http.put<any>(`${CART_API}/update?accountId=${accountId}`, cartItems, this.httpOptions);
+    }
+
 }
