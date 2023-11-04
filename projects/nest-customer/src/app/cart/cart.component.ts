@@ -16,6 +16,7 @@ export class CartComponent implements AfterViewInit {
   accountId: number = 0;
   totalValue: number = 0;
   totalPrice: number = 0;
+  totalProduct: number = 0;
 
   constructor(
     private cartService: CartService,
@@ -29,12 +30,13 @@ export class CartComponent implements AfterViewInit {
       this.accountId = userData.id;
       this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
         this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
+        this.totalProduct = this.cartItems.length;
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
         this.cartItems = this.cartItems.map((item) => {
           item.totalPrice = item.quantity * item.productId.price;
           return item;
         });
-        console.log(this.cartItems, this.totalValue, this.totalPrice);
+        console.log(this.cartItems, this.totalValue, this.totalPrice, this.totalProduct);
       },
         (error) => {
           console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
@@ -96,6 +98,7 @@ export class CartComponent implements AfterViewInit {
         successResponse => {
           console.log('Update sản phẩm thành công');
           this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+          window.location.reload;
         },
         errorResponse => {
           console.error('Có lỗi khi update sản phẩm', errorResponse);

@@ -11,7 +11,7 @@ declare const template: any;
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements AfterViewInit{
+export class LoginComponent implements AfterViewInit {
   title = 'nest-customer';
   username: string = '';
   password: string = '';
@@ -27,7 +27,7 @@ export class LoginComponent implements AfterViewInit{
     private cartService: CartService,
   ) { }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     template.init();
   }
 
