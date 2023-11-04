@@ -43,7 +43,7 @@ export class HomeComponent implements AfterViewInit {
       console.log(response);
     });
   }
-  showProducts(){
+  showProducts() {
     this.productService.getAllProducts().subscribe((data: any) => {
       this.products = data.response.content;
       console.log(this.products);
@@ -53,7 +53,7 @@ export class HomeComponent implements AfterViewInit {
       });
   }
 
-  showCategories(){
+  showCategories() {
     this.categoryService.getAllCategories().subscribe((data: any) => {
       this.categories = data.response.content;
       console.log(this.categories);
@@ -75,15 +75,16 @@ export class HomeComponent implements AfterViewInit {
           console.log('Thêm sản phẩm thành công');
           this.cartItems = this.cartItems.filter(item => item.id !== productId);
           this.cartService.updateCart();
+          location.reload;
         },
         errorResponse => {
           // Xử lý khi có lỗi
           console.error('Có lỗi khi thêm sản phẩm', errorResponse);
         }
       );
-    }
-    else {
+    } else {
       this.router.navigate([`${paths.login}`]);
+      alert('Vui lòng login để tiếp tục mua sắm !!!');
     }
   }
 

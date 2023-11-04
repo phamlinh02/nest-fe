@@ -18,6 +18,7 @@ export class HeaderComponent implements AfterViewInit {
   cartItems: any[] = [];
   accountId: number = 0;
   totalValue: number = 0;
+  totalProduct: number = 0;
 
   constructor(
     private router: Router,
@@ -25,10 +26,10 @@ export class HeaderComponent implements AfterViewInit {
     private productService: ProductService,
     private cartService: CartService
   ) {
-    this.cartService.cartUpdated.subscribe(()=>{
+    this.cartService.cartUpdated.subscribe(() => {
       this.showCartItem();
-  });
-   }
+    });
+  }
 
   ngAfterViewInit() {
     //Lấy danh mục sản phẩm
@@ -62,6 +63,7 @@ export class HeaderComponent implements AfterViewInit {
       this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
         this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+        this.totalProduct = this.cartItems.length;
         console.log(this.cartItems, this.totalValue);
       },
         (error) => {
@@ -80,6 +82,9 @@ export class HeaderComponent implements AfterViewInit {
         // Cập nhật lại danh sách giỏ hàng
         this.cartItems = this.cartItems.filter(item => item.id !== id);
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+        this.totalProduct = this.cartItems.reduce((total, item) => total + item.quantity, 0)
+        window.location.reload;
+
       },
       error => {
         // Xử lý khi có lỗi

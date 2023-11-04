@@ -9,7 +9,7 @@ declare const template: any;
   selector: 'account-info',
   templateUrl: './account-info.component.html',
 })
-export class AccountInfoComponent implements AfterViewInit{
+export class AccountInfoComponent implements AfterViewInit {
   title = 'nest-customer';
   user: any;
   paths = paths;
@@ -18,18 +18,18 @@ export class AccountInfoComponent implements AfterViewInit{
   constructor(
     private router: Router,
     private accountService: AccountService
-    ){
+  ) {
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData).response;
       console.log(userData);
-    } 
+    }
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     template.init();
   }
 
-  updateAccountByUser(){
+  updateAccountByUser() {
     this.accountService.updateAccountByUser(this.user).subscribe
       ((response) => {
         console.log('Updated successfully!', response);
@@ -42,10 +42,11 @@ export class AccountInfoComponent implements AfterViewInit{
       )
   }
 
-  logout(){
+  logout() {
     // Xóa thông tin người dùng khỏi localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    location.reload;
   }
 
 }
