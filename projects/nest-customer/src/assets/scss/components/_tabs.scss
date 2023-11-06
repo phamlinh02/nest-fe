@@ -1,7 +1,10 @@
 /*COMPONENTS -> TABS*/
 .nav-tabs {
     border: 0;
-    margin-bottom: 4px;
+    margin-bottom: 4px !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    margin-bottom: 15px !important;
     .nav-link {
         background-color: rgb(238, 238, 238);
         font-size: 15px;
@@ -12,14 +15,15 @@
         padding: 15px 24px;
         -webkit-transition: 0.2s;
         transition: 0.2s;
-        border: 0;
-        border-top-color: currentcolor;
-        border-right-color: currentcolor;
-        border-bottom-color: currentcolor;
-        border-left-color: currentcolor;
+        border: 0 !important;
+        border-top-color: currentcolor !important;
+        border-right-color: currentcolor !important;
+        border-bottom-color: currentcolor !important;
+        border-left-color: currentcolor !important;
         font-family: $font-heading;
         font-weight: 600;
         line-height: 1;
+        text-decoration: none !important;
         &.active {
            color: $color-brand;
            background-color: #fde1bd;

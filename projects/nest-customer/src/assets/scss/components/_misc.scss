@@ -342,7 +342,7 @@ table {
     }
 }
 
-.zoomContainer, .zoomWindow{ z-index: 9999;}
+.zoomContainer, .zoomWindow{ z-index: 99;}
 .single-product {
-    .zoomContainer, .zoomWindow{ z-index: 99;}
+    .zoomContainer, .zoomWindow{ z-index: 9999 !important; }
 }

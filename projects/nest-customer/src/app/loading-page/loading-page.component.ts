@@ -6,4 +6,5 @@ import { Component } from '@angular/core';
 })
 export class LoadingPageComponent {
   title = 'nest-customer';
+  isLoading = false;
 }

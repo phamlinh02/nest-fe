@@ -255,3 +255,9 @@ input[type=number]:focus,
 		list-style: inside;
 	}
 }
+.heading_s1 p a{
+	color: $color-brand;
+}
+.heading_s1 p a:hover{
+	color: $color-brand-2;
+}

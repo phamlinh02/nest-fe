@@ -77,7 +77,7 @@ const routes: Routes = [
     component: PrivacyPolicyComponent
   },
   {
-    path: paths.productDetail,
+    path: `${paths.productDetail}/:id`,
     component: ProductDetailComponent
   },
   {
@@ -93,8 +93,12 @@ const routes: Routes = [
     component: ResetPasswordComponent
   },
   {
-    path: paths.shopFilter,
+    path: `${paths.shopFilter}/search/:productName`,
     component: ShopFilterComponent
+  },
+  {
+    path: `${paths.shopFilter}/showByCategory/:categoryId`, 
+    component: ShopFilterComponent,
   },
   {
     path: paths.shopGrid,
