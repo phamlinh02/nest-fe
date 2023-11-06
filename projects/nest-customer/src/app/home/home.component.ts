@@ -21,6 +21,9 @@ export class HomeComponent implements AfterViewInit {
   cartItem: any[] = [];
   accountId: number = 0;
   cartItems: any[] = [];
+  categoryId: number = 1;
+  showByCategory: any[] = [];
+  quantity: number = 1;
 
   constructor(
     private orderService: OrderService,
@@ -63,19 +66,34 @@ export class HomeComponent implements AfterViewInit {
       });
   }
 
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+
+  decreaseQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  updateQuantity(event: Event): void {
+    this.quantity = +(<HTMLInputElement>event.target).value;
+  }
+
   addToCart(productId: number) {
     const userString = localStorage.getItem('user');
     if (userString) {
       const userData = JSON.parse(userString).response;
       this.accountId = userData.id;
 
-      this.cartService.addToCart(this.accountId, productId).subscribe(
+      this.cartService.addToCart(this.accountId, productId, this.quantity).subscribe(
         successResponse => {
           // Xử lý khi thành công
+          alert('Sản phẩm đã được thêm vào giỏ hàng');
           console.log('Thêm sản phẩm thành công');
           this.cartItems = this.cartItems.filter(item => item.id !== productId);
           this.cartService.updateCart();
-          location.reload;
+          this.quantity = 1;
         },
         errorResponse => {
           // Xử lý khi có lỗi
@@ -88,5 +106,20 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
+  showProductsByCategory() {
+    this.productService.showProductsByCategory(this.categoryId).subscribe(
+      (data: any) => {
+        this.showByCategory = data.response.content;
+      },
+      (error) => {
+        console.error('Lỗi khi tải chi tiết sản phẩm: ', error);
+      }
+    );
+  }
+  changeCategory(newCategoryId: number) {
+    this.categoryId = newCategoryId;
+    console.log(this.categoryId);
+    this.showProductsByCategory(); // Gọi lại phương thức để cập nhật sản phẩm
+  }
 
 }

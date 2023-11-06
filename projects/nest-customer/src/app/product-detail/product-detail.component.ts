@@ -1,7 +1,9 @@
-import {AfterViewInit, Component} from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { paths } from '../const';
+import { CartService } from '../service/cart.service';
+import { Router } from '@angular/router';
 
 declare let template: any;
 
@@ -14,15 +16,24 @@ export class ProductDetailComponent implements AfterViewInit {
   product: any = {};
   productId: number = 1;
   paths = paths;
+  accountId: number = 0;
+  cartItems: any[] = [];
+  quantity: number = 1;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute) {}
+
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private router: Router,
+  ) { }
 
   ngAfterViewInit() {
     template.productInit();
-    this.route.params.subscribe(params => {
-      const id = +params['id']; // Lấy giá trị tham số 'id' từ URL
+    this.route.params.subscribe((params) => {
+      const id = +params['id'];
       if (!isNaN(id)) {
-        this.productId = id; // Gán giá trị 'id' lấy từ URL vào biến 'productId'
+        this.productId = id;
         this.productService.getProductById(this.productId).subscribe(
           (data: any) => {
             this.product = data.response;
@@ -34,6 +45,43 @@ export class ProductDetailComponent implements AfterViewInit {
         );
       }
     });
+  }
 
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+
+  decreaseQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  updateQuantity(event: Event): void {
+    this.quantity = +(<HTMLInputElement>event.target).value;
+  }
+
+  addToCart(productId: number) {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.accountId = userData.id;
+      this.cartService
+        .addToCart(this.accountId, productId, this.quantity)
+        .subscribe(
+          (successResponse) => {
+            alert('Sản phẩm đã được thêm vào giỏ hàng');
+            console.log('Thêm sản phẩm thành công');
+            this.cartItems = this.cartItems.filter((item) => item.id !== productId);
+            this.cartService.updateCart();
+          },
+          (errorResponse) => {
+            console.error('Có lỗi khi thêm sản phẩm', errorResponse);
+          }
+        );
+    } else {
+      this.router.navigate([`${paths.login}`]);
+      alert('Vui lòng đăng nhập để tiếp tục mua sắm !!!');
+    }
   }
 }

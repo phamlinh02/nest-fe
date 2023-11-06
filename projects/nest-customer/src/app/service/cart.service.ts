@@ -22,7 +22,7 @@ export class CartService {
     cartUpdated: Subject<void> = new Subject<void>();
 
     updateCart() {
-    this.cartUpdated.next();
+        this.cartUpdated.next();
     }
 
     getAllCarts(accountId: number): Observable<any[]> {
@@ -37,11 +37,12 @@ export class CartService {
         return this.http.delete<any[]>(`${CART_API}/remove?accountId=${accountId}`);
     }
 
-    addToCart(accountId: number, productId: number): Observable<any> {
+
+    addToCart(accountId: number, productId: number, quantity: number): Observable<any> {
         const item: CartItem = {
             accountId: accountId,
             productId: productId,
-            quantity: 1
+            quantity: quantity
             // Thông tin khác của sản phẩm
         };
         return this.http.post<any>(`${CART_API}/add`, item, this.httpOptions);

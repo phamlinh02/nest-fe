@@ -158,11 +158,11 @@
                       <form (ngSubmit)="updateAccountByUser()">
                         <div class="error-message text-danger pb-3" *ngIf="errorMessage">{{ errorMessage }}</div>
                         <div class="row">
-                          <div class="form-group col-md-6">
-                            <label>ID <span class="required">*</span></label>
-                            <input required="" class="form-control" name="id" [(ngModel)]="user.id" type="number" />
+                          <div class="form-group col-md-12 text-center">
+                            <img [src]="user.avatar" alt="" style="border-radius: 50%; width: 300px; height: 300px; border: 3px solid black">
                           </div>
-                          <div class="form-group col-md-6">
+                            <input required="" class="form-control" name="id" [(ngModel)]="user.id" type="hidden" />
+                          <div class="form-group col-md-12">
                             <label>Full Name <span class="required">*</span></label>
                             <input required="" class="form-control" name="fullName" [(ngModel)]="user.fullName" type="text" />
                           </div>
