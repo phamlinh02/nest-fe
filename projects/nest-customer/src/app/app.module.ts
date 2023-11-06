@@ -61,6 +61,10 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     HttpClientModule
   ],
   providers: [HttpClient],
+  exports: [
+    HeaderComponent,
+    FooterComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
