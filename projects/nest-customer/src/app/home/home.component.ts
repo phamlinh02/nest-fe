@@ -21,6 +21,8 @@ export class HomeComponent implements AfterViewInit {
   cartItem: any[] = [];
   accountId: number = 0;
   cartItems: any[] = [];
+  categoryId: number = 1;
+  showByCategory: any[] = []; 
 
   constructor(
     private orderService: OrderService,
@@ -88,5 +90,20 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
+  showProductsByCategory(){
+    this.productService.showProductsByCategory(this.categoryId).subscribe(
+      (data: any) => {
+        this.showByCategory = data.response.content;
+      },
+      (error) => {
+        console.error('Lỗi khi tải chi tiết sản phẩm: ', error);
+      }
+    );
+  }
+  changeCategory(newCategoryId: number) {
+    this.categoryId = newCategoryId;
+    console.log(this.categoryId);
+    this.showProductsByCategory(); // Gọi lại phương thức để cập nhật sản phẩm
+}
 
 }

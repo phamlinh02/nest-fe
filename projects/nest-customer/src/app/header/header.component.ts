@@ -48,7 +48,7 @@ export class HeaderComponent implements AfterViewInit {
   searchProductByName() {
     if (this.productName) {
       // Xử lý sự kiện nhập từ khóa và chuyển hướng đến trang shop-filter với từ khóa tìm kiếm
-      this.router.navigate([`${paths.shopFilter}/${this.productName}`]);
+      this.router.navigate([`${paths.shopFilter}/search/${this.productName}`]);
     }
   }
 
@@ -96,6 +96,7 @@ export class HeaderComponent implements AfterViewInit {
   clearCart() {
     this.cartItems = [];
     this.totalValue = 0;
+    this.totalProduct = 0;
   }
 
 
