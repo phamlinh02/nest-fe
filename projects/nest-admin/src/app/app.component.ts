@@ -10,6 +10,5 @@ export class AppComponent implements AfterViewInit{
   title = 'nest-admin';
 
   ngAfterViewInit() {
-    template.init();
   }
 }

@@ -121,5 +121,5 @@ export class HomeComponent implements AfterViewInit {
     console.log(this.categoryId);
     this.showProductsByCategory(); // Gọi lại phương thức để cập nhật sản phẩm
   }
-
+  
 }
