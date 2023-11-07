@@ -13,7 +13,8 @@
         <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
           <div class="row">
             <div class="col-lg-6 pr-30 d-none d-lg-block">
-              <img class="border-radius-15" src="https://i.pinimg.com/564x/fe/8a/82/fe8a821d11269ba7e8ded9432331cd35.jpg" alt="" />
+              <img class="border-radius-15"
+                src="https://i.pinimg.com/564x/fe/8a/82/fe8a821d11269ba7e8ded9432331cd35.jpg" alt="" />
             </div>
             <div class="col-lg-6 col-md-8">
               <div class="login_wrap widget-taber-content background-white">
@@ -28,21 +29,23 @@
                       <input type="text" required="" [(ngModel)]="username" name="username" placeholder="Username *" />
                     </div>
                     <div class="form-group">
-                      <input required="" type="password" [(ngModel)]="password" name="password" placeholder="Your password *" />
+                      <input required="" type="password" [(ngModel)]="password" name="password"
+                        placeholder="Your password *" />
                     </div>
                     <div class="login_footer form-group mb-50">
                       <div class="chek-form">
                         <div class="custome-checkbox">
-                          <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
+                          <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1"
+                            value="" />
                           <label class="form-check-label" for="exampleCheckbox1"><span>Remember me</span></label>
                         </div>
                       </div>
                       <a class="text-muted" [routerLink]="['/',paths.forgotPass]">Forgot password?</a>
                     </div>
                     <div class="form-group">
-                      <button  type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>
+                      <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>
                     </div>
-                   
+
                   </form>
                 </div>
               </div>
