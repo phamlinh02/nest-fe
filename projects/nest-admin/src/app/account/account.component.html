@@ -31,134 +31,21 @@
     <!-- card-header end// -->
     <div class="card-body">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
-        <div class="col">
+        <div class="col" *ngFor="let user of accounts; let i = index">
           <div class="card card-user">
             <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-1.png" alt="User pic" />
+              <img class="img-md img-avatar" [src]="userAvatars[i]" alt="Userpic" />
             </div>
             <div class="card-body">
-              <h5 class="card-title mt-50">Mary Sandra</h5>
+              <h5 class="card-title mt-50">{{user.fullName}}</h5>
               <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #409</p>
-                <p>mary90@example.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
+                <p class="m-0">Username: {{user.username}}</p>
+                <p>{{user.email}}</p>
+                <a [routerLink]="['/',paths.account, user.id]" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
               </div>
             </div>
           </div>
         </div>
-        <!-- col.// -->
-        <div class="col">
-          <div class="card card-user">
-            <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-2.png" alt="User pic" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title mt-50">Leslie Alexander</h5>
-              <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #478</p>
-                <p>leslie@example.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col.// -->
-        <div class="col">
-          <div class="card card-user">
-            <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-3.png" alt="User pic" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title mt-50">Leslie Alexander</h5>
-              <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #478</p>
-                <p>leslie@example.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col.// -->
-        <div class="col">
-          <div class="card card-user">
-            <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-4.png" alt="User pic" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title mt-50">Floyd Miles</h5>
-              <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #171</p>
-                <p>fedor12@example.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col.// -->
-        <div class="col">
-          <div class="card card-user">
-            <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-1.png" alt="User pic" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title mt-50">John Alexander</h5>
-              <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #987</p>
-                <p>john@mymail.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col.// -->
-        <div class="col">
-          <div class="card card-user">
-            <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-3.png" alt="User pic" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title mt-50">Albert Flores</h5>
-              <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #478</p>
-                <p>leslie@example.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col.// -->
-        <div class="col">
-          <div class="card card-user">
-            <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-4.png" alt="User pic" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title mt-50">Leslie Alexander</h5>
-              <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #478</p>
-                <p>leslie@example.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col.// -->
-        <div class="col">
-          <div class="card card-user">
-            <div class="card-header">
-              <img class="img-md img-avatar" src="assets/imgs/people/avatar-1.png" alt="User pic" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title mt-50">Marx Alberto</h5>
-              <div class="card-text text-muted">
-                <p class="m-0">Seller ID: #478</p>
-                <p>leslie@example.com</p>
-                <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col.// -->
       </div>
       <!-- row.// -->
     </div>
