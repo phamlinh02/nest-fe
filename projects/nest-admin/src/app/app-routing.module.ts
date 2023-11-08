@@ -34,7 +34,8 @@ const routes: Routes = [
     path: paths.account, component: AccountComponent
   },
   {
-    path: paths.account + '/:slug', component: AccountDetailComponent
+    path: `${paths.account}/:id`, 
+    component: AccountDetailComponent
   },
   {
     path: paths.login, component: LoginComponent
