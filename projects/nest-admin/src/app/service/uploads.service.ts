@@ -22,8 +22,8 @@ export class UploadsService {
     return this.http.get<string[]>(`${ACCOUNT_API}/list`);
   }
 
-  getImage(filename: string): Observable<Blob> {
-    return this.http.get(`${ACCOUNT_API}/image/${filename}`, { responseType: 'blob' });
+  getImage(type: string,filename: string): Observable<Blob> {
+    return this.http.get(`${ACCOUNT_API}/image/${type}/${filename}`, { responseType: 'blob' });
   }
   
 }

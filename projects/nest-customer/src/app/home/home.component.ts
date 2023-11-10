@@ -5,6 +5,8 @@ import { ProductService } from "../service/product.service";
 import { CategoryService } from "../service/category.service";
 import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { UploadsService } from '../service/uploads.service';
 
 
 declare const template: any;
@@ -24,6 +26,7 @@ export class HomeComponent implements AfterViewInit {
   categoryId: number = 1;
   showByCategory: any[] = [];
   quantity: number = 1;
+  productImage: { [key: number]: SafeUrl } = {};
 
   constructor(
     private orderService: OrderService,
@@ -31,6 +34,8 @@ export class HomeComponent implements AfterViewInit {
     private categoryService: CategoryService,
     private cartService: CartService,
     private router: Router,
+    private uploadsService: UploadsService,
+    private domSanitizer: DomSanitizer
   ) {
   }
   ngAfterViewInit() {
@@ -49,11 +54,22 @@ export class HomeComponent implements AfterViewInit {
   showProducts() {
     this.productService.getAllProducts().subscribe((data: any) => {
       this.products = data.response.content;
+
+      this.products.forEach((product, index) => {
+        this.getProductImage('product', product.image, index);
+      });
       console.log(this.products);
     },
       (error) => {
         console.error('Lỗi khi tải danh sách sản phẩm: ', error);
       });
+  }
+
+  getProductImage(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.productImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
   }
 
   showCategories() {
@@ -110,6 +126,9 @@ export class HomeComponent implements AfterViewInit {
     this.productService.showProductsByCategory(this.categoryId).subscribe(
       (data: any) => {
         this.showByCategory = data.response.content;
+        this.showByCategory.forEach((product, index) => {
+          this.getProductImage('product', product.image, index);
+        });
       },
       (error) => {
         console.error('Lỗi khi tải chi tiết sản phẩm: ', error);
@@ -121,5 +140,5 @@ export class HomeComponent implements AfterViewInit {
     console.log(this.categoryId);
     this.showProductsByCategory(); // Gọi lại phương thức để cập nhật sản phẩm
   }
-  
+
 }

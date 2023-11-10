@@ -17,7 +17,7 @@
                 <!-- MAIN SLIDES -->
                 <div class="product-image-slider">
                   <figure class="border-radius-10">
-                    <img [src]="'assets/imgs/shop/' + product.image" alt="{{ product.productName }}"
+                    <img [src]="productImage" alt="{{ product.productName }}"
                       style="height: 100%; width: 100%;" />
                   </figure>
                   <!-- <figure class="border-radius-10">
@@ -41,7 +41,7 @@
                 </div>
                 <!-- THUMBNAILS -->
                 <div class="slider-nav-thumbnails" style=" margin-top: 20px; text-align: center;">
-                  <div><img [src]="'assets/imgs/shop/' + product.image" alt="{{ product.productName }}" style="border: 2px solid #a2d2c9;
+                  <div><img [src]="productImage" alt="{{ product.productName }}" style="border: 2px solid #a2d2c9;
                     height: 140px !important; border-radius: 17px;" /></div>
                   <!-- <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image" /></div>
                   <div><img src="assets/imgs/shop/thumbnail-5.jpg" alt="product image" /></div>

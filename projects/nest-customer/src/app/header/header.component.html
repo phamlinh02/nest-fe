@@ -104,10 +104,10 @@
                 <a><span class="lable">Cart</span></a>
                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                   <ul>
-                    <li *ngFor="let item of cartItems">
+                    <li *ngFor="let item of cartItems,let i = index">
                       <div class="shopping-cart-img">
                         <a href="shop-product-right.html"><img alt="Nest"
-                            [src]="'assets/imgs/shop/' + item.productId.image" /></a>
+                          [src]="productImage[i]" /></a>
                       </div>
                       <div class="shopping-cart-title" style="width: 150px;">
                         <h4><a href="shop-product-right.html">{{item.productId.productName}}</a></h4>

@@ -34,7 +34,7 @@ export class AccountInfoComponent implements AfterViewInit {
   }
   ngAfterViewInit() {
     template.init();
-    this.getUserAvatar(this.user.avatar);
+    this.getUserAvatar('account',this.user.avatar);
   }
 
   updateAccountByUser() {
@@ -78,8 +78,8 @@ export class AccountInfoComponent implements AfterViewInit {
     location.reload;
   }
 
-  getUserAvatar(filename: string) {
-    this.uploadsService.getImage(filename).subscribe((imageData: Blob) => {
+  getUserAvatar(type: string,filename: string) {
+    this.uploadsService.getImage(type,filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });

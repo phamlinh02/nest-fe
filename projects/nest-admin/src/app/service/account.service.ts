@@ -18,8 +18,8 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUsers(): Observable<any> {
-    return this.http.get(`${ACCOUNT_API}/get-all`);
+  getAllUsers(page: number, size: number): Observable<any> {
+    return this.http.get(`${ACCOUNT_API}/get-all?page=${page}&size=${size}`);
   }
 
   saveUser(account: any): Observable<any> {
@@ -29,11 +29,6 @@ export class AccountService {
   updateUser(account: any): Observable<any> {
     return this.http.post(`${ACCOUNT_API}/update`, account);
   }
-
-  updateAccountByUser(account: any): Observable<any> {
-    return this.http.post(`${ACCOUNT_API}/updateByUser`, account);
-  }
-
   getUserByUsername(id: number): Observable<any> {
     return this.http.get(`${ACCOUNT_API}/get-user?id=${id}`);
   }

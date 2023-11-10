@@ -4,6 +4,8 @@ import { ProductService } from "../service/product.service";
 import { Router } from '@angular/router';
 import { CategoryService } from "../service/category.service";
 import { CartService } from '../service/cart.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { UploadsService } from '../service/uploads.service';
 
 @Component({
   selector: 'app-header',
@@ -19,12 +21,15 @@ export class HeaderComponent implements AfterViewInit {
   accountId: number = 0;
   totalValue: number = 0;
   totalProduct: number = 0;
+  productImage: { [key: number]: SafeUrl } = {};
 
   constructor(
     private router: Router,
     private categoryService: CategoryService,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private uploadsService: UploadsService,
+    private domSanitizer: DomSanitizer
   ) {
     this.cartService.cartUpdated.subscribe(() => {
       this.showCartItem();
@@ -62,6 +67,9 @@ export class HeaderComponent implements AfterViewInit {
       // Gọi phương thức để lấy danh sách sản phẩm trong giỏ hàng dựa trên accountId
       this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
         this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
+        this.cartItems.forEach((cartItem, index) => {
+          this.getProductImage('product', cartItem.productId.image, index);
+        });
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
         this.totalProduct = this.cartItems.length;
         console.log(this.cartItems, this.totalValue);
@@ -119,6 +127,13 @@ export class HeaderComponent implements AfterViewInit {
     localStorage.removeItem('user');
     // Xóa thông tin giỏ hàng
     this.clearCart();
+  }
+
+  getProductImage(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.productImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
   }
 
 }
