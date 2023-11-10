@@ -1,0 +1,95 @@
+<section class="content-main">
+    <div class="row">
+      <div class="col-9">
+        <div class="content-header">
+          <h2 class="content-title">Add Product</h2>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h4>Basic</h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-lg-7">
+              <div class="mb-4">
+                <label for="product_name" class="form-label">Product Name</label>
+                <input type="text" placeholder="Type here"  class="form-control" name="productName" [(ngModel)]="product.productName" />
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Full description</label>
+                <textarea placeholder="Type here" name="description" [(ngModel)]="product.description" class="form-control" rows="4"></textarea>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="mb-4">
+                    <label class="form-label">Price</label>
+                    <div class="row gx-2">
+                      <input placeholder="$" type="text" name="price" [(ngModel)]="product.price"  class="form-control" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Quantity</label>
+                <input type="text" placeholder="Quantity" name="quantity" [(ngModel)]="product.quantity" class="form-control" id="product_name" />
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Category</label>
+                <input type="text" placeholder="Category" name="categoryName" [(ngModel)]="product.categoryName" class="form-control" id="product_name" />
+              </div>
+              <div class="mb-4">
+                <label class="form-label">IsActive</label>
+                <input type="text" placeholder="IsActive" name="isActive" [(ngModel)]="product.isActive" class="form-control" id="product_name" />
+              </div>
+            </div>
+              <div class="col-lg-4">
+                <div class="card mb-5">
+                  <div class="card-header">
+                    <h4>Media</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="input-upload">
+                      <img  *ngIf="productImage" [src]="productImage" alt="" />
+                      <input class="form-control" (change)="onAvatarChange($event)" type="file" />
+                    </div>
+                  </div>
+                </div>
+                <!-- card end// -->
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <h4>Organization</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="row gx-2">
+                      <div class="col-sm-12 mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select">
+                          <option>Automobiles</option>
+                          <option>Home items</option>
+                          <option>Electronics</option>
+                          <option>Smartphones</option>
+                          <option>Sport items</option>
+                          <option>Baby and Tous</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- row.// -->
+                  </div>
+                </div>
+                <!-- card end// -->
+              </div>
+            </div>
+            <br />
+                <button class="btn btn-primary" style="margin-left: 20px;" type="submit" (click)="saveProduct()">Add Product</button>
+            </form>
+          </div>
+        </div>
+        <!-- card end// -->
+      </div>
+  
+    </div>
+  </section>
+  

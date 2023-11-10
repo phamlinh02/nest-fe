@@ -3,6 +3,7 @@ import { ProductService } from '../../service/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../../service/uploads.service';
+import { CategoryService } from '../../service/category.service';
 
 declare let template: any;
 
@@ -17,17 +18,20 @@ export class ProductDetailComponent implements AfterViewInit{
   productImage!: SafeUrl;
   productFile: File | null = null;
   errorMessage: string = '';
+  categories: any[] = [];
 
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
     private domSanitizer: DomSanitizer,
-    private uploadsService: UploadsService
+    private uploadsService: UploadsService,
+    private categoryService: CategoryService
   ){}
 
   ngAfterViewInit() {
     template.init();
     this.showProductById();
+    this.showCategories();
   }
 
   showProductById(){
@@ -73,6 +77,16 @@ export class ProductDetailComponent implements AfterViewInit{
         this.errorMessage = 'Product update failed, please check information...!';
       }
     );
+  }
+
+  showCategories() {
+    this.categoryService.getAllCategories().subscribe((data: any) => {
+      this.categories = data.response.content;
+      console.log(this.categories);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
+      });
   }
 
   onAvatarChange(event: any) {

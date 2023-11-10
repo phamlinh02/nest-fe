@@ -62,4 +62,15 @@ export class ProductComponent implements AfterViewInit {
     return Array.from({ length: totalPages }, (_, i) => i);
   }
 
+  deleteProduct(productId: number) {
+    this.productService.deleteProduct(productId).subscribe(
+      (response) => {
+        this.showProducts();
+        console.log('Sản phẩm đã được xóa thành công');
+      },
+      (error) => {
+        console.error('Lỗi khi xóa sản phẩm', error);
+      }
+    );
+  }
 }
