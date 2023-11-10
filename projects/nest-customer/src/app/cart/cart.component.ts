@@ -2,6 +2,8 @@ import { AfterViewInit, Component } from '@angular/core';
 import { paths } from '../const';
 import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { UploadsService } from '../service/uploads.service';
 
 declare const template: any;
 
@@ -17,10 +19,13 @@ export class CartComponent implements AfterViewInit {
   totalValue: number = 0;
   totalPrice: number = 0;
   totalProduct: number = 0;
+  productImage: { [key: number]: SafeUrl } = {};
 
   constructor(
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private uploadsService: UploadsService,
+    private domSanitizer: DomSanitizer
   ) { }
   ngAfterViewInit() {
     template.init();
@@ -30,6 +35,9 @@ export class CartComponent implements AfterViewInit {
       this.accountId = userData.id;
       this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
         this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
+        this.cartItems.forEach((cartItem, index) => {
+          this.getProductImage('product', cartItem.productId.image, index);
+        });
         this.totalProduct = this.cartItems.length;
         this.totalValue = this.cartItems.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
         this.cartItems = this.cartItems.map((item) => {
@@ -105,5 +113,11 @@ export class CartComponent implements AfterViewInit {
         }
       );
     }
+  }
+  getProductImage(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.productImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
   }
 }

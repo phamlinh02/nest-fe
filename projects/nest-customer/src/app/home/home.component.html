@@ -1,5 +1,5 @@
 <main class="main">
-  <div *ngFor="let product of products">
+  <div *ngFor="let product of products,let i = index">
     <div class="modal fade custom-modal" [id]="'quickViewModal-' + product.id" tabindex="-1"
       aria-labelledby="quickViewModalLabel" aria-hidden="true" style="height: 100%;">
       <div class="modal-dialog">
@@ -12,7 +12,7 @@
                   <!-- MAIN SLIDES -->
                   <div class="product-image-slider">
                     <figure class="border-radius-10" style="margin: 0 0 0 0 !important;">
-                      <img [src]="'assets/imgs/shop/' + product.image" alt="{{ product.productName }}"
+                      <img [src]="productImage[i]" alt="{{ product.productName }}"
                         style="width: 100%; height: 100%;" />
                     </figure>
                   </div>
@@ -268,12 +268,12 @@
         <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
           <div class="row product-grid-4">
 
-            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of products">
+            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of products,let i = index">
               <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
                 <div class="product-img-action-wrap">
                   <div class="product-img product-img-zoom">
                     <a [routerLink]="['/', paths.productDetail, product.id]">
-                      <img class="default-img" [src]="'assets/imgs/shop/' + product.image"
+                      <img class="default-img" [src]="productImage[i]"
                         alt="{{ product.productName }}" />
                       <!-- <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" /> -->
                     </a>
@@ -322,12 +322,12 @@
         <div *ngFor="let category of categories" class="tab-pane fade" [id]="'tab-' + category.id" role="tabpanel"
           [attr.aria-labelledby]="'tab-'+category.id">
           <div class="row product-grid-4">
-            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of showByCategory">
+            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of showByCategory; let i = index">
               <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
                 <div class="product-img-action-wrap">
                   <div class="product-img product-img-zoom">
                     <a [routerLink]="['/', paths.productDetail, product.id]">
-                      <img class="default-img" [src]="'assets/imgs/shop/' + product.image"
+                      <img class="default-img" [src]="productImage[i]"
                         alt="{{ product.productName }}" />
                       <!-- <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" /> -->
                     </a>

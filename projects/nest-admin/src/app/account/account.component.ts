@@ -16,6 +16,9 @@ export class AccountComponent  implements AfterViewInit{
   accounts: any[] = [];
   paths = paths;
   userAvatars: { [key: number]: SafeUrl } = {};
+  currentPage: number = 0;
+  totalPages: number = 0;
+  
 
   constructor(
     private accountService: AccountService,
@@ -29,10 +32,11 @@ export class AccountComponent  implements AfterViewInit{
   }
 
   getAllUsers() {
-    this.accountService.getAllUsers().subscribe((data: any) => {
+    this.accountService.getAllUsers(this.currentPage, 8).subscribe((data: any) => {
       this.accounts = data.response.content;
+      this.totalPages = Math.ceil(data.response.totalElements / 8);
       this.accounts.forEach((account, index) => {
-        this.getUserAvatar(account.avatar, index);
+        this.getUserAvatar('account', account.avatar, index);
       });
       console.log(this.accounts);
     }, (error) => {
@@ -40,10 +44,21 @@ export class AccountComponent  implements AfterViewInit{
     });
   }
 
-  getUserAvatar(filename: string, index: number) {
-    this.uploadsService.getImage(filename).subscribe((imageData: Blob) => {
+  getUserAvatar(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.userAvatars[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
+  }
+
+  changePage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.getAllUsers();
+    }
+  }
+
+  range(totalPages: number): number[] {
+    return Array.from({ length: totalPages }, (_, i) => i);
   }
 }

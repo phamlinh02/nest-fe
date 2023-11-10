@@ -6,7 +6,7 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {ProductComponent, ProductDetailComponent} from "./product";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {RateComponent} from "./rate/rate.component";
-import {AccountComponent, AccountDetailComponent, LoginComponent} from "./account";
+import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent} from "./account";
 
 const routes: Routes = [
   {
@@ -17,6 +17,10 @@ const routes: Routes = [
   },
   {
     path: paths.product, component: ProductComponent
+  },
+  {
+    path: `${paths.product}/:id`,
+     component: ProductDetailComponent
   },
   {
     path: paths.addProduct, component: ProductDetailComponent
@@ -32,6 +36,10 @@ const routes: Routes = [
   },
   {
     path: paths.account, component: AccountComponent
+  },
+  {
+    path: `${paths.account}/add`, 
+    component: AddAccountComponent
   },
   {
     path: `${paths.account}/:id`, 

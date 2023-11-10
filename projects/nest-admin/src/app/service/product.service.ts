@@ -18,13 +18,22 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getAllProducts(): Observable<any[]> {
-    return this.http.get<any[]>(PRODUCT_API + '/get-all-active');
+  getAllProducts(page: number, size: number): Observable<any[]> {
+    return this.http.get<any[]>(`${PRODUCT_API}/get-all?page=${page}&size=${size}`);
   }
 
   getProductById(id: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/get-product?id=${id}`);
   }
+
+//   createProduct(productData: any): Observable<any> {
+//     return this.http.post(`${API_URL}/nest/product/save`, productData, this.httpOptions);
+//   }
+
+  updateProduct(product: any): Observable<any> {
+    return this.http.post(`${PRODUCT_API}/update`, product);
+  }
+
   searchProductsByName(productName: string): Observable<any> {
     return this.http.get(`${PRODUCT_API}/search-by-name?productName=${productName}`);
   }

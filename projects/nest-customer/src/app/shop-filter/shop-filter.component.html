@@ -1,6 +1,6 @@
 <main class="main">
   <!-- Quick view -->
-<div *ngFor="let product of searchResult">
+<div *ngFor="let product of searchResult,let i = index">
   <div class="modal fade custom-modal" [id]="'quickViewModal-' + product.id" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true" style="height: 100%;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -12,7 +12,7 @@
                             <!-- MAIN SLIDES -->
                             <div class="product-image-slider">
                                 <figure class="border-radius-10" style="margin: 0 0 0 0 !important;">
-                                    <img [src]="'assets/imgs/shop/' + product.image" alt="{{ product.productName }}" style="width: 100%; height: 100%;"/>
+                                    <img [src]="productImage[i]" alt="{{ product.productName }}" style="width: 100%; height: 100%;"/>
                                 </figure>
                             </div>
                         </div>
@@ -78,12 +78,12 @@
           </div>
         </div>
         <div class="row product-grid">
-          <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of searchResult">
+          <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of searchResult,let i = index">
             <div class="product-cart-wrap mb-30">
               <div class="product-img-action-wrap">
                 <div class="product-img product-img-zoom">
                   <a href="shop-product-right.html">
-                    <img class="default-img" [src]="'assets/imgs/shop/' + product.image" alt="{{ product.productName }}" alt="" />
+                    <img class="default-img" [src]="productImage[i]" alt="{{ product.productName }}" alt="" />
                   </a>
                 </div>
                 <div class="product-action-1">
@@ -117,12 +117,12 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of showByCategory">
+          <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of showByCategory,let i = index">
             <div class="product-cart-wrap mb-30">
               <div class="product-img-action-wrap">
                 <div class="product-img product-img-zoom">
                   <a href="shop-product-right.html">
-                    <img class="default-img" [src]="'assets/imgs/shop/' + product.image" alt="{{ product.productName }}" alt="" />
+                    <img class="default-img" [src]="productImage[i]" alt="{{ product.productName }}" alt="" />
                   </a>
                 </div>
                 <div class="product-action-1">

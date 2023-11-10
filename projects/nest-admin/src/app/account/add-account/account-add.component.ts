@@ -9,10 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 declare let template: any;
 
 @Component({
-  selector: 'account-detail',
-  templateUrl: './account-detail.component.html',
+  selector: 'add-account',
+  templateUrl: './account-add.component.html',
 })
-export class AccountDetailComponent implements AfterViewInit{
+export class AddAccountComponent implements AfterViewInit{
   title = 'nest-customer';
   paths = paths;
   account: any = {};
@@ -54,13 +54,8 @@ export class AccountDetailComponent implements AfterViewInit{
     });
   }
 
-  updateAccount() {
+  saveAccount() {
     const formData = new FormData();
-  
-    if (this.avatarFile) {
-      formData.append('avatarFile', this.avatarFile);
-    }
-  
     formData.append('id', this.account.id);
     formData.append('username', this.account.username);
     formData.append('email', this.account.email);
@@ -68,18 +63,26 @@ export class AccountDetailComponent implements AfterViewInit{
     formData.append('address', this.account.address);
     formData.append('phone', this.account.phone);
     formData.append('roleName', this.account.roleName);
-  
-    this.accountService.updateUser(formData).subscribe(
+
+    if (this.avatarFile) {
+      formData.append('avatarFile', this.avatarFile);
+    }
+
+    if (this.account.password) {
+      formData.append('password', this.account.password);
+    }
+
+    this.accountService.saveUser(formData).subscribe(
       (response) => {
-        console.log('Updated successfully!', response);
-        window.location.reload();
+        console.log('Account saved successfully!', response);
+        this.router.navigate(['/account']);
+        window.location.reload;
       },
       (error) => {
-        this.errorMessage = 'Account update failed, please check information...!';
+        this.errorMessage = 'Account save failed, please check information...!';
       }
     );
   }
-
   onAvatarChange(event: any) {
     this.avatarFile = event.target.files[0];
     if (this.avatarFile) {

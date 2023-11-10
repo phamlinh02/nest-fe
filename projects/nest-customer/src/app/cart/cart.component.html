@@ -35,7 +35,7 @@
             </thead>
             <tbody>
               <tr class="pt-30" *ngFor="let item of cartItems; let i = index">
-                <td class="image product-thumbnail pt-40 p-3"><img [src]="'assets/imgs/shop/' + item.productId.image"
+                <td class="image product-thumbnail pt-40 p-3"><img [src]="productImage[i]"
                     alt="#" style="vertical-align: baseline !important;"></td>
                 <td class="product-des product-name" style="padding-left: 20px; width: 350px;">
                   <h6 class="mb-2"><a class="product-name mb-10 text-heading"
