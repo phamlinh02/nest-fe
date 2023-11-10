@@ -26,9 +26,9 @@ export class ProductService {
     return this.http.get(`${PRODUCT_API}/get-product?id=${id}`);
   }
 
-//   createProduct(productData: any): Observable<any> {
-//     return this.http.post(`${API_URL}/nest/product/save`, productData, this.httpOptions);
-//   }
+  createProduct(product: any): Observable<any> {
+    return this.http.post(`${PRODUCT_API}/save`,product);
+  }
 
   updateProduct(product: any): Observable<any> {
     return this.http.post(`${PRODUCT_API}/update`, product);
@@ -40,5 +40,9 @@ export class ProductService {
 
   showProductsByCategory(categoryId: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}`);
+  }
+
+  deleteProduct(productId: number): Observable<any> {
+    return this.http.post(`${PRODUCT_API}/update-status`, { id: productId, isActive: false });
   }
 }
