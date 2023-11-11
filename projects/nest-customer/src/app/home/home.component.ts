@@ -27,6 +27,8 @@ export class HomeComponent implements AfterViewInit {
   showByCategory: any[] = [];
   quantity: number = 1;
   productImage: { [key: number]: SafeUrl } = {};
+  categoryImage: { [key: number]: SafeUrl } = {};
+  totalCategoryPages: number = 0;
 
   constructor(
     private orderService: OrderService,
@@ -50,6 +52,8 @@ export class HomeComponent implements AfterViewInit {
     this.orderService.getAllOrder({}).subscribe(response => {
       console.log(response);
     });
+
+    this.showProductsByCategory();
   }
   showProducts() {
     this.productService.getAllProducts().subscribe((data: any) => {
@@ -73,8 +77,11 @@ export class HomeComponent implements AfterViewInit {
   }
 
   showCategories() {
-    this.categoryService.getAllCategories().subscribe((data: any) => {
+    this.categoryService.getAllCategoriesIsActive().subscribe((data: any) => {
       this.categories = data.response.content;
+      this.categories.forEach((category, index) => {
+        this.getAllCategoryImage('category', category.imageCategory,index);
+      });
       console.log(this.categories);
     },
       (error) => {
@@ -139,6 +146,13 @@ export class HomeComponent implements AfterViewInit {
     this.categoryId = newCategoryId;
     console.log(this.categoryId);
     this.showProductsByCategory(); // Gọi lại phương thức để cập nhật sản phẩm
+  }
+
+  getAllCategoryImage(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
   }
 
 }

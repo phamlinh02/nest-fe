@@ -80,7 +80,7 @@ export class ProductDetailComponent implements AfterViewInit{
   }
 
   showCategories() {
-    this.categoryService.getAllCategories().subscribe((data: any) => {
+    this.categoryService.getAllCategoriesIsActive().subscribe((data: any) => {
       this.categories = data.response.content;
       console.log(this.categories);
     },

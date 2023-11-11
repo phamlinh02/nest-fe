@@ -17,9 +17,9 @@ const CATEGORY_API = `${SERVER_URL}/api/nest/category`;
       };
     
       constructor(private http: HttpClient) { }
-    
-      getAllCategories(): Observable<any[]> {
-        return this.http.get<any[]>(CATEGORY_API + '/get-all');
+
+      getAllCategoriesIsActive(): Observable<any[]> {
+        return this.http.get<any[]>(CATEGORY_API + '/get-all-active');
       }
     
 }
