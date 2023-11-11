@@ -22,6 +22,8 @@ export class HeaderComponent implements AfterViewInit {
   totalValue: number = 0;
   totalProduct: number = 0;
   productImage: { [key: number]: SafeUrl } = {};
+  categoryImage: { [key: number]: SafeUrl } = {};
+  categoryFile: File | null = null;
 
   constructor(
     private router: Router,
@@ -37,15 +39,9 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    //Lấy danh mục sản phẩm
-    this.categoryService.getAllCategories().subscribe((data: any) => {
-      this.categories = data.response.content;
-      console.log(this.categories);
-    },
-      (error) => {
-        console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
-      });
-
+    
+    this.showCategory();
+    
     this.showCartItem();
 
   }
@@ -55,6 +51,20 @@ export class HeaderComponent implements AfterViewInit {
       // Xử lý sự kiện nhập từ khóa và chuyển hướng đến trang shop-filter với từ khóa tìm kiếm
       this.router.navigate([`${paths.shopFilter}/search/${this.productName}`]);
     }
+  }
+
+  //Hiển thị thông tin category
+  showCategory() {
+    this.categoryService.getAllCategoriesIsActive().subscribe((data: any) => {
+      this.categories = data.response.content;
+      this.categories.forEach((category, index) => {
+        this.getAllCategoryImage('category', category.imageCategory,index);
+      });
+      console.log(this.categories);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
+      });
   }
 
   //Hiển thị thông tin giỏ hàng
@@ -133,6 +143,13 @@ export class HeaderComponent implements AfterViewInit {
     this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.productImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
+  }
+
+  getAllCategoryImage(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
   }
 

@@ -8,18 +8,33 @@ const SERVER_URL = environment.SERVER_URL;
 const CATEGORY_API = `${SERVER_URL}/api/nest/category`;
 
 @Injectable({
-    providedIn: 'root'
-  })
+  providedIn: 'root'
+})
 
-  export class CategoryService {
-    private httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-      };
-    
-      constructor(private http: HttpClient) { }
-    
-      getAllCategories(): Observable<any[]> {
-        return this.http.get<any[]>(CATEGORY_API + '/get-all');
-      }
-    
+export class CategoryService {
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  constructor(private http: HttpClient) { }
+
+  getAllCategoriesIsActive(): Observable<any[]> {
+    return this.http.get<any[]>(CATEGORY_API + '/get-all-active');
+  }
+
+  getAllCategories(page: number, size: number): Observable<any[]> {
+    return this.http.get<any[]>(`${CATEGORY_API}/get-all?page=${page}&size=${size}`);
+  }
+  getCategoryId(id: number): Observable<any> {
+    return this.http.get(`${CATEGORY_API}/get-category?id=${id}`);
+  }
+
+  updateCategory(category: any): Observable<any> {
+    return this.http.post(`${CATEGORY_API}/update`, category);
+  }
+
+  createCategory(category: any): Observable<any> {
+    return this.http.post(`${CATEGORY_API}/save`,category);
+  }
+
 }

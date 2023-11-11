@@ -4,9 +4,6 @@
       <h2 class="content-title card-title">Categories</h2>
       <p>Add, edit or delete a category</p>
     </div>
-    <div>
-      <input type="text" placeholder="Search Categories" class="form-control bg-white" />
-    </div>
   </div>
   <div class="card">
     <div class="card-body">
@@ -14,218 +11,65 @@
         <div class="col-md-3">
           <form>
             <div class="mb-4">
-              <label for="product_name" class="form-label">Name</label>
-              <input type="text" placeholder="Type here" class="form-control" id="product_name" />
+              <label for="category_name"  class="form-label">Name</label>
+              <input type="text" placeholder="Type here" class="form-control" name="name"
+              [(ngModel)]="category.name" id="category_name" />
             </div>
             <div class="mb-4">
-              <label for="product_slug" class="form-label">Slug</label>
-              <input type="text" placeholder="Type here" class="form-control" id="product_slug" />
-            </div>
-            <div class="mb-4">
-              <label class="form-label">Parent</label>
-              <select class="form-select">
-                <option>Fruit</option>
-                <option>Snack</option>
+              <label class="form-label">Active</label>
+              <select class="form-select" name="isActive" [(ngModel)]="category.isActive">
+                <option [value]="true" [selected]="category.isActive === true">Active</option>
+                <option [value]="false" [selected]="category.isActive === false">Disabled</option>
               </select>
             </div>
             <div class="mb-4">
-              <label class="form-label">Description</label>
-              <textarea placeholder="Type here" class="form-control"></textarea>
+              <label class="form-label">Category Image</label>
+                <div class="input-upload">
+                  <img *ngIf="categoryImageDetail" [src]="categoryImageDetail" alt="" />
+                  <input class="form-control" (change)="onAvatarChange($event)"  type="file" />
+                </div>
             </div>
             <div class="d-grid">
-              <button class="btn btn-primary">Create category</button>
+              <div class="row" style="justify-content: center;" >
+              <button class="btn btn-primary col-3 m-1" style="padding-left: 15px;" (click)="saveCategory()">Create</button>
+              <button class="btn btn-primary col-3 m-1" style="padding-left: 15px;" (click)="updateCategory()">Update</button>
+              <a class="btn btn-primary col-3 m-1" style="padding-left: 15px;" [routerLink]="['/',paths.categories]">Clear</a>
+            </div>
             </div>
           </form>
         </div>
         <div class="col-md-9">
           <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover text-center">
               <thead>
               <tr>
-                <th class="text-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" />
-                  </div>
-                </th>
                 <th>ID</th>
+                <th>Image Category</th>
                 <th>Name</th>
-                <th>Description</th>
-                <th>Slug</th>
-                <th>Order</th>
-                <th class="text-end">Action</th>
+                <th>Active</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="text-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" />
-                  </div>
+              <tr *ngFor="let category of categories, let i = index">
+                <td>{{category.id}}</td>
+                <td>
+                  <img [src]="categoryImage[i]" class="img-sm img-thumbnail" alt="Item" />
                 </td>
-                <td>21</td>
-                <td><b>Cake & Milk</b></td>
-                <td>Cake & Milk</td>
-                <td>/cake</td>
-                <td>1</td>
-                <td class="text-end">
+                <td>{{category.name}}</td>
+                <td>
+                  <ng-container *ngIf="category.isActive; else disabledBadge">
+                    <span class="badge rounded-pill alert-success">Active</span>
+                  </ng-container>
+                  <ng-template #disabledBadge>
+                    <span class="badge rounded-pill alert-danger">Disabled</span>
+                  </ng-template>
+                </td>
+                <td>
                   <div class="dropdown">
                     <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
-                      <a class="dropdown-item text-danger" href="#">Delete</a>
-                    </div>
-                  </div>
-                  <!-- dropdown //end -->
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" />
-                  </div>
-                </td>
-                <td>2</td>
-                <td><b>Oganic Kiwi</b></td>
-                <td>EU standard</td>
-                <td>/kiwi</td>
-                <td>2</td>
-                <td class="text-end">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
-                      <a class="dropdown-item text-danger" href="#">Delete</a>
-                    </div>
-                  </div>
-                  <!-- dropdown //end -->
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" />
-                  </div>
-                </td>
-                <td>3</td>
-                <td><b>Peach</b></td>
-                <td>Peach</td>
-                <td>/peach</td>
-                <td>3</td>
-                <td class="text-end">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
-                      <a class="dropdown-item text-danger" href="#">Delete</a>
-                    </div>
-                  </div>
-                  <!-- dropdown //end -->
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><i class="material-icons md-subdirectory_arrow_right text-muted"></i></td>
-                <td>4</td>
-                <td><b>Red Apple</b></td>
-                <td>Red Apple</td>
-                <td>/apple</td>
-                <td>4</td>
-                <td class="text-end">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
-                      <a class="dropdown-item text-danger" href="#">Delete</a>
-                    </div>
-                  </div>
-                  <!-- dropdown //end -->
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><i class="material-icons md-subdirectory_arrow_right text-muted"></i></td>
-                <td>5</td>
-                <td><b>Snack</b></td>
-                <td>Snack</td>
-                <td>/snack</td>
-                <td>5</td>
-                <td class="text-end">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
-                      <a class="dropdown-item text-danger" href="#">Delete</a>
-                    </div>
-                  </div>
-                  <!-- dropdown //end -->
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" />
-                  </div>
-                </td>
-                <td>6</td>
-                <td><b>Vegetables</b></td>
-                <td>Vegetables</td>
-                <td>/vegetables</td>
-                <td>6</td>
-                <td class="text-end">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
-                      <a class="dropdown-item text-danger" href="#">Delete</a>
-                    </div>
-                  </div>
-                  <!-- dropdown //end -->
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" />
-                  </div>
-                </td>
-                <td>7</td>
-                <td><b>Strawberry</b></td>
-                <td>Strawberry</td>
-                <td>/strawberry</td>
-                <td>7</td>
-                <td class="text-end">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
-                      <a class="dropdown-item text-danger" href="#">Delete</a>
-                    </div>
-                  </div>
-                  <!-- dropdown //end -->
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" />
-                  </div>
-                </td>
-                <td>8</td>
-                <td><b>Black plum</b></td>
-                <td>Black plum</td>
-                <td>/plum</td>
-                <td>8</td>
-                <td class="text-end">
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">View detail</a>
-                      <a class="dropdown-item" href="#">Edit info</a>
+                      <a class="dropdown-item" [routerLink]="['/',paths.categories,category.id]">Edit info</a>
                       <a class="dropdown-item text-danger" href="#">Delete</a>
                     </div>
                   </div>
@@ -241,6 +85,19 @@
       <!-- .row // -->
     </div>
     <!-- card body .// -->
+  </div>
+  <div class="pagination-area mt-15 mb-50" style="justify-content: center;">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-start">
+        <li class="page-item">
+          <a class="page-link" (click)="changePage(currentPage - 1)"><i class="material-icons md-chevron_left pt-1"></i></a>
+        </li>
+        <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of range(totalPages)"><a class="page-link" (click)="changePage(page)">{{ page + 1 }}</a></li>
+        <li class="page-item">
+          <a class="page-link" (click)="changePage(currentPage + 1)"><i class="material-icons md-chevron_right pt-1"></i></a>
+        </li>
+      </ul>
+    </nav>
   </div>
   <!-- card .// -->
 </section>
