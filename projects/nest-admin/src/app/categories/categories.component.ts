@@ -140,6 +140,18 @@ export class CategoriesComponent implements AfterViewInit {
     }
   }
 
+  deleteCategory(categoryId: number) {
+    this.categoryService.deleteCategory(categoryId).subscribe(
+      (response) => {
+        this.showCategories();
+        console.log('Trạng thái danh mục sản phẩm đã được cập nhật thành công');
+      },
+      (error) => {
+        console.error('Lỗi khi cập nhật trạng thái danh mục', error);
+      }
+    );
+  }
+
   range(totalPages: number): number[] {
     return Array.from({ length: totalPages }, (_, i) => i);
   }

@@ -37,4 +37,8 @@ export class CategoryService {
     return this.http.post(`${CATEGORY_API}/save`,category);
   }
 
+  deleteCategory(categoryId: number): Observable<any> {
+    return this.http.post(`${CATEGORY_API}/update-status`, { id: categoryId, isActive: false });
+  }
+
 }

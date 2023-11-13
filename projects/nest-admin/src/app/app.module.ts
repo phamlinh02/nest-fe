@@ -9,7 +9,7 @@ import {HomeComponent} from "./home/home.component";
 import {FooterComponent} from "./footer/footer.component";
 import {HeaderComponent} from "./header/header.component";
 import {CategoriesComponent} from "./categories/categories.component";
-import {AccountComponent, AccountDetailComponent,AddAccountComponent} from "./account";
+import {AccountComponent, AccountDetailComponent,AddAccountComponent, RolesComponent} from "./account";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {ProductDetailComponent, ProductComponent, AddProductComponent} from "./product";
 import {RateComponent} from "./rate/rate.component";
@@ -32,7 +32,8 @@ import {LoginComponent} from "./account/login/login.component";
     RateComponent,
     LoginComponent,
     AddAccountComponent,
-    AddProductComponent
+    AddProductComponent,
+    RolesComponent
   ],
   imports: [
     BrowserModule,
