@@ -5,6 +5,7 @@ import { AccountService } from '../../service/account.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../../service/uploads.service';
 import { ActivatedRoute } from '@angular/router';
+import { RoleService } from '../../service/role.service';
 
 declare let template: any;
 
@@ -20,19 +21,22 @@ export class AddAccountComponent implements AfterViewInit{
   userAvatar!: SafeUrl;
   avatarFile: File | null = null;
   errorMessage: string = '';
+  roles: any[] = [];
 
   constructor(
     private accountService: AccountService,
     private router: Router,
     private uploadsService: UploadsService,
     private route: ActivatedRoute,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private roleService: RoleService
   ){
   }
 
   ngAfterViewInit() {
     template.init();
     this.showAccountById();
+    this.showRoles();
   }
 
   showAccountById(){
@@ -96,6 +100,16 @@ export class AddAccountComponent implements AfterViewInit{
       const imageUrl = URL.createObjectURL(imageData);
       this.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
+  }
+
+  showRoles() {
+    this.roleService.getAllRolesIsActive().subscribe((data: any) => {
+      this.roles = data.response.content;
+      console.log(this.roles);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách vai trò ', error);
+      });
   }
 
 }

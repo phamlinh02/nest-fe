@@ -6,7 +6,7 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {ProductComponent, ProductDetailComponent, AddProductComponent} from "./product";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {RateComponent} from "./rate/rate.component";
-import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent} from "./account";
+import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent,RolesComponent} from "./account";
 
 const routes: Routes = [
   {
@@ -44,6 +44,14 @@ const routes: Routes = [
     path: paths.account, component: AccountComponent
   },
   {
+    path: `${paths.account}/role`,
+    component: RolesComponent
+  },
+  {
+    path: `${paths.account}/role/:id`,
+    component: RolesComponent
+  },
+  {
     path: `${paths.account}/add`, 
     component: AddAccountComponent
   },
@@ -52,8 +60,10 @@ const routes: Routes = [
     component: AccountDetailComponent
   },
   {
-    path: paths.login, component: LoginComponent
+    path: paths.login, 
+    component: LoginComponent
   },
+
   {
     path: '**', redirectTo: paths.home, pathMatch: 'full'
   },

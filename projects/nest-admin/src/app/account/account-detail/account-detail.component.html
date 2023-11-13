@@ -37,10 +37,14 @@
                       <label class="form-label">Address</label>
                       <input class="form-control" type="text" name="address" [(ngModel)]="account.address" placeholder="Type here" />
                     </div>
-                    <!-- col .// -->
                     <div class="col-lg-12 mb-3">
-                      <label class="form-label">Role</label>
-                      <input class="form-control" type="text" name="roleName" [(ngModel)]="account.roleName" placeholder="Type here" />
+                      <div class="mb-4">
+                        <label class="form-label">Role Name</label>
+                        <select class="form-select" name="roleName" [(ngModel)]="account.roleName">
+
+                          <option *ngFor="let role of roles" [value]="role.roleName">{{role.roleName}}</option>
+                        </select>
+                      </div>
                     </div>
                     <!-- col .// -->
                   </div>

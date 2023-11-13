@@ -1,0 +1,85 @@
+<section class="content-main">
+    <div class="content-header">
+      <div>
+        <h2 class="content-title card-title">Roles</h2>
+        <p>Add, edit or delete a role</p>
+        <p class="text-success">Note, there are only 3 roles: ROLE_CUSTOMER, ROLE_ADMIN and ROLE_DIRECTOR in the system
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <form>
+              <div class="error-message text-danger pb-3" *ngIf="errorMessage">{{ errorMessage }}</div>
+              <div class="mb-4">
+                <label class="form-label">Role Name</label>
+                <select class="form-select" name="roleName" [(ngModel)]="roleName">
+                  <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                  <option value="ROLE_CUSTOMER">ROLE_CUSTOMER</option>
+                  <option value="ROLE_DIRECTOR">ROLE_DIRECTOR</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Active</label>
+                <select class="form-select" name="isActive" [(ngModel)]="role.isActive">
+                  <option [value]="true" [selected]="role.isActive === true">Active</option>
+                  <option [value]="false" [selected]="role.isActive === false">Disabled</option>
+                </select>
+              </div>
+              <div class="d-grid">
+                <div class="row" style="justify-content: center;" >
+                <button class="btn btn-primary col-3 m-1" style="padding-left: 15px;" (click)="saveRole()">Create</button>
+                <button class="btn btn-primary col-3 m-1" style="padding-left: 15px;" (click)="updateRole()">Update</button>
+              </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-9">
+            <div class="table-responsive">
+              <table class="table table-hover text-center">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Role Name</th>
+                  <th>Active</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let role of roles">
+                  <td>{{role.id}}</td>
+                  <td>{{role.roleName}}</td>
+                  <td>
+                    <ng-container *ngIf="role.isActive; else disabledBadge">
+                      <span class="badge rounded-pill alert-success">Active</span>
+                    </ng-container>
+                    <ng-template #disabledBadge>
+                      <span class="badge rounded-pill alert-danger">Disabled</span>
+                    </ng-template>
+                  </td>
+                  <td>
+                    <div class="dropdown">
+                      <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" [routerLink]="['/',paths.account,'role',role.id]">Edit info</a>
+                        <button class="dropdown-item text-danger" (click)="deleteRole(role.id)">Delete</button>
+                      </div>
+                    </div>
+                    <!-- dropdown //end -->
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- .col// -->
+        </div>
+        <!-- .row // -->
+      </div>
+      <!-- card body .// -->
+    </div>
+    <!-- card .// -->
+  </section>
+  
