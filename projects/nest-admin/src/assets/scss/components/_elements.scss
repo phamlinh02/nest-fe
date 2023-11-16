@@ -652,3 +652,34 @@
     opacity: 0
   }
 }
+.status-{
+  &pending{
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+  }
+  &canceled{
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+  }
+
+  &completed{
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+  }
+}
+
+.p-dropdown{
+  width: 100%;
+  height: 37px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.p-dropdown-item{
+  padding: 5px;
+}

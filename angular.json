@@ -36,7 +36,9 @@
               "projects/nest-admin/src/assets/css/vendors/select2.min.css",
               "projects/nest-admin/src/assets/css/vendors/material-icon-round.css",
               "projects/nest-admin/src/assets/scss/main.scss",
-              "node_modules/primeicons/primeicons.css"
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": [
               "projects/nest-admin/src/assets/js/vendors/bootstrap.bundle.min.js",

@@ -27,6 +27,7 @@ import {FavoriteComponent} from "./favorite/favorite.component";
 import {ShopDealsComponent} from "./shop-grid-right/shop-deals.component";
 import {LoadingPageComponent} from "./loading-page/loading-page.component";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [HttpClient],
   exports: [

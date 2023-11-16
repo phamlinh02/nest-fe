@@ -4,6 +4,13 @@
 
 
 .form-control, .form-select {
+
+  &.input-search{
+    border-color: #ced4da;
+    &:focus {
+      border-color: #ced4da;
+    }
+  }
   background-color: #f4f5f9;
   border: 2px solid #f4f5f9;
   font-size: 13px;
