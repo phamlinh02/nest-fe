@@ -14,6 +14,8 @@ import {OrderComponent, OrderDetailComponent} from "./order";
 import {ProductDetailComponent, ProductComponent, AddProductComponent} from "./product";
 import {RateComponent} from "./rate/rate.component";
 import {LoginComponent} from "./account/login/login.component";
+import {PaginatorModule} from "primeng/paginator";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import {LoginComponent} from "./account/login/login.component";
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PaginatorModule,
+    BrowserAnimationsModule
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

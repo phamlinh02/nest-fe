@@ -204,6 +204,12 @@ table {
 .table > :not(caption) > * > * {
   padding: 0.8rem 0.4rem;
   vertical-align: middle;
+
+  &.text-end{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
 }
 
 .table-lg {

@@ -20,4 +20,8 @@ export class OrderService {
     return this.http.post(ORDER_API + '/get-all', order, httpOptions)
   }
 
+  getBillDetail(id : number) : Observable<any> {
+    return this.http.get(ORDER_API + `/get-detail/${id}`, httpOptions)
+  }
+
 }
