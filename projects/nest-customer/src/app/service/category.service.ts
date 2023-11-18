@@ -15,11 +15,11 @@ const CATEGORY_API = `${SERVER_URL}/api/nest/category`;
     private httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       };
-    
+
       constructor(private http: HttpClient) { }
 
-      getAllCategoriesIsActive(): Observable<any[]> {
-        return this.http.get<any[]>(CATEGORY_API + '/get-all-active');
+      getAllCategoriesIsActive(page: number, size: number): Observable<any[]> {
+        return this.http.get<any[]>(CATEGORY_API + `/get-all-active?page=${page}&size=${size}`);
       }
-    
+
 }

@@ -55,11 +55,11 @@ export class ProductDetailComponent implements AfterViewInit{
 
   updateProduct() {
     const formData = new FormData();
-  
+
     if (this.productFile) {
       formData.append('productFile', this.productFile);
     }
-  
+
     formData.append('id', this.product.id);
     formData.append('productName', this.product.productName);
     formData.append('description', this.product.description);
@@ -67,7 +67,7 @@ export class ProductDetailComponent implements AfterViewInit{
     formData.append('quantity', this.product.quantity);
     formData.append('isActive', this.product.isActive);
     formData.append('categoryName', this.product.categoryName);
-  
+
     this.productService.updateProduct(formData).subscribe(
       (response) => {
         console.log('Updated successfully!', response);
@@ -80,7 +80,7 @@ export class ProductDetailComponent implements AfterViewInit{
   }
 
   showCategories() {
-    this.categoryService.getAllCategoriesIsActive().subscribe((data: any) => {
+    this.categoryService.getAllCategoriesIsActive(0, 100).subscribe((data: any) => {
       this.categories = data.response.content;
       console.log(this.categories);
     },

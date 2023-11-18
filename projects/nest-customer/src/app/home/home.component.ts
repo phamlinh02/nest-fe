@@ -77,7 +77,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   showCategories() {
-    this.categoryService.getAllCategoriesIsActive().subscribe((data: any) => {
+    this.categoryService.getAllCategoriesIsActive(0, 100).subscribe((data: any) => {
       this.categories = data.response.content;
       this.categories.forEach((category, index) => {
         this.getAllCategoryImage('category', category.imageCategory,index);

@@ -25,16 +25,16 @@ export class CartService {
         this.cartUpdated.next();
     }
 
-    getAllCarts(accountId: number): Observable<any[]> {
-        return this.http.get<any[]>(`${CART_API}/list?accountId=${accountId}`);
+    getAllCarts(accountId: number): Observable<any> {
+        return this.http.get<any>(`${CART_API}/list?accountId=${accountId}`);
     }
 
     removeById(id: number): Observable<any> {
         return this.http.delete<any>(`${CART_API}/removeid?id=${id}`);
     }
 
-    remove(accountId: number): Observable<any[]> {
-        return this.http.delete<any[]>(`${CART_API}/remove?accountId=${accountId}`);
+    remove(accountId: number): Observable<any> {
+        return this.http.delete<any>(`${CART_API}/remove?accountId=${accountId}`);
     }
 
 

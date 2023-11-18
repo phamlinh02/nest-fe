@@ -39,9 +39,9 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+
     this.showCategory();
-    
+
     this.showCartItem();
 
   }
@@ -55,7 +55,7 @@ export class HeaderComponent implements AfterViewInit {
 
   //Hiển thị thông tin category
   showCategory() {
-    this.categoryService.getAllCategoriesIsActive().subscribe((data: any) => {
+    this.categoryService.getAllCategoriesIsActive(0, 100).subscribe((data: any) => {
       this.categories = data.response.content;
       this.categories.forEach((category, index) => {
         this.getAllCategoryImage('category', category.imageCategory,index);
@@ -147,10 +147,10 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   getAllCategoryImage(type: string, filename: string, index: number) {
-    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
-      const imageUrl = URL.createObjectURL(imageData);
-      this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
-    });
+    // this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+    //   const imageUrl = URL.createObjectURL(imageData);
+    //   this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    // });
   }
 
 }

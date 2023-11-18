@@ -16,6 +16,7 @@ import {RateComponent} from "./rate/rate.component";
 import {LoginComponent} from "./account/login/login.component";
 import {PaginatorModule} from "primeng/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {LoadingPageComponent} from "./loading-page/loading-page.component";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     LoginComponent,
     AddAccountComponent,
     AddProductComponent,
-    RolesComponent
+    RolesComponent,
+    LoadingPageComponent
   ],
   imports: [
     BrowserModule,
