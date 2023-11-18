@@ -669,6 +669,11 @@
     background-color: #d1e7dd;
     border-color: #badbcc;
   }
+  &new{
+    color: #2c04c1;
+    background-color: #e7caca;
+    border-color: #ffecb5;
+  }
 }
 
 .p-dropdown{
@@ -678,8 +683,21 @@
   display: flex;
   align-items: center;
   padding: 5px;
+  max-width: 200px;
+
+  .p-dropdown-label{
+    display: flex;
+  }
 }
 
 .p-dropdown-item{
   padding: 5px;
+  display: flex;
 }
+
+//.dropdown-status{
+//  max-width: 200px;
+//  span{
+//    display: flex;
+//  }
+//}

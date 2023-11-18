@@ -1,9 +1,10 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { paths } from '../const';
-import { AccountService } from '../service/account.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { UploadsService } from '../service/uploads.service';
+import {Component, AfterViewInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {paths} from '../const';
+import {AccountService} from '../service/account.service';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {UploadsService} from '../service/uploads.service';
+import {OrderService} from "../service/order.service";
 
 
 declare const template: any;
@@ -19,22 +20,59 @@ export class AccountInfoComponent implements AfterViewInit {
   errorMessage: string = '';
   avatarFile: File | null = null;
   userAvatar!: SafeUrl;
+  tabSelected = 'dashboard';
+  listTab: {
+    icon: string,
+    title: string,
+    code: string
+  }[] = [
+    {
+      icon: 'fi-rs-settings-sliders',
+      title: 'Dashboard',
+      code: 'dashboard'
+    }, {
+      icon: 'fi-rs-shopping-bag',
+      title: 'Orders',
+      code: 'order'
+    }, {
+      icon: 'fi-rs-shopping-cart-check',
+      title: 'Track Your Order',
+      code: 'track-orders'
+    }, {
+      icon: 'fi-rs-marker',
+      title: 'My Address',
+      code: 'address'
+    }, {
+      icon: 'fi-rs-user',
+      title: 'Account Details',
+      code: 'account-detail'
+    }
+  ];
+
+  public listOrder: any = []
 
   constructor(
     private router: Router,
     private accountService: AccountService,
     private domSanitizer: DomSanitizer,
-    private uploadsService: UploadsService
+    private uploadsService: UploadsService,
+    private route: ActivatedRoute,
+    private orderService: OrderService
   ) {
+
+    this.tabSelected = this.route.snapshot.queryParamMap.get('tab') ?? 'dashboard';
+    this.changeTab(this.tabSelected);
+
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData).response;
       console.log(userData);
     }
   }
+
   ngAfterViewInit() {
     template.init();
-    this.getUserAvatar('account',this.user.avatar);
+    this.getUserAvatar('account', this.user.avatar);
   }
 
   updateAccountByUser() {
@@ -63,7 +101,7 @@ export class AccountInfoComponent implements AfterViewInit {
   onAvatarChange(event: any) {
     // Handle the file selection event and store the selected file
     this.avatarFile = event.target.files[0];
-  
+
     // Create a URL for the selected image and update userAvatar
     if (this.avatarFile) {
       const imageUrl = URL.createObjectURL(this.avatarFile);
@@ -78,11 +116,27 @@ export class AccountInfoComponent implements AfterViewInit {
     location.reload;
   }
 
-  getUserAvatar(type: string,filename: string) {
-    this.uploadsService.getImage(type,filename).subscribe((imageData: Blob) => {
+  getUserAvatar(type: string, filename: string) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
   }
 
+  changeTab(tab: string) {
+    this.tabSelected = tab;
+    this.router.navigate([paths.accountInfo], {queryParams: {tab: tab}, queryParamsHandling: "merge"})
+    if (tab == 'order') {
+      this.getAllBill();
+    }
+  }
+
+  getAllBill() {
+    const param = {
+      accountId: this.user.id ?? 2
+    }
+    this.orderService.getAllOrder(param).subscribe((response) => {
+      this.listOrder = response.response.content;
+    })
+  }
 }

@@ -18,8 +18,8 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCategoriesIsActive(): Observable<any[]> {
-    return this.http.get<any[]>(CATEGORY_API + '/get-all-active');
+  getAllCategoriesIsActive(page: number, size: number): Observable<any[]> {
+    return this.http.get<any[]>(CATEGORY_API + `/get-all-active?page=${page}&size=${size}`);
   }
 
   getAllCategories(page: number, size: number): Observable<any[]> {

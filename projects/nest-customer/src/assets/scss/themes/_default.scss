@@ -1,0 +1,43 @@
+.p-toast-message-content{
+  gap: 10px;
+  padding: 10px;
+  align-items: center;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.status-{
+  &pending{
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+  }
+  &canceled{
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+  }
+
+  &completed{
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+  }
+  &new{
+    color: #2c04c1;
+    background-color: #e7caca;
+    border-color: #ffecb5;
+  }
+
+  [class^='status-']{
+
+  }
+
+}
+
+[class*='status-']{
+  width: fit-content;
+  padding: 5px;
+  border-radius: 100px;
+}

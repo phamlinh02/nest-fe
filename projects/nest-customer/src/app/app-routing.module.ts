@@ -65,7 +65,7 @@ const routes: Routes = [
     component: ForgetPasswordComponent
   },
   {
-    path: paths.invoice,
+    path: paths.invoice + '/:slug',
     component: InvoiceComponent
   },
   {
@@ -97,7 +97,7 @@ const routes: Routes = [
     component: ShopFilterComponent
   },
   {
-    path: `${paths.shopFilter}/showByCategory/:categoryId`, 
+    path: `${paths.shopFilter}/showByCategory/:categoryId`,
     component: ShopFilterComponent,
   },
   {

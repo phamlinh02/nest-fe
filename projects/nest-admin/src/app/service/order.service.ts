@@ -29,8 +29,8 @@ export class OrderService {
     return this.http.get(ORDER_API + `/get-detail/${id}`, httpOptions)
   }
 
-  createBill(request: any): Observable<any> {
-    return this.http.post(ORDER_API + `/create-bill`,request, httpOptions)
+  saveBill(bill : any): Observable<any> {
+    return this.http.post(ORDER_API + `/update`,bill, httpOptions)
   }
 
 }

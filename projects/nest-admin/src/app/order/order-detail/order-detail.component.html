@@ -9,19 +9,24 @@
     <header class="card-header">
       <div class="row align-items-center">
         <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
-          <span> <i class="material-icons md-calendar_today"></i> <b>{{orderDetail.bill.orderDate | date}}</b> </span> <br />
+          <span> <i class="material-icons md-calendar_today"></i> <b>{{orderDetail.bill.orderDate | date : 'dd-MM-yyyy hh:mm:ss'}}</b> </span> <br />
           <small class="text-muted">Order ID: {{billId}}</small>
         </div>
-        <div class="col-lg-6 col-md-6 ms-auto text-md-end">
-          <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200">
-            <option>Change status</option>
-            <option>Awaiting payment</option>
-            <option>Confirmed</option>
-            <option>Shipped</option>
-            <option>Delivered</option>
-          </select>
-          <a class="btn btn-primary" href="#">Save</a>
-          <a class="btn btn-secondary print ms-2" href="#"><i class="icon material-icons md-print"></i></a>
+        <div class="col-lg-6 col-md-6 ms-auto justify-content-end d-flex gap-4">
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <span>Status Bill</span>
+            <p-dropdown
+              class="dropdown-status"
+              placeholder="Change Status"
+              [options]="listStatus"
+              [(ngModel)]="statusSelected"
+              optionValue="code"
+              optionLabel="value"
+              [disabled]="checkDisable()"
+            ></p-dropdown>
+          </div>
+          <button class="btn btn-primary" [class.disabled]="checkDisable()" (click)="saveBillDetail()">Save</button>
+<!--          <a class="btn btn-secondary print ms-2" href="#"><i class="icon material-icons md-print"></i></a>-->
         </div>
       </div>
     </header>
@@ -106,9 +111,9 @@
           <div class="h-25 pt-4">
             <div class="mb-3">
               <label>Notes</label>
-              <textarea class="form-control" name="notes" id="notes" placeholder="Type some note"></textarea>
+              <textarea [disabled]="checkDisable()" [(ngModel)]="orderDetail.bill.description" class="form-control" name="notes" id="notes" placeholder="Type some note"></textarea>
             </div>
-            <button class="btn btn-primary">Save note</button>
+            <button class="btn btn-primary" [class.disabled]="checkDisable()" (click)="saveBillDetail()">Save note</button>
           </div>
         </div>
         <!-- col// -->
@@ -118,3 +123,4 @@
   </div>
   <!-- card end// -->
 </section>
+<loading-page [isLoading]="loading"></loading-page>

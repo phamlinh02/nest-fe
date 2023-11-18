@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {OrderService} from "../../../../../nest-customer/src/app/service/order.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {finalize} from "rxjs";
+import {OrderService} from "../../service/order.service";
 
 @Component({
   selector: 'order-detail',
@@ -12,6 +12,14 @@ export class OrderDetailComponent implements OnInit {
   orderDetail: any;
   billId: any;
   loading: boolean = false;
+  listStatus : any = [
+    {code : 'COMPLETED', value : 'Completed'},
+    {code : 'PENDING', value : 'Pending'},
+    {code : 'NEW', value : 'New'},
+    {code : 'CANCELLED', value : 'Canceled'},
+    {code : 'PROCESSING', value : 'Processing'},
+  ]
+  statusSelected : any;
 
   constructor(
     private orderService: OrderService,
@@ -36,13 +44,37 @@ export class OrderDetailComponent implements OnInit {
         this.loading = false;
       }))
       .subscribe({
-        next : response => {
+        next: response => {
           this.orderDetail = response.response;
-          console.log(this.orderDetail)
+          this.statusSelected = this.orderDetail.bill.status;
         },
         error: err => {
           alert(`Don't have this order`);
           this.router.navigate(['/home']);
+        }
+      })
+  }
+
+  checkDisable(){
+   return this.orderDetail.bill.status === 'CANCELED' || this.orderDetail.bill.status === 'COMPLETED'
+  }
+  saveBillDetail() {
+    if(!this.statusSelected) return;
+    if(this.checkDisable()) return;
+
+    this.orderDetail.bill.status = this.statusSelected;
+    this.loading = true;
+    this.orderService.saveBill(this.orderDetail.bill)
+      .pipe(finalize(() =>{
+        this.loading = false;
+        this.loadData();
+      }))
+      .subscribe({
+        next: response => {
+
+        },
+        error: err => {
+          alert(`Something went wrong, try again`);
         }
       })
   }

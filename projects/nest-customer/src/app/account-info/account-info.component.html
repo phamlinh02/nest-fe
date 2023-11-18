@@ -15,46 +15,48 @@
             <div class="col-md-3">
               <div class="dashboard-menu">
                 <ul class="nav flex-column" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                  <li class="nav-item" *ngFor="let item of listTab">
+                    <a
+                      class="nav-link" id="{{item.code}}-tab" data-bs-toggle="tab" [attr.href]="'#' + item.code"
+                       role="tab"
+                       [class.active]="tabSelected == item.code"
+                       (click)="changeTab(item.code)"
+                       [attr.aria-controls]="item.code" aria-selected="false"><i
+                      class="{{item.icon}} mr-10"></i>{{item.title}}
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                    <a class="nav-link" [routerLink]="'/' + paths.resetPass"><i class="fi-rs-lock mr-10"></i>Update
+                      Password</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Track Your Order</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker mr-10"></i>My Address</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link"  [routerLink]="'/' + paths.resetPass" ><i class="fi-rs-lock mr-10"></i>Update Password</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" (click)="logout()" [routerLink]="'/' + paths.login"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                    <a class="nav-link" (click)="logout()" [routerLink]="'/' + paths.login"><i
+                      class="fi-rs-sign-out mr-10"></i>Logout</a>
                   </li>
                 </ul>
               </div>
             </div>
             <div class="col-md-9">
               <div class="tab-content account dashboard-content pl-50">
-                <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                <div
+                  [ngClass]="tabSelected == 'dashboard' ? 'active show' : ''"
+                  class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                   <div class="card">
                     <div class="card-header">
                       <h3 class="mb-0">Hello {{ user.username }}!</h3>
                     </div>
                     <div class="card-body">
                       <p>
-                        From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                        manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
+                        From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br/>
+                        manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password
+                        and account details.</a>
                       </p>
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                <div
+                  [ngClass]="tabSelected == 'order' ? 'active show' : ''"
+                  class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="orders-tab">
                   <div class="card">
                     <div class="card-header">
                       <h3 class="mb-0">Your Orders</h3>
@@ -72,50 +74,40 @@
                           </tr>
                           </thead>
                           <tbody>
-                          <tr>
-                            <td>#1357</td>
-                            <td>March 45, 2020</td>
-                            <td>Processing</td>
-                            <td>$125.00 for 2 item</td>
-                            <td><a href="#" class="btn-small d-block">View</a></td>
-                          </tr>
-                          <tr>
-                            <td>#2468</td>
-                            <td>June 29, 2020</td>
-                            <td>Completed</td>
-                            <td>$364.00 for 5 item</td>
-                            <td><a href="#" class="btn-small d-block">View</a></td>
-                          </tr>
-                          <tr>
-                            <td>#2366</td>
-                            <td>August 02, 2020</td>
-                            <td>Completed</td>
-                            <td>$280.00 for 3 item</td>
-                            <td><a href="#" class="btn-small d-block">View</a></td>
-                          </tr>
+                          <ng-container *ngFor="let item of listOrder">
+                            <tr>
+                              <td>#{{item.id}}</td>
+                              <td>{{item.orderDate | date}}</td>
+                              <td>{{item.status | titlecase}}</td>
+                              <td>${{item.sumPriceBill}} for {{item.countOrder}} item</td>
+                              <td><a [routerLink]="['/' + paths.invoice +'/' + item.id]" class="btn-small d-block">View</a></td>
+                            </tr>
+                          </ng-container>
                           </tbody>
                         </table>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+                <div [ngClass]="tabSelected == 'track-orders' ? 'active show' : ''"
+                     class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                   <div class="card">
                     <div class="card-header">
                       <h3 class="mb-0">Orders tracking</h3>
                     </div>
                     <div class="card-body contact-from-area">
-                      <p>To track your order please enter your OrderID in the box below and press "Track" button. This was given to you on your receipt and in the confirmation email you should have received.</p>
+                      <p>To track your order please enter your OrderID in the box below and press "Track" button. This
+                        was given to you on your receipt and in the confirmation email you should have received.</p>
                       <div class="row">
                         <div class="col-lg-8">
                           <form class="contact-form-style mt-30 mb-50" action="#" method="post">
                             <div class="input-style mb-20">
                               <label>Order ID</label>
-                              <input name="order-id" placeholder="Found in your order confirmation email" type="text" />
+                              <input name="order-id" placeholder="Found in your order confirmation email" type="text"/>
                             </div>
                             <div class="input-style mb-20">
                               <label>Billing email</label>
-                              <input name="billing-email" placeholder="Email you used during checkout" type="email" />
+                              <input name="billing-email" placeholder="Email you used during checkout" type="email"/>
                             </div>
                             <button class="submit submit-auto-width" type="submit">Track</button>
                           </form>
@@ -124,16 +116,18 @@
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                <div [ngClass]="tabSelected == 'address' ? 'active show' : ''"
+                     class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="card mb-3 mb-lg-0">
                         <div class="card-body">
-                         <img src="https://i.pinimg.com/474x/28/1f/b2/281fb27c747c2cf1cc41819356978801.jpg" alt="">
+                          <img src="https://i.pinimg.com/474x/28/1f/b2/281fb27c747c2cf1cc41819356978801.jpg" alt="">
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-6" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div class="col-lg-6"
+                         style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                       <div class="card">
                         <div class="card-header">
                           <h5 class="mb-0">Shipping Address</h5>
@@ -148,7 +142,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+                <div [ngClass]="tabSelected == 'account-detail' ? 'active show' : ''"
+                     class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
                   <div class="card">
                     <div class="card-header">
                       <h5>Account Details</h5>
@@ -159,35 +154,42 @@
                         <div class="error-message text-danger pb-3" *ngIf="errorMessage">{{ errorMessage }}</div>
                         <div class="row">
                           <div class="form-group col-md-12 text-center" style="text-align: center;">
-                            <img *ngIf="userAvatar" [src]="userAvatar" alt="User Avatar" class="avatar-preview" style="border-radius: 50%;border: 3px solid black; width: 300px; height: 300px;" />
+                            <img *ngIf="userAvatar" [src]="userAvatar" alt="User Avatar" class="avatar-preview"
+                                 style="border-radius: 50%;border: 3px solid black; width: 300px; height: 300px;"/>
                           </div>
-                          <input required="" class="form-control" name="id" [(ngModel)]="user.id" type="hidden" />
+                          <input required="" class="form-control" name="id" [(ngModel)]="user.id" type="hidden"/>
                           <div class="form-group col-md-12">
                             <label>Full Name <span class="required">*</span></label>
-                            <input required="" class="form-control" name="fullName" [(ngModel)]="user.fullName" type="text" />
+                            <input required="" class="form-control" name="fullName" [(ngModel)]="user.fullName"
+                                   type="text"/>
                           </div>
                           <div class="form-group col-md-12">
                             <label>Username <span class="required">*</span></label>
-                            <input required="" class="form-control" name="username" [(ngModel)]="user.username" type="text" />
+                            <input required="" class="form-control" name="username" [(ngModel)]="user.username"
+                                   type="text"/>
                           </div>
                           <div class="form-group col-md-12">
                             <label>Email Address <span class="required">*</span></label>
-                            <input required="" class="form-control" name="email" [(ngModel)]="user.email" type="email" />
+                            <input required="" class="form-control" name="email" [(ngModel)]="user.email" type="email"/>
                           </div>
                           <div class="form-group col-md-12">
                             <label>Address <span class="required">*</span></label>
-                            <input required="" class="form-control" name="address" [(ngModel)]="user.address" type="text" />
+                            <input required="" class="form-control" name="address" [(ngModel)]="user.address"
+                                   type="text"/>
                           </div>
                           <div class="form-group col-md-12">
                             <label>Phone <span class="required">*</span></label>
-                            <input required="" class="form-control" name="phone" [(ngModel)]="user.phone" type="text" />
+                            <input required="" class="form-control" name="phone" [(ngModel)]="user.phone" type="text"/>
                           </div>
                           <div class="col-md-12">
                             <label>Avatar</label>
-                            <input type="file" class="form-control" style="border: none;" name="avatar" (change)="onAvatarChange($event)" />
+                            <input type="file" class="form-control" style="border: none;" name="avatar"
+                                   (change)="onAvatarChange($event)"/>
                           </div>
                           <div class="col-md-12">
-                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Change</button>
+                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit"
+                                    value="Submit">Save Change
+                            </button>
                           </div>
                         </div>
                       </form>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OrderService} from "../../../../nest-customer/src/app/service/order.service";
+import {OrderService} from "../service/order.service";
 
 @Component({
   selector: 'app-order',

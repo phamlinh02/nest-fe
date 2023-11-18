@@ -28,6 +28,8 @@ import {ShopDealsComponent} from "./shop-grid-right/shop-deals.component";
 import {LoadingPageComponent} from "./loading-page/loading-page.component";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 @NgModule({
   declarations: [
@@ -56,18 +58,20 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-b
     ShopDealsComponent,
     LoadingPageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [HttpClient],
-  exports: [
-    HeaderComponent,
-    FooterComponent
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        ToastModule,
+    ],
+  providers: [HttpClient, MessageService],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        LoadingPageComponent
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
