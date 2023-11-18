@@ -18,6 +18,8 @@ export class ShopFilterComponent implements AfterViewInit {
   categoryId: number = 1;
   public readonly paths = paths;
   productImage: { [key: number]: SafeUrl } = {};
+  currentPage: number = 0;
+  totalPages: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -27,14 +29,20 @@ export class ShopFilterComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
+    this.showProductByCategory();
+    this.searchProduct();
+  }
+
+  showProductByCategory(){
     this.route.params.subscribe((params) => {
       this.searchKeyword = params['productName'];
       const categoryId = +params['categoryId'];
       if (!isNaN(categoryId)) {
         this.categoryId = categoryId; // Gán giá trị 'id' lấy từ URL vào biến 'productId'
-        this.productService.showProductsByCategory(this.categoryId).subscribe(
+        this.productService.showProductsByCategoryPage(this.categoryId).subscribe(
           (data: any) => {
             this.showByCategory = data.response.content;
+            this.totalPages = Math.ceil(data.response.totalElements / 8);
             this.showByCategory.forEach((product, index) => {
               this.getProductImage('product', product.image, index);
             });
@@ -45,7 +53,7 @@ export class ShopFilterComponent implements AfterViewInit {
           }
         );
       }
-      this.searchProduct();
+      
     });
   }
 
@@ -53,6 +61,7 @@ export class ShopFilterComponent implements AfterViewInit {
     this.productService.searchProductsByName(this.searchKeyword).subscribe(
       (data: any) => {
         this.searchResult = data.response.content;
+        this.totalPages = Math.ceil(data.response.totalElements / 8);
         this.searchResult.forEach((product, index) => {
           this.getProductImage('product', product.image, index);
         });
@@ -68,6 +77,18 @@ export class ShopFilterComponent implements AfterViewInit {
       const imageUrl = URL.createObjectURL(imageData);
       this.productImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
+  }
+
+  changePage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.showProductByCategory();
+      this.searchProduct();
+    }
+  }
+
+  range(totalPages: number): number[] {
+    return Array.from({ length: totalPages }, (_, i) => i);
   }
 
 }

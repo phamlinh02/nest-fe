@@ -32,4 +32,8 @@ export class ProductService {
   showProductsByCategory(categoryId: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}`);
   }
+
+  showProductsByCategoryPage(categoryId: number): Observable<any> {
+    return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}`);
+  }
 }

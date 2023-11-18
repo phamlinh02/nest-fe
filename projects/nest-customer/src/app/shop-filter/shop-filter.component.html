@@ -163,15 +163,11 @@
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">
               <li class="page-item">
-                <a class="page-link" href="#"><i class="fi-rs-arrow-small-left"></i></a>
+                <a class="page-link" (click)="changePage(currentPage - 1)"><i class="material-icons md-chevron_left pt-1"></i></a>
               </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
+              <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of range(totalPages)"><a class="page-link" (click)="changePage(page)">{{ page + 1 }}</a></li>
               <li class="page-item">
-                <a class="page-link" href="#"><i class="fi-rs-arrow-small-right"></i></a>
+                <a class="page-link" (click)="changePage(currentPage + 1)"><i class="material-icons md-chevron_right pt-1"></i></a>
               </li>
             </ul>
           </nav>
