@@ -47,20 +47,21 @@
     <div class="card mx-auto card-login">
       <div class="card-body">
         <h4 class="card-title mb-4">Sign in</h4>
-        <form>
+        <form (ngSubmit)="login()">
+          <div class="error-message text-danger pb-3" *ngIf="errorMessage">{{ errorMessage }}</div>
           <div class="mb-3">
-            <input class="form-control" placeholder="Username or email" type="text" />
+            <input class="form-control" [(ngModel)]="username" name="username" placeholder="Username" type="text" />
           </div>
           <!-- form-group// -->
           <div class="mb-3">
-            <input class="form-control" placeholder="Password" type="password" />
+            <input class="form-control" placeholder="Password"type="password" [(ngModel)]="password" name="password" />
           </div>
           <!-- form-group// -->
           <div class="mb-3">
-            <a href="#" class="float-end font-sm text-muted">Forgot password?</a>
+            <a [routerLink]="['/',paths.forgetPass]" class="float-end font-sm text-muted">Forgot password?</a>
             <label class="form-check">
-              <input type="checkbox" class="form-check-input" checked="" />
-              <span class="form-check-label">Remember</span>
+              <input type="checkbox" class="form-check-input" name="rememberMe" [(ngModel)]="rememberMe" />
+              <span class="form-check-label" >Remember</span>
             </label>
           </div>
           <!-- form-group form-check .// -->
@@ -87,7 +88,6 @@
             Sign in using Facebook
           </a>
         </div>
-        <p class="text-center mb-4">Don't have account? <a href="#">Sign up</a></p>
       </div>
     </div>
   </section>

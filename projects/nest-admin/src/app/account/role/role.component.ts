@@ -2,6 +2,8 @@ import {AfterViewInit, Component} from '@angular/core';
 import { RoleService } from '../../service/role.service';
 import { ActivatedRoute } from '@angular/router';
 import { paths } from '../../const';
+import { AccountService } from '../../service/account.service';
+import { Router } from '@angular/router';
 
 declare let template: any;
 
@@ -21,13 +23,20 @@ export class RolesComponent implements AfterViewInit{
   constructor(
     private roleService: RoleService,
     private route: ActivatedRoute,
+    private accountService: AccountService,
+    private router: Router
   ){
 
   }
   ngAfterViewInit() {
-    template.init();
-    this.showRoles();
-    this.showRoleById();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      template.init();
+      this.showRoles();
+      this.showRoleById();
+    }
+   
   }
 
   showRoles() {

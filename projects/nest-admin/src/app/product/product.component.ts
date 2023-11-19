@@ -28,8 +28,9 @@ export class ProductComponent implements AfterViewInit {
   ) {
   }
   ngAfterViewInit() {
-    template.init();
+
     this.showProducts();
+    template.init();
   }
 
   showProducts() {

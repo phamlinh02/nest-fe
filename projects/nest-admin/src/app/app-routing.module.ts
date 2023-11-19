@@ -6,7 +6,7 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {ProductComponent, ProductDetailComponent, AddProductComponent} from "./product";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {RateComponent} from "./rate/rate.component";
-import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent,RolesComponent} from "./account";
+import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent,RolesComponent, ForgetComponent} from "./account";
 
 const routes: Routes = [
   {
@@ -58,6 +58,10 @@ const routes: Routes = [
   {
     path: `${paths.account}/:id`, 
     component: AccountDetailComponent
+  },
+  {
+    path: `${paths.forgetPass}`, 
+    component: ForgetComponent
   },
   {
     path: paths.login, 

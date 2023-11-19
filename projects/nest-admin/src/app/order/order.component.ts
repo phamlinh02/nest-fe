@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../service/order.service";
+import { AccountService } from '../service/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -20,12 +22,19 @@ export class OrderComponent implements OnInit {
   }
 
   constructor(
-    private orderService: OrderService
+    private orderService: OrderService,
+    private accountService: AccountService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
-    this.loadData();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      this.loadData();
+    }
+    
   }
 
   loadData() {

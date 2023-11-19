@@ -23,12 +23,18 @@ export class AccountComponent  implements AfterViewInit{
   constructor(
     private accountService: AccountService,
     private uploadsService: UploadsService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private router: Router
   ){}
 
   ngAfterViewInit(){
-    template.init();
-    this.getAllUsers();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      template.init();
+      this.getAllUsers();
+    }
+    
   }
 
   getAllUsers() {

@@ -6,5 +6,6 @@ export const paths = {
   addProduct : 'add-new-product',
   order: 'order',
   rate: 'rate',
-  account : 'account'
+  account : 'account',
+  forgetPass: 'forgetPass'
 }
