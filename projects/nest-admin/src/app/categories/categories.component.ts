@@ -4,6 +4,8 @@ import { paths } from '../const';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
+import { AccountService } from '../service/account.service';
+import { Router } from '@angular/router';
 
 declare let template: any;
 
@@ -29,12 +31,19 @@ export class CategoriesComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
+    private accountService: AccountService,
+    private router: Router
   ){}
 
   ngAfterViewInit() {
-    template.init();
-    this.showCategories();
-    this.showCategoryById();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      template.init();
+      this.showCategories();
+      this.showCategoryById();
+    }
+    
   }
 
   showCategories() {

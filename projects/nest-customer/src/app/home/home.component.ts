@@ -28,7 +28,6 @@ export class HomeComponent implements AfterViewInit {
   quantity: number = 1;
   productImage: { [key: number]: SafeUrl } = {};
   categoryImage: { [key: number]: SafeUrl } = {};
-  totalCategoryPages: number = 0;
 
   constructor(
     private orderService: OrderService,

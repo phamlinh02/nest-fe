@@ -1,5 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ReportService } from "../service/report.service";
+import { AccountService } from '../service/account.service';
+import { Router } from '@angular/router';
 
 declare let template: any;
 
@@ -13,13 +15,19 @@ export class HomeComponent implements AfterViewInit {
   orderQty: number = 0;
 
   constructor(
-    private reportService: ReportService
+    private reportService: ReportService,
+    private accountService: AccountService,
+    private router: Router
   ) {
 
   }
   ngAfterViewInit(): void {
-    this.showReport();
-    template.init();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      this.showReport();
+      template.init();
+    }
   }
   title = 'nest-customer';
 

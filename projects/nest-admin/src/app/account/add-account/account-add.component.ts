@@ -34,9 +34,14 @@ export class AddAccountComponent implements AfterViewInit{
   }
 
   ngAfterViewInit() {
-    template.init();
-    this.showAccountById();
-    this.showRoles();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      template.init();
+      this.showAccountById();
+      this.showRoles();
+    }
+    
   }
 
   showAccountById(){

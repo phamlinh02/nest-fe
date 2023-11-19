@@ -123,7 +123,7 @@
               <a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]"><img [src]="categoryImage[i]" style="height: 70px;"/></a>
             </figure>
             <h6><a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]">{{category.name}}</a></h6>
-            <span>{{totalCategoryPages}} Items</span>
+            <span>{{category.productCount}} Items</span>
           </div>
         </div>
       </div>

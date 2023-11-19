@@ -9,7 +9,7 @@ import {HomeComponent} from "./home/home.component";
 import {FooterComponent} from "./footer/footer.component";
 import {HeaderComponent} from "./header/header.component";
 import {CategoriesComponent} from "./categories/categories.component";
-import {AccountComponent, AccountDetailComponent,AddAccountComponent, RolesComponent} from "./account";
+import {AccountComponent, AccountDetailComponent,AddAccountComponent, RolesComponent, ForgetComponent} from "./account";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {ProductDetailComponent, ProductComponent, AddProductComponent} from "./product";
 import {RateComponent} from "./rate/rate.component";
@@ -37,7 +37,8 @@ import {LoadingPageComponent} from "./loading-page/loading-page.component";
     AddAccountComponent,
     AddProductComponent,
     RolesComponent,
-    LoadingPageComponent
+    LoadingPageComponent,
+    ForgetComponent
   ],
   imports: [
     BrowserModule,
