@@ -120,7 +120,7 @@ export class CategoriesComponent implements AfterViewInit {
     );
   }
 
-  onAvatarChange(event: any) {
+  onCategoryChange(event: any) {
     this.categoryFile = event.target.files[0];
     if (this.categoryFile) {
       const imageUrl = URL.createObjectURL(this.categoryFile);
