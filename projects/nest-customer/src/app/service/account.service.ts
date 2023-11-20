@@ -15,8 +15,18 @@ export class AccountService {
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+  userRole: string = '';
 
   constructor(private http: HttpClient) { }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('token') !== null;
+  }
+
+  hasAdminOrDirectorRole(): boolean {
+    console.log('UserRole in hasAdminOrDirectorRole:', this.userRole);
+    return this.userRole === 'ROLE_ADMIN' || this.userRole === 'ROLE_DIRECTOR';
+  }
 
   getAllUsers(): Observable<any> {
     return this.http.get(`${ACCOUNT_API}/get-all`);

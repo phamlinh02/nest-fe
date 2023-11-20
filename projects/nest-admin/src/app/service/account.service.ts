@@ -20,13 +20,14 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  isLoggedIn(): boolean {
-    return localStorage.getItem('token') !== null;
-  }
-
   hasAdminOrDirectorRole(): boolean {
     console.log('UserRole in hasAdminOrDirectorRole:', this.userRole);
     return this.userRole === 'ROLE_ADMIN' || this.userRole === 'ROLE_DIRECTOR';
+  }
+
+  isOwner(commentUserId: string): boolean {
+    const loggedInUserId = localStorage.getItem('userId');
+    return loggedInUserId === commentUserId;
   }
 
   getAllUsers(page: number, size: number): Observable<any> {

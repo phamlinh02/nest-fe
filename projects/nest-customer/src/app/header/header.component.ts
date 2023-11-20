@@ -147,10 +147,10 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   getAllCategoryImage(type: string, filename: string, index: number) {
-    // this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
-    //   const imageUrl = URL.createObjectURL(imageData);
-    //   this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
-    // });
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
   }
 
 }
