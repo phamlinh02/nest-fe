@@ -4,6 +4,7 @@ import { paths } from "../const";
 import { Router } from '@angular/router';
 import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AccountService } from '../service/account.service';
 
 declare const template: any;
 
@@ -24,13 +25,19 @@ export class ProductComponent implements AfterViewInit {
     private productService: ProductService,
     private router: Router,
     private uploadsService: UploadsService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private accountService: AccountService,
   ) {
   }
   ngAfterViewInit() {
 
-    this.showProducts();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      this.showProducts();
     template.init();
+    }
+    
   }
 
   showProducts() {

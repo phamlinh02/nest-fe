@@ -6,7 +6,7 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {ProductComponent, ProductDetailComponent, AddProductComponent} from "./product";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {RateComponent} from "./rate/rate.component";
-import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent,RolesComponent, ForgetComponent} from "./account";
+import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent,RolesComponent, ForgetComponent, AccountInfoComponent, ChangePasswordComponent} from "./account";
 
 const routes: Routes = [
   {
@@ -64,10 +64,17 @@ const routes: Routes = [
     component: ForgetComponent
   },
   {
+    path: `${paths.accountInfo}`, 
+    component: AccountInfoComponent
+  },
+  {
     path: paths.login, 
     component: LoginComponent
   },
-
+  {
+    path: paths.changePass, 
+    component: ChangePasswordComponent
+  },
   {
     path: '**', redirectTo: paths.home, pathMatch: 'full'
   },

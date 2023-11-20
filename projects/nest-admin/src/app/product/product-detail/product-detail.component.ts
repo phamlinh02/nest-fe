@@ -1,9 +1,11 @@
-import {AfterViewInit, Component} from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ProductService } from '../../service/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../../service/uploads.service';
 import { CategoryService } from '../../service/category.service';
+import { AccountService } from '../../service/account.service';
+import { Router } from '@angular/router';
 
 declare let template: any;
 
@@ -11,7 +13,7 @@ declare let template: any;
   selector: 'product-detail',
   templateUrl: './product-detail.component.html',
 })
-export class ProductDetailComponent implements AfterViewInit{
+export class ProductDetailComponent implements AfterViewInit {
   title = 'nest-customer';
   product: any = {};
   productId: number = 1;
@@ -25,16 +27,23 @@ export class ProductDetailComponent implements AfterViewInit{
     private route: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
-    private categoryService: CategoryService
-  ){}
+    private categoryService: CategoryService,
+    private accountService: AccountService,
+    private router: Router,
+  ) { }
 
   ngAfterViewInit() {
-    template.init();
-    this.showProductById();
-    this.showCategories();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      template.init();
+      this.showProductById();
+      this.showCategories();
+    }
+
   }
 
-  showProductById(){
+  showProductById() {
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       if (!isNaN(id)) {
@@ -42,7 +51,7 @@ export class ProductDetailComponent implements AfterViewInit{
         this.productService.getProductById(this.productId).subscribe(
           (data: any) => {
             this.product = data.response;
-            this.getProductImage('product',this.product.image);
+            this.getProductImage('product', this.product.image);
             console.log(this.product);
           },
           (error) => {
@@ -97,8 +106,8 @@ export class ProductDetailComponent implements AfterViewInit{
     }
   }
 
-  getProductImage(type: string,filename: string) {
-    this.uploadsService.getImage(type,filename).subscribe((imageData: Blob) => {
+  getProductImage(type: string, filename: string) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.productImage = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });

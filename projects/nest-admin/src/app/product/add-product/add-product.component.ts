@@ -3,6 +3,7 @@ import { ProductService } from '../../service/product.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../../service/uploads.service';
 import { Router } from '@angular/router';
+import { AccountService } from '../../service/account.service';
 
 declare let template: any;
 
@@ -23,10 +24,16 @@ export class AddProductComponent implements AfterViewInit{
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
     private router: Router,
+    private accountService: AccountService,
   ){}
 
   ngAfterViewInit() {
-    template.init();
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      template.init();
+    }
+    
   }
 
   saveProduct() {

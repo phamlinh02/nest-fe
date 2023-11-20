@@ -28,7 +28,7 @@ export class CartComponent implements AfterViewInit {
     private domSanitizer: DomSanitizer
   ) { }
   ngAfterViewInit() {
-    template.init();
+    
     const userString = localStorage.getItem('user');
     if (userString) {
       const userData = JSON.parse(userString).response;
@@ -50,6 +50,7 @@ export class CartComponent implements AfterViewInit {
           console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
         });
     }
+    template.init();
   }
 
   removeCartItem(id: number) {

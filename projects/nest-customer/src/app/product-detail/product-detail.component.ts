@@ -35,7 +35,7 @@ export class ProductDetailComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    template.init();
+   
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       if (!isNaN(id)) {
@@ -44,7 +44,7 @@ export class ProductDetailComponent implements AfterViewInit {
           (data: any) => {
             this.product = data.response;
             this.getProductImage('product',this.product.image);
-            console.log(this.product);
+            console.log('Sản phẩm:',this.product);
           },
           (error) => {
             console.error('Lỗi khi tải chi tiết sản phẩm: ', error);
@@ -52,6 +52,7 @@ export class ProductDetailComponent implements AfterViewInit {
         );
       }
     });
+    template.init();
   }
 
   getProductImage(type: string,filename: string) {

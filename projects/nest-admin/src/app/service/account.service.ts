@@ -59,5 +59,9 @@ export class AccountService {
   forgetPassword(forgetPassDTO: any): Observable<any> {
     return this.http.post(`${ACCOUNT_API}/forget-pass`, forgetPassDTO);
   }
+
+  updateAccountByUser(account: any): Observable<any> {
+    return this.http.post(`${ACCOUNT_API}/updateByUser`, account);
+  }
  
 }
