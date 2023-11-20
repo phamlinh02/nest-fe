@@ -31,8 +31,8 @@ export class AccountComponent  implements AfterViewInit{
     if (!this.accountService.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
-      template.init();
       this.getAllUsers();
+      template.init();
     }
     
   }

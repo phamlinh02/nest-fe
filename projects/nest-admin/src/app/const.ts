@@ -7,5 +7,7 @@ export const paths = {
   order: 'order',
   rate: 'rate',
   account : 'account',
-  forgetPass: 'forgetPass'
+  forgetPass: 'forgetPass',
+  accountInfo: 'accountInfo',
+  changePass: 'changePass'
 }

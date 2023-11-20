@@ -1,79 +1,47 @@
-import {Component, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
+import { paths } from '../../const';
+import { AccountService } from '../../service/account.service';
+import { UploadsService } from '../../service/uploads.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {paths} from '../const';
-import {AccountService} from '../service/account.service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {UploadsService} from '../service/uploads.service';
-import {OrderService} from "../service/order.service";
-
 
 declare const template: any;
 
 @Component({
-  selector: 'account-info',
+  selector: 'app-account',
   templateUrl: './account-info.component.html',
 })
-export class AccountInfoComponent implements AfterViewInit {
+export class AccountInfoComponent  implements AfterViewInit{
   title = 'nest-customer';
   user: any;
   paths = paths;
-  errorMessage: string = '';
   avatarFile: File | null = null;
   userAvatar!: SafeUrl;
-  tabSelected = 'dashboard';
-  listTab: {
-    icon: string,
-    title: string,
-    code: string
-  }[] = [
-    {
-      icon: 'fi-rs-settings-sliders',
-      title: 'Dashboard',
-      code: 'dashboard'
-    }, {
-      icon: 'fi-rs-shopping-bag',
-      title: 'Orders',
-      code: 'order'
-    }, {
-      icon: 'fi-rs-shopping-cart-check',
-      title: 'Track Your Order',
-      code: 'track-orders'
-    }, {
-      icon: 'fi-rs-marker',
-      title: 'My Address',
-      code: 'address'
-    }, {
-      icon: 'fi-rs-user',
-      title: 'Account Details',
-      code: 'account-detail'
-    }
-  ];
-
-  public listOrder: any = []
+  errorMessage: string = '';
+  
 
   constructor(
-    private router: Router,
     private accountService: AccountService,
-    private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
     private route: ActivatedRoute,
-    private orderService: OrderService
-  ) {
-
-    this.tabSelected = this.route.snapshot.queryParamMap.get('tab') ?? 'dashboard';
-    this.changeTab(this.tabSelected);
-
+    private router: Router,
+    private domSanitizer: DomSanitizer,
+  ){
     const userData = localStorage.getItem('user');
+    if (!this.accountService.isLoggedIn()) {
+        this.router.navigate(['/login']);
+    }else{
     if (userData) {
       this.user = JSON.parse(userData).response;
+      this.getUserAvatar('account', this.user.avatar); 
       console.log(userData);
-      this.getUserAvatar('account', this.user.avatar);
+    }
     }
   }
 
-  ngAfterViewInit() {
-    template.init();
-    this.getUserAvatar('account', this.user.avatar);
+  ngAfterViewInit(){
+    template.init(); 
+      
   }
 
   updateAccountByUser() {
@@ -109,14 +77,6 @@ export class AccountInfoComponent implements AfterViewInit {
       this.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     }
   }
-
-  logout() {
-    // Xóa thông tin người dùng khỏi localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    location.reload;
-  }
-
   getUserAvatar(type: string, filename: string) {
     this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
@@ -124,20 +84,5 @@ export class AccountInfoComponent implements AfterViewInit {
     });
   }
 
-  changeTab(tab: string) {
-    this.tabSelected = tab;
-    this.router.navigate([paths.accountInfo], {queryParams: {tab: tab}, queryParamsHandling: "merge"})
-    if (tab == 'order') {
-      this.getAllBill();
-    }
-  }
-
-  getAllBill() {
-    const param = {
-      accountId: this.user.id ?? 2
-    }
-    this.orderService.getAllOrder(param).subscribe((response) => {
-      this.listOrder = response.response.content;
-    })
-  }
+ 
 }
