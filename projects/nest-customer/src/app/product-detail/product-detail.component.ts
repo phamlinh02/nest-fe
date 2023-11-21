@@ -34,6 +34,8 @@ export class ProductDetailComponent implements AfterViewInit{
   rateImageDetail!: SafeUrl;
   userRole: string = '';
   totalRate: number = 0;
+  recommendedProducts: any[] = [];
+  relateProductImage: { [key: number]: SafeUrl } = {};
 
   constructor(
     private productService: ProductService,
@@ -50,8 +52,7 @@ export class ProductDetailComponent implements AfterViewInit{
       console.log(userData);
     }
   }
-  ngAfterViewInit() {
-   
+  ngAfterViewInit() {  
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       if (!isNaN(id)) {
@@ -62,6 +63,7 @@ export class ProductDetailComponent implements AfterViewInit{
             this.getProductImage('product',this.product.image);
             console.log('Sản phẩm:',this.product);
             this.showRatesByProductId(this.productId);
+            this.showRelatedProductsByPriceRange(this.productId, this.product.price);
           },
           (error) => {
             console.error('Lỗi khi tải chi tiết sản phẩm: ', error);
@@ -80,6 +82,13 @@ export class ProductDetailComponent implements AfterViewInit{
     this.uploadsService.getImage(type,filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.productImage = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
+  }
+
+  getRelatedProductImage(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.relateProductImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
   }
 
@@ -244,6 +253,29 @@ export class ProductDetailComponent implements AfterViewInit{
     }    
     const percentage = (this.productRates.filter(rate => rate.star === star).length / this.totalRate) * 100;
     return percentage.toFixed(2);
+  }
+
+  showRelatedProductsByPriceRange(productId: number, price: number): void {
+    const priceRange = 2; // Define your price range
+    const lowerBound = price - priceRange;
+    const upperBound = price + priceRange;
+  
+    this.productService.getAllProducts().subscribe(
+      (data: any) => {
+        const products = data.response.content; // Access the 'content' property
+        this.recommendedProducts = products
+          .filter((product: any) => product.id !== productId && product.price >= lowerBound && product.price <= upperBound)
+          .slice(0, 4);
+        this.recommendedProducts.forEach((product, index) => {
+          this.getRelatedProductImage('product', product.image, index);
+        });
+  
+        console.log('Related Products:', this.recommendedProducts);
+      },
+      (error) => {
+        console.error('Error fetching all products: ', error);
+      }
+    );
   }
 
 }
