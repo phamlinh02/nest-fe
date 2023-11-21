@@ -19,7 +19,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getAllProducts(): Observable<any[]> {
-    return this.http.get<any[]>(PRODUCT_API + '/get-all-active');
+    return this.http.get<any[]>(`${PRODUCT_API}/get-all-active`);
   }
 
   getProductById(id: number): Observable<any> {

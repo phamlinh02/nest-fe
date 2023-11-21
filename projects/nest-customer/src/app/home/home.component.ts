@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 
-
 declare const template: any;
 
 @Component({
@@ -152,6 +151,11 @@ export class HomeComponent implements AfterViewInit {
       const imageUrl = URL.createObjectURL(imageData);
       this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
+  }
+
+  calculateRatingWidth(averageRating: number): string {
+    const width = averageRating * 20;
+    return `${width}%`;
   }
 
 }
