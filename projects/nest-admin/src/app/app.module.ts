@@ -12,11 +12,12 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {AccountComponent, AccountDetailComponent,AddAccountComponent, RolesComponent, ForgetComponent, AccountInfoComponent, ChangePasswordComponent} from "./account";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {ProductDetailComponent, ProductComponent, AddProductComponent} from "./product";
-import {RateComponent} from "./rate/rate.component";
+import {RateComponent, RateDetailComponent} from "./rate";
 import {LoginComponent} from "./account/login/login.component";
 import {PaginatorModule} from "primeng/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoadingPageComponent} from "./loading-page/loading-page.component";
+import { R3TemplateDependencyKind } from '@angular/compiler';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {LoadingPageComponent} from "./loading-page/loading-page.component";
     LoadingPageComponent,
     ForgetComponent,
     AccountInfoComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    RateDetailComponent
   ],
   imports: [
     BrowserModule,
