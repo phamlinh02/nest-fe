@@ -7,6 +7,7 @@ import {ProductComponent, ProductDetailComponent, AddProductComponent} from "./p
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {RateComponent, RateDetailComponent} from "./rate";
 import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent,RolesComponent, ForgetComponent, AccountInfoComponent, ChangePasswordComponent} from "./account";
+import { StatisticProductComponent } from './statistical';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
   {
     path: paths.changePass, 
     component: ChangePasswordComponent
+  },
+  {
+    path: paths.statisticProduct, 
+    component: StatisticProductComponent
   },
   {
     path: '**', redirectTo: paths.home, pathMatch: 'full'

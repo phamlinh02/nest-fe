@@ -22,6 +22,14 @@ export class ProductService {
     return this.http.get<any[]>(`${PRODUCT_API}/get-all?page=${page}&size=${size}`);
   }
 
+  getAllProductsIsActive(page: number, size: number): Observable<any[]> {
+    return this.http.get<any[]>(`${PRODUCT_API}/get-all-active?page=${page}&size=${size}`);
+  }
+
+  getStatisticProduct(): Observable<any[]> {
+    return this.http.get<any[]>(`${PRODUCT_API}/statistic-product`);
+  }
+
   getProductById(id: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/get-product?id=${id}`);
   }

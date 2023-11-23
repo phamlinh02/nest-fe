@@ -17,7 +17,7 @@ import {LoginComponent} from "./account/login/login.component";
 import {PaginatorModule} from "primeng/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoadingPageComponent} from "./loading-page/loading-page.component";
-import { R3TemplateDependencyKind } from '@angular/compiler';
+import { StatisticProductComponent } from './statistical';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,8 @@ import { R3TemplateDependencyKind } from '@angular/compiler';
     ForgetComponent,
     AccountInfoComponent,
     ChangePasswordComponent,
-    RateDetailComponent
+    RateDetailComponent,
+    StatisticProductComponent
   ],
   imports: [
     BrowserModule,
