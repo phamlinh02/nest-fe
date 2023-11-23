@@ -41,5 +41,9 @@ export class RateService {
   getRateById(id: number): Observable<any> {
     return this.http.get(`${RATE_API}/get-rate?id=${id}`);
   }
+
+  getReportRate(): Observable<any> {
+    return this.http.get(`${RATE_API}/get-statistics`);
+  }
  
 }

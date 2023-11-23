@@ -43,7 +43,6 @@
             "scripts": [
               "projects/nest-admin/src/assets/js/vendors/bootstrap.bundle.min.js",
               "projects/nest-admin/src/assets/js/vendors/jquery-3.6.0.min.js",
-              "projects/nest-admin/src/assets/js/vendors/chart.js",
               "projects/nest-admin/src/assets/js/vendors/jquery.fullscreen.min.js",
               "projects/nest-admin/src/assets/js/vendors/perfect-scrollbar.js",
               "projects/nest-admin/src/assets/js/vendors/select2.min.js",
