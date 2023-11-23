@@ -62,11 +62,14 @@
           <i class="icon material-icons md-stars"></i>
           <span class="text">Category</span> </a>
       </li>
-      <li class="menu-item">
+      <li class="menu-item has-submenu">
         <a class="menu-link" disabled href="#">
           <i class="icon material-icons md-pie_chart"></i>
           <span class="text">Statistics</span>
         </a>
+        <div class="submenu">
+          <a [routerLink]="paths.statisticProduct">Product statistics</a>
+        </div>
       </li>
     </ul>
     <hr />
