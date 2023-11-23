@@ -2,6 +2,11 @@ import { AfterViewInit, Component } from '@angular/core';
 import { ReportService } from "../service/report.service";
 import { AccountService } from '../service/account.service';
 import { Router } from '@angular/router';
+import { RateService } from '../service/rate.service';
+import { Chart,registerables } from 'chart.js';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
+
+Chart.register(ChartAnnotation,...registerables);
 
 declare let template: any;
 
@@ -17,7 +22,8 @@ export class HomeComponent implements AfterViewInit {
   constructor(
     private reportService: ReportService,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private rateService: RateService,
   ) {
 
   }
@@ -26,6 +32,7 @@ export class HomeComponent implements AfterViewInit {
       this.router.navigate(['/login']);
     } else {
       this.showReport();
+      this.showRateStatistics();
       template.init();
     }
   }
@@ -46,6 +53,56 @@ export class HomeComponent implements AfterViewInit {
 
     this.reportService.getQtyOrderInMonth().subscribe(data => {
       this.orderQty = data;
+    });
+  }
+  showRateStatistics() {
+    this.rateService.getReportRate().subscribe((data: any) => {
+      const chartData = {
+        labels: ['5 Stars', '4 Stars', '3 Stars', '2 Stars', '1 Star'],
+        datasets: [{
+          label: 'Number of Ratings',
+          data: [
+            data.response.fiveStarCount,
+            data.response.fourStarCount,
+            data.response.threeStarCount,
+            data.response.twoStarCount,
+            data.response.oneStarCount,
+          ],
+          backgroundColor: [
+            '#5897fb',
+            '#7bcf86',
+            '#ff9076',
+            '#d595e5',
+            '#CC0033',
+          ],
+          borderColor: [
+            '#5897fb',
+            '#7bcf86',
+            '#ff9076',
+            '#d595e5',
+            '#CC0033',
+          ],
+          borderWidth: 2  ,
+        }],
+      };
+
+      const ctx = document.getElementById('rateChart') as HTMLCanvasElement;
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          scales: {
+            y: {
+              type: 'linear',
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1,
+              },
+            },
+          },
+        },
+      });
     });
   }
 
