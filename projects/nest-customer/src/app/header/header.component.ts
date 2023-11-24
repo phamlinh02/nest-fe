@@ -24,6 +24,7 @@ export class HeaderComponent implements AfterViewInit {
   productImage: { [key: number]: SafeUrl } = {};
   categoryImage: { [key: number]: SafeUrl } = {};
   categoryFile: File | null = null;
+  comparedProducts: any[] = [];
 
   constructor(
     private router: Router,
@@ -43,6 +44,8 @@ export class HeaderComponent implements AfterViewInit {
     this.showCategory();
 
     this.showCartItem();
+
+    this.loadComparedProducts();
 
   }
 
@@ -151,6 +154,17 @@ export class HeaderComponent implements AfterViewInit {
       const imageUrl = URL.createObjectURL(imageData);
       this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
+  }
+
+  loadComparedProducts(): void {
+    const storedData = localStorage.getItem('comparedProducts');
+    if (storedData !== null) {
+      this.comparedProducts = JSON.parse(storedData);
+    }
+  }
+
+  getComparisonCount(): number {
+    return this.comparedProducts.length;
   }
 
 }
