@@ -158,4 +158,25 @@ export class HomeComponent implements AfterViewInit {
     return `${width}%`;
   }
 
+  addToComparison(product: any): void {
+    const localStorageValue = localStorage.getItem('comparedProducts');
+    
+    if (localStorageValue === null) {
+      const comparedProducts = [product];
+      localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+      alert('Product added to comparison list');
+    } else {
+      const comparedProducts = JSON.parse(localStorageValue);
+      
+      if (!comparedProducts.some((p: any) => p.id === product.id)) {
+        comparedProducts.push(product);
+        localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+        alert('Product added to comparison list');
+      } else {
+        alert('The product is already in the comparison list');
+      }
+    }
+  }
+ 
+
 }
