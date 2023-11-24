@@ -30,20 +30,7 @@
       </div>
       <!-- card-body end// -->
     </div>
-    <div class="content-header">
-        <div>
-          <h2 class="content-title card-title">Statistical Information</h2>
-        </div>
-    </div>
-    <div class="card mb-4">
-        <!-- card-header end// -->
-        <p>Total Products: {{ statisticInfo.totalProduct }}</p>
-        <p>Total Stock Quantity: {{ statisticInfo.totalStockQuantity }}</p>
-
-        <canvas id="statisticChart" width="400" height="200"></canvas>
-        <!-- card-body end// -->
-    </div>
-    <!-- card end// -->
+    
     <div class="pagination-area mt-15 mb-50">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-start">
@@ -57,5 +44,16 @@
         </ul>
       </nav>
     </div>
+    <div class="content-header">
+      <div>
+        <h2 class="content-title card-title">Statistical Information</h2>
+      </div>
+  </div>
+    <div class="card mb-4">
+        <canvas id="statisticChart" width="400" height="150"></canvas>
+        <!-- card-body end// -->
+    </div>
+    <!-- card end// -->
+    
   </section>
   
