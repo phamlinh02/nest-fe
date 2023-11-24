@@ -4,6 +4,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../../service/uploads.service';
 import { Router } from '@angular/router';
 import { AccountService } from '../../service/account.service';
+import { CategoryService } from '../../service/category.service';
 
 declare let template: any;
 
@@ -18,6 +19,7 @@ export class AddProductComponent implements AfterViewInit{
   productImage!: SafeUrl;
   productFile: File | null = null;
   errorMessage: string = '';
+  categories: any[] = [];
 
   constructor(
     private productService: ProductService,
@@ -25,12 +27,14 @@ export class AddProductComponent implements AfterViewInit{
     private uploadsService: UploadsService,
     private router: Router,
     private accountService: AccountService,
+    private categoryService: CategoryService,
   ){}
 
   ngAfterViewInit() {
     if (!this.accountService.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
+      this.showCategories();
       template.init();
     }
     
@@ -75,6 +79,16 @@ export class AddProductComponent implements AfterViewInit{
       const imageUrl = URL.createObjectURL(imageData);
       this.productImage = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
+  }
+
+  showCategories() {
+    this.categoryService.getAllCategoriesIsActive(0, 100).subscribe((data: any) => {
+      this.categories = data.response.content;
+      console.log(this.categories);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
+      });
   }
 
 }
