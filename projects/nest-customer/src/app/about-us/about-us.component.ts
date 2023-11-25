@@ -12,7 +12,7 @@ export class AboutUsComponent implements AfterViewInit {
   title = 'nest-customer';
   paths = paths;
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void {  
     template.init();
   }
 }

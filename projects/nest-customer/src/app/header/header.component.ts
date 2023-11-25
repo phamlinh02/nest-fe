@@ -6,6 +6,10 @@ import { CategoryService } from "../service/category.service";
 import { CartService } from '../service/cart.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
+import { FavoriteService } from '../service/favorite.service';
+import { ActivatedRoute} from '@angular/router';
+
+declare let template: any;
 
 @Component({
   selector: 'app-header',
@@ -21,9 +25,12 @@ export class HeaderComponent implements AfterViewInit {
   accountId: number = 0;
   totalValue: number = 0;
   totalProduct: number = 0;
+  totalProductFavorite: number = 0;
   productImage: { [key: number]: SafeUrl } = {};
   categoryImage: { [key: number]: SafeUrl } = {};
   categoryFile: File | null = null;
+  comparedProducts: any[] = [];
+  favoriteProducts: any[] = [];
 
   constructor(
     private router: Router,
@@ -31,7 +38,9 @@ export class HeaderComponent implements AfterViewInit {
     private productService: ProductService,
     private cartService: CartService,
     private uploadsService: UploadsService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private favoriteService: FavoriteService,
+    private route: ActivatedRoute,
   ) {
     this.cartService.cartUpdated.subscribe(() => {
       this.showCartItem();
@@ -43,6 +52,12 @@ export class HeaderComponent implements AfterViewInit {
     this.showCategory();
 
     this.showCartItem();
+
+    this.loadComparedProducts();
+
+    this.loadFavoriteProducts();
+
+    
 
   }
 
@@ -135,6 +150,10 @@ export class HeaderComponent implements AfterViewInit {
     // Xóa thông tin người dùng khỏi localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+
+    localStorage.removeItem('comparedProducts');
+    this.comparedProducts.length = 0;
+    this.totalProductFavorite = 0;
     // Xóa thông tin giỏ hàng
     this.clearCart();
   }
@@ -152,5 +171,45 @@ export class HeaderComponent implements AfterViewInit {
       this.categoryImage[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
   }
+
+  loadComparedProducts(): void {
+    const storedData = localStorage.getItem('comparedProducts');
+    if (storedData !== null) {
+      this.comparedProducts = JSON.parse(storedData);
+    }
+  }
+
+  getComparisonCount(): number {
+    return this.comparedProducts.length;
+  }
+
+  loadFavoriteProducts() {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+    const userData = JSON.parse(userString).response;
+    this.accountId = userData.id;
+
+    this.favoriteService.getFavoriteProducts(this.accountId).subscribe(
+      (data: any) => {
+        this.favoriteProducts = data.response.content;
+        this.favoriteProducts.forEach((product, index) => {
+          this.getProductImage('product', product.image, index);
+        });
+        this.totalProductFavorite = this.favoriteProducts.length;
+        console.log('favoriteProducts', this.favoriteProducts, this.totalProductFavorite);
+      },
+      (error) => {
+        console.error('Error loading favorite products:', error);
+      }
+    );
+  }
+
+}
+
+onCategoryChange(event: any) {
+  console.log('Category changed:', event.target.value);
+  const categoryId = event.target.value;
+  this.router.navigate([`${paths.shopFilter}/showByCategory/${categoryId}`], { relativeTo: this.route });
+}
 
 }

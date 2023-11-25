@@ -37,12 +37,11 @@
                 <input type="text" placeholder="Quantity" name="quantity" [(ngModel)]="product.quantity" class="form-control" id="product_name" />
               </div>
               <div class="mb-4">
-                <label class="form-label">Category</label>
-                <input type="text" placeholder="Category" name="categoryName" [(ngModel)]="product.categoryName" class="form-control" id="product_name" />
-              </div>
-              <div class="mb-4">
                 <label class="form-label">IsActive</label>
-                <input type="text" placeholder="IsActive" name="isActive" [(ngModel)]="product.isActive" class="form-control" id="product_name" />
+                <select class="form-select" name="isActive" [(ngModel)]="product.isActive">
+                  <option [value]="true" [selected]="product.isActive === true">Active</option>
+                  <option [value]="false" [selected]="product.isActive === false">Disabled</option>
+                </select>
               </div>
             </div>
               <div class="col-lg-4">
@@ -66,13 +65,8 @@
                     <div class="row gx-2">
                       <div class="col-sm-12 mb-3">
                         <label class="form-label">Category</label>
-                        <select class="form-select">
-                          <option>Automobiles</option>
-                          <option>Home items</option>
-                          <option>Electronics</option>
-                          <option>Smartphones</option>
-                          <option>Sport items</option>
-                          <option>Baby and Tous</option>
+                        <select class="form-select" name="categoryName" [(ngModel)]="product.categoryName">
+                          <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
                         </select>
                       </div>
                     </div>

@@ -97,39 +97,49 @@ export class StatisticProductComponent implements AfterViewInit {
       const totalProducts: number[] = this.statisticInfo.categoryStatistics.map((category: any) => category.totalProduct);
       const totalStockQuantities: number[] = this.statisticInfo.categoryStatistics.map((category: any) => category.totalStockQuantity);
   
-      // Assuming you have Chart.js and the necessary plugins registered in your project
+      // Giả sử bạn đã đăng ký Chart.js và các plugin cần thiết trong dự án của bạn
   
-      // Create the chart
+      // Tạo biểu đồ
       this.statisticChart = new Chart('statisticChart', {
         type: 'bar',
         data: {
           labels: categories,
           datasets: [
             {
-              label: 'Total Products',
-              data: totalProducts,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-            },
-            {
               label: 'Total Stock Quantity',
               data: totalStockQuantities,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1,
+              borderColor: '#F18D9E',
+              borderWidth: 2,
+              fill: false,
+              type: 'line',
+              yAxisID: 'stock',
             },
+            {
+              label: 'Prouducts',
+              data: totalProducts,
+              backgroundColor: '#98DBC6',
+              borderColor: '#98DBC6',
+              borderWidth: 1,
+              yAxisID: 'products',
+            },
+            
           ],
         },
         options: {
           scales: {
-            y: {
-              beginAtZero: true,
+            products: {
+              type: 'linear',
+              position: 'left',
+            },
+            stock: {
+              type: 'linear',
+              position: 'right',
             },
           },
         },
       });
     }
   }
+  }
 
-}
+

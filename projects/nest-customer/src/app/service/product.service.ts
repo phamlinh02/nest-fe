@@ -25,16 +25,16 @@ export class ProductService {
   getProductById(id: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/get-product?id=${id}`);
   }
-  searchProductsByName(productName: string): Observable<any> {
-    return this.http.get(`${PRODUCT_API}/search-by-name?productName=${productName}`);
+  searchProductsByName(productName: string,page: number, size: number): Observable<any> {
+    return this.http.get(`${PRODUCT_API}/search-by-name?productName=${productName}&page=${page}&size=${size}`);
   }
 
   showProductsByCategory(categoryId: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}`);
   }
 
-  showProductsByCategoryPage(categoryId: number): Observable<any> {
-    return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}`);
+  showProductsByCategoryPage(categoryId: number,page: number, size: number): Observable<any> {
+    return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}&page=${page}&size=${size}`);
   }
   getRecentlyAddedProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${PRODUCT_API}/get-recently-added`);

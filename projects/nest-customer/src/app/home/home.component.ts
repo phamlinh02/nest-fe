@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, ChangeDetectorRef } from '@angular/core';
 import { paths } from "../const";
 import { OrderService } from "../service/order.service";
 import { ProductService } from "../service/product.service";
@@ -7,6 +7,7 @@ import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
+import { FavoriteService } from '../service/favorite.service';
 
 declare const template: any;
 
@@ -21,6 +22,7 @@ export class HomeComponent implements AfterViewInit {
   producttop: any[] = [];
   productRec: any[] = [];
   productSelling: any[] = [];
+  productTrennding: any[] = [];
   categories: any[] = [];
   cartItem: any[] = [];
   accountId: number = 0;
@@ -38,7 +40,9 @@ export class HomeComponent implements AfterViewInit {
     private cartService: CartService,
     private router: Router,
     private uploadsService: UploadsService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private favoriteService: FavoriteService,
+    private cd: ChangeDetectorRef
   ) {
   }
   ngAfterViewInit() {
@@ -53,6 +57,8 @@ export class HomeComponent implements AfterViewInit {
     this.showRecentlyAddedProducts();
 
     this.showTopSellingProducts();
+
+    // this.showMostSearchedProducts();
 
     this.orderService.getAllOrder({}).subscribe(response => {
       console.log(response);
@@ -205,4 +211,62 @@ export class HomeComponent implements AfterViewInit {
       });
   }
 
+  // showMostSearchedProducts() {
+  //   this.productService.getMostSearchedProducts().subscribe((data: any) => {
+  //     this.productTrennding = data.response;
+  //     this.productTrennding.forEach((product, index) => {
+  //       this.getProductImage('product', product.image, index);
+  //     });
+  //     console.log(this.productTrennding);
+  //   },
+  //     (error) => {
+  //       console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+  //     });
+  // }
+
+  addToComparison(product: any): void {
+    const localStorageValue = localStorage.getItem('comparedProducts');
+
+    if (localStorageValue === null) {
+      const comparedProducts = [product];
+      localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+      alert('Product added to comparison list');
+    } else {
+      const comparedProducts = JSON.parse(localStorageValue);
+
+      if (!comparedProducts.some((p: any) => p.id === product.id)) {
+        comparedProducts.push(product);
+        localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+        alert('Product added to comparison list');
+      } else {
+        alert('The product is already in the comparison list');
+      }
+    }
+  }
+
+  addToWishlist(productId: number): void {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      const accountId = userData.id;
+
+      this.favoriteService.addProductToFavorite({ accountId, productId }).subscribe(
+        successResponse => {
+          // Handle success
+          alert('The product has been added to your favorites list');
+          console.log('Thêm sản phẩm vào danh sách yêu thích thành công');
+          this.cd.detectChanges();
+
+        },
+        errorResponse => {
+          alert('The product is already in the wish list!!!');
+        }
+      );
+    } else {
+      this.router.navigate([`${paths.login}`]);
+      alert('Please login to add products to your favorites list!!!');
+    }
+  }
 }
+
+
