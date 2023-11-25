@@ -36,4 +36,7 @@ export class ProductService {
   showProductsByCategoryPage(categoryId: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/show-by-category?categoryId=${categoryId}`);
   }
+  getRecentlyAddedProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${PRODUCT_API}/get-recently-added`);
+  }
 }

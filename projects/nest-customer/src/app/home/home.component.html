@@ -12,8 +12,7 @@
                   <!-- MAIN SLIDES -->
                   <div class="product-image-slider">
                     <figure class="border-radius-10" style="margin: 0 0 0 0 !important;">
-                      <img [src]="productImage[i]" alt="{{ product.productName }}"
-                        style="width: 100%; height: 100%;" />
+                      <img [src]="productImage[i]" alt="{{ product.productName }}" style="width: 100%; height: 100%;" />
                     </figure>
                   </div>
                 </div>
@@ -118,9 +117,11 @@
       </div>
       <div class="carausel-10-columns-cover position-relative">
         <div class="row justify-content-center" id="carausel-10-columns">
-          <div *ngFor="let category of categories, let i = index" class="card-2 col-1 " style="background-color: white; border:2px solid #3BB77E; margin: 0px 10px 10px 10px;">
+          <div *ngFor="let category of categories, let i = index" class="card-2 col-1 "
+            style="background-color: white; border:2px solid #3BB77E; margin: 0px 10px 10px 10px;">
             <figure class="img-hover-scale overflow-hidden">
-              <a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]"><img [src]="categoryImage[i]" style="height: 70px;"/></a>
+              <a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]"><img [src]="categoryImage[i]"
+                  style="height: 70px;" /></a>
             </figure>
             <h6><a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]">{{category.name}}</a></h6>
             <span>{{category.productCount}} Items</span>
@@ -199,8 +200,7 @@
                 <div class="product-img-action-wrap">
                   <div class="product-img product-img-zoom">
                     <a [routerLink]="['/', paths.productDetail, product.id]">
-                      <img class="default-img" [src]="productImage[i]"
-                        alt="{{ product.productName }}" />
+                      <img class="default-img" [src]="productImage[i]" alt="{{ product.productName }}" />
                       <!-- <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" /> -->
                     </a>
                   </div>
@@ -252,8 +252,7 @@
                 <div class="product-img-action-wrap">
                   <div class="product-img product-img-zoom">
                     <a [routerLink]="['/', paths.productDetail, product.id]">
-                      <img class="default-img" [src]="productImage[i]"
-                        alt="{{ product.productName }}" />
+                      <img class="default-img" [src]="productImage[i]" alt="{{ product.productName }}" />
                       <!-- <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" /> -->
                     </a>
                   </div>
@@ -572,7 +571,7 @@
                 <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-2-arrows">
                 </div>
                 <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns-2">
-                  <div class="product-cart-wrap">
+                  <div class="product-cart-wrap" *ngFor="let product of producttop">
                     <div class="product-img-action-wrap">
                       <div class="product-img product-img-zoom">
                         <a href="shop-product-right.html">
@@ -596,8 +595,7 @@
                       <div class="product-category">
                         <a href="shop-grid-right.html">Hodo Foods</a>
                       </div>
-                      <h2><a href="shop-product-right.html">Canada Dry Ginger
-                          Ale – 2 L Bottle</a></h2>
+                      <h2><a href="shop-product-right.html">{{product.productName}}</a></h2>
                       <div class="product-rate d-inline-block">
                         <div class="product-rating" style="width: 80%"></div>
                       </div>
@@ -617,186 +615,7 @@
                     </div>
                   </div>
                   <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-15-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-15-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="new">Save 35%</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">Encore Seafoods
-                          Stuffed Alaskan</a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-12-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-12-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="sale">Sale</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">Gorton’s Beer
-                          Battered Fish </a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-13-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-13-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="best">Best sale</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">Haagen-Dazs Caramel
-                          Cone Ice</a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-14-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-14-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="hot">Save 15%</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">Italian-Style
-                          Chicken Meatball</a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!--End product Wrap-->
+
                 </div>
               </div>
             </div>
@@ -1214,14 +1033,13 @@
           data-wow-delay="0">
           <h4 class="section-title style-1 mb-30 animated animated">Top Selling</h4>
           <div class="product-list-small animated animated">
-            <article class="row align-items-center hover-up">
+            <article class="row align-items-center hover-up" *ngFor="let product of productSelling">
               <figure class="col-md-4 mb-0">
                 <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-1.jpg" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
-                  <a href="shop-product-right.html">Nestle Original Coffee-Mate
-                    Coffee Creamer</a>
+                  <a href="shop-product-right.html">{{product.productName}}</a>
                 </h6>
                 <div class="product-rate-cover">
                   <div class="product-rate d-inline-block">
@@ -1230,49 +1048,7 @@
                   <span class="font-small ml-5 text-muted"> (4.0)</span>
                 </div>
                 <div class="product-price">
-                  <span>$32.85</span>
-                  <span class="old-price">$33.8</span>
-                </div>
-              </div>
-            </article>
-            <article class="row align-items-center hover-up">
-              <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-2.jpg" alt /></a>
-              </figure>
-              <div class="col-md-8 mb-0">
-                <h6>
-                  <a href="shop-product-right.html">Nestle Original Coffee-Mate
-                    Coffee Creamer</a>
-                </h6>
-                <div class="product-rate-cover">
-                  <div class="product-rate d-inline-block">
-                    <div class="product-rating" style="width: 90%"></div>
-                  </div>
-                  <span class="font-small ml-5 text-muted"> (4.0)</span>
-                </div>
-                <div class="product-price">
-                  <span>$32.85</span>
-                  <span class="old-price">$33.8</span>
-                </div>
-              </div>
-            </article>
-            <article class="row align-items-center hover-up">
-              <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-3.jpg" alt /></a>
-              </figure>
-              <div class="col-md-8 mb-0">
-                <h6>
-                  <a href="shop-product-right.html">Nestle Original Coffee-Mate
-                    Coffee Creamer</a>
-                </h6>
-                <div class="product-rate-cover">
-                  <div class="product-rate d-inline-block">
-                    <div class="product-rating" style="width: 90%"></div>
-                  </div>
-                  <span class="font-small ml-5 text-muted"> (4.0)</span>
-                </div>
-                <div class="product-price">
-                  <span>$32.85</span>
+                  <span>${{product.price}}</span>
                   <span class="old-price">$33.8</span>
                 </div>
               </div>
@@ -1354,14 +1130,13 @@
           <h4 class="section-title style-1 mb-30 animated animated">Recently
             added</h4>
           <div class="product-list-small animated animated">
-            <article class="row align-items-center hover-up">
+            <article class="row align-items-center hover-up" *ngFor="let product of productRec">
               <figure class="col-md-4 mb-0">
                 <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-7.jpg" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
-                  <a href="shop-product-right.html">Pepperidge Farm Farmhouse
-                    Hearty White Bread</a>
+                  <a href="shop-product-right.html">{{product.productName}}</a>
                 </h6>
                 <div class="product-rate-cover">
                   <div class="product-rate d-inline-block">
@@ -1370,49 +1145,7 @@
                   <span class="font-small ml-5 text-muted"> (4.0)</span>
                 </div>
                 <div class="product-price">
-                  <span>$32.85</span>
-                  <span class="old-price">$33.8</span>
-                </div>
-              </div>
-            </article>
-            <article class="row align-items-center hover-up">
-              <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-8.jpg" alt /></a>
-              </figure>
-              <div class="col-md-8 mb-0">
-                <h6>
-                  <a href="shop-product-right.html">Organic Frozen Triple Berry
-                    Blend</a>
-                </h6>
-                <div class="product-rate-cover">
-                  <div class="product-rate d-inline-block">
-                    <div class="product-rating" style="width: 90%"></div>
-                  </div>
-                  <span class="font-small ml-5 text-muted"> (4.0)</span>
-                </div>
-                <div class="product-price">
-                  <span>$32.85</span>
-                  <span class="old-price">$33.8</span>
-                </div>
-              </div>
-            </article>
-            <article class="row align-items-center hover-up">
-              <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-9.jpg" alt /></a>
-              </figure>
-              <div class="col-md-8 mb-0">
-                <h6>
-                  <a href="shop-product-right.html">Oroweat Country Buttermilk
-                    Bread</a>
-                </h6>
-                <div class="product-rate-cover">
-                  <div class="product-rate d-inline-block">
-                    <div class="product-rating" style="width: 90%"></div>
-                  </div>
-                  <span class="font-small ml-5 text-muted"> (4.0)</span>
-                </div>
-                <div class="product-price">
-                  <span>$32.85</span>
+                  <span>{{product.price}}</span>
                   <span class="old-price">$33.8</span>
                 </div>
               </div>

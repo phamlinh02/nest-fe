@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {environment} from "../../enviroment/enviroment";
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../enviroment/enviroment";
 
 const SERVER_URL = environment.SERVER_URL;
 
@@ -15,7 +15,7 @@ const httpOptions = {
   }),
 };
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class OrderService {
 
   constructor(private http: HttpClient) {
@@ -30,7 +30,10 @@ export class OrderService {
   }
 
   createBill(request: any): Observable<any> {
-    return this.http.post(ORDER_API + `/create-bill`,request, httpOptions)
+    return this.http.post(ORDER_API + `/create-bill`, request, httpOptions)
+  }
+  getTopSellingProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${ORDER_API}/selling`);
   }
 
 }
