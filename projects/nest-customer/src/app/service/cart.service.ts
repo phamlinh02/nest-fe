@@ -53,7 +53,7 @@ export class CartService {
     }
 
     getTop10ProductPopular(): Observable<any[]> {
-        return this.http.get<any[]>(`${CART_API}/list/top`);
+        return this.http.get<any[]>(`${CART_API}/top_popular`);
     }
 
 }
