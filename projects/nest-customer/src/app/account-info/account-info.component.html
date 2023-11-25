@@ -29,10 +29,6 @@
                     <a class="nav-link" [routerLink]="'/' + paths.resetPass"><i class="fi-rs-lock mr-10"></i>Update
                       Password</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" (click)="logout()" [routerLink]="'/' + paths.login"><i
-                      class="fi-rs-sign-out mr-10"></i>Logout</a>
-                  </li>
                 </ul>
               </div>
             </div>
@@ -136,7 +132,6 @@
                           <address>
                             {{user.address}}
                           </address>
-                          <a href="#" class="btn-small">Edit</a>
                         </div>
                       </div>
                     </div>

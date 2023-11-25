@@ -5,6 +5,7 @@ import {paths} from "../const";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 
+declare const template: any;
 
 @Component({
   selector: 'shop-filter',
@@ -31,6 +32,8 @@ export class ShopFilterComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.showProductByCategory();
     this.searchProduct();
+    template.init();
+    
   }
 
   showProductByCategory(){
@@ -39,7 +42,7 @@ export class ShopFilterComponent implements AfterViewInit {
       const categoryId = +params['categoryId'];
       if (!isNaN(categoryId)) {
         this.categoryId = categoryId; // Gán giá trị 'id' lấy từ URL vào biến 'productId'
-        this.productService.showProductsByCategoryPage(this.categoryId).subscribe(
+        this.productService.showProductsByCategoryPage(this.categoryId,this.currentPage, 8).subscribe(
           (data: any) => {
             this.showByCategory = data.response.content;
             this.totalPages = Math.ceil(data.response.totalElements / 8);
@@ -58,7 +61,7 @@ export class ShopFilterComponent implements AfterViewInit {
   }
 
   searchProduct() {
-    this.productService.searchProductsByName(this.searchKeyword).subscribe(
+    this.productService.searchProductsByName(this.searchKeyword,this.currentPage, 8).subscribe(
       (data: any) => {
         this.searchResult = data.response.content;
         this.totalPages = Math.ceil(data.response.totalElements / 8);
@@ -79,11 +82,14 @@ export class ShopFilterComponent implements AfterViewInit {
     });
   }
 
-  changePage(page: number) {
+  changePage(page: number, isSearch: boolean) {
     if (page >= 0 && page < this.totalPages) {
       this.currentPage = page;
-      this.showProductByCategory();
-      this.searchProduct();
+      if (isSearch) {
+        this.searchProduct();
+      } else {
+        this.showProductByCategory();
+      }
     }
   }
 

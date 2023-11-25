@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component,ChangeDetectorRef } from '@angular/core';
 import { paths } from "../const";
 import { OrderService } from "../service/order.service";
 import { ProductService } from "../service/product.service";
@@ -7,6 +7,7 @@ import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
+import { FavoriteService } from '../service/favorite.service';
 
 declare const template: any;
 
@@ -35,7 +36,9 @@ export class HomeComponent implements AfterViewInit {
     private cartService: CartService,
     private router: Router,
     private uploadsService: UploadsService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private favoriteService: FavoriteService,
+    private cd: ChangeDetectorRef
   ) {
   }
   ngAfterViewInit() {
@@ -177,6 +180,30 @@ export class HomeComponent implements AfterViewInit {
       }
     }
   }
+
+  addToWishlist(productId: number): void {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      const accountId = userData.id;
+
+      this.favoriteService.addProductToFavorite({ accountId, productId }).subscribe(
+        successResponse => {
+          // Handle success
+          alert('The product has been added to your favorites list');
+          console.log('Thêm sản phẩm vào danh sách yêu thích thành công');
+          this.cd.detectChanges();
+
+        },
+        errorResponse => {
+          alert('The product is already in the wish list!!!');
+        }
+      );
+    } else {
+      this.router.navigate([`${paths.login}`]);
+      alert('Please login to add products to your favorites list!!!');
+    }
+  }
+}
  
 
-}

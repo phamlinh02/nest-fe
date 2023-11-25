@@ -201,12 +201,12 @@
                     <a [routerLink]="['/', paths.productDetail, product.id]">
                       <img class="default-img" [src]="productImage[i]"
                         alt="{{ product.productName }}" />
-                      <!-- <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" /> -->
                     </a>
                   </div>
                   <div class="product-action-1">
-                    <a aria-label="Add To Wishlist" class="action-btn" href="shop-wishlist.html"><i
-                        class="fi-rs-heart"></i></a>
+                    <a (click)="addToWishlist(product.id)" aria-label="Add To Wishlist" class="action-btn">
+                      <i class="fi-rs-heart"></i>
+                    </a>
                     <a aria-label="Compare" class="action-btn" (click)="addToComparison(product)"><i
                         class="fi-rs-shuffle"></i></a>
                     <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal"
@@ -254,13 +254,13 @@
                     <a [routerLink]="['/', paths.productDetail, product.id]">
                       <img class="default-img" [src]="productImage[i]"
                         alt="{{ product.productName }}" />
-                      <!-- <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" /> -->
                     </a>
                   </div>
                   <div class="product-action-1">
-                    <a aria-label="Add To Wishlist" class="action-btn" href="shop-wishlist.html"><i
-                        class="fi-rs-heart"></i></a>
-                    <a aria-label="Compare" class="action-btn" href="shop-compare.html"><i
+                    <a (click)="addToWishlist(product.id)" aria-label="Add To Wishlist" class="action-btn">
+                      <i class="fi-rs-heart"></i>
+                    </a>
+                    <a aria-label="Compare" class="action-btn" (click)="addToComparison(product)"><i
                         class="fi-rs-shuffle"></i></a>
                     <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal"
                       [attr.data-bs-target]="'#quickViewModal-' + product.id"><i class="fi-rs-eye"></i></a>
