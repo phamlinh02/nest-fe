@@ -11,7 +11,7 @@
             <ul>
               <li><a [routerLink]="['/',paths.aboutUs]">About Us</a></li>
               <li><a (click)="navigateTo(paths.accountInfo)">My Account</a></li>
-              <li><a href="shop-wishlist.html">Wishlist</a></li>
+              <li><a [routerLink]="['/',paths.favorite]">Wishlist</a></li>
               <li><a href="shop-order.html">Order Tracking</a></li>
             </ul>
           </div>
@@ -52,36 +52,11 @@
         <div class="header-right">
           <div class="search-style-2">
             <form action="#">
-              <select class="select-active">
-                <option>All Categories</option>
-                <option *ngFor="let category of categories">{{category.name}}</option>
-              </select>
-              <input type="text" name="productName" placeholder="Search for items..." [(ngModel)]="productName"
-                (keyup.enter)="searchProductByName()">
+              <input type="text" name="productName" placeholder="Search for items..." [(ngModel)]="productName" (keyup.enter)="searchProductByName()">
             </form>
           </div>
           <div class="header-action-right">
             <div class="header-action-2">
-              <!-- <div class="search-location">
-                <form action="#">
-                  <select class="select-active">
-                    <option>Your Location</option>
-                    <option>Alabama</option>
-                    <option>Alaska</option>
-                    <option>Arizona</option>
-                    <option>Delaware</option>
-                    <option>Florida</option>
-                    <option>Georgia</option>
-                    <option>Hawaii</option>
-                    <option>Indiana</option>
-                    <option>Maryland</option>
-                    <option>Nevada</option>
-                    <option>New Jersey</option>
-                    <option>New Mexico</option>
-                    <option>New York</option>
-                  </select>
-                </form>
-              </div> -->
               <div class="header-action-icon-2">
                 <a [routerLink]="['/',paths.compareItem]">
                   <img class="svgInject" alt="Nest" src="assets/imgs/theme/icons/icon-compare.svg" />
@@ -90,11 +65,11 @@
                 <a [routerLink]="['/',paths.compareItem]"><span class="lable ml-0">Compare</span></a>
               </div>
               <div class="header-action-icon-2">
-                <a href="shop-wishlist.html">
+                <a [routerLink]="['/',paths.favorite]">
                   <img class="svgInject" alt="Nest" src="assets/imgs/theme/icons/icon-heart.svg" />
-                  <span class="pro-count blue">6</span>
+                  <span class="pro-count blue">{{ totalProductFavorite }}</span>
                 </a>
-                <a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
+                <a  [routerLink]="['/',paths.favorite]"><span class="lable">Wishlist</span></a>
               </div>
               <div class="header-action-icon-2">
                 <a [routerLink]="['/' + paths.cart]" class="mini-cart-icon" href="shop-cart.html">

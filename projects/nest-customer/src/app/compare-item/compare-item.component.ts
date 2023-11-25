@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,AfterViewInit} from '@angular/core';
 import { paths } from '../const';
 import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -11,7 +11,7 @@ declare const template: any;
   selector: 'compare-item',
   templateUrl: './compare-item.component.html',
 })
-export class CompareItemComponent {
+export class CompareItemComponent implements AfterViewInit{
   title = 'nest-customer';
   comparedProducts: any[] = [];
   paths = paths;
@@ -28,7 +28,7 @@ export class CompareItemComponent {
     private router: Router,
     ) {}
 
-    ngOnInit(): void {
+    ngAfterViewInit() {
       this.loadComparedProducts();
       template.init();
     }
