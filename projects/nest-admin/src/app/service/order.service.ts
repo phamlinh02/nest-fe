@@ -21,8 +21,12 @@ export class OrderService {
   constructor(private http: HttpClient) {
   }
 
-  getAllOrder(order: any): Observable<any> {
-    return this.http.post(ORDER_API + '/get-all', order, httpOptions)
+  getAllOrder(order: any, header ?: any): Observable<any> {
+    let url = '/get-all';
+    if(header){
+      url += `?size=${header.size}&number=${header.number}`;
+    }
+    return this.http.post(ORDER_API + url, order, httpOptions)
   }
 
   getBillDetail(id: number): Observable<any> {
@@ -31,6 +35,12 @@ export class OrderService {
 
   saveBill(bill : any): Observable<any> {
     return this.http.post(ORDER_API + `/update`,bill, httpOptions)
+  }
+  getStatisticsBill(): Observable<any> {
+    return this.http.get(ORDER_API + `/statistics`, httpOptions)
+  }
+  latestBill(): Observable<any> {
+    return this.http.get(ORDER_API + `/order-bill`, httpOptions)
   }
 
 }

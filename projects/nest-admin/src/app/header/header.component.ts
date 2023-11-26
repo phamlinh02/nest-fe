@@ -24,13 +24,15 @@ export class HeaderComponent implements AfterViewInit{
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData).response;
-      this.getUserAvatar('account', this.user.avatar); 
+      this.getUserAvatar('account', this.user.avatar);
       console.log(userData);
     }
   }
 
   ngAfterViewInit() {
-    this.getUserAvatar('account', this.user.avatar); 
+    if(this.user){
+      this.getUserAvatar('account', this.user.avatar);
+    }
   }
 
   logout() {

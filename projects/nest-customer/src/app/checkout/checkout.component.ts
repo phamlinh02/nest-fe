@@ -20,7 +20,7 @@ export class CheckoutComponent implements AfterViewInit {
   bill: any = {};
   loading: boolean = false;
   totalPrice: number = 0;
-  createSuccess: boolean = true;
+  createSuccess: boolean = false;
 
   constructor(
     private cartService: CartService,
@@ -50,7 +50,11 @@ export class CheckoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    template.init();
+    try {
+      template.init();
+    } catch (e){
+      console.log(e)
+    }
     this.loadData();
   }
 
@@ -62,6 +66,7 @@ export class CheckoutComponent implements AfterViewInit {
 
     if (this.checkInValidForm()) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Please fill all info'});
+      return;
     }
 
     const billDetail = this.orderDetails.map((order: any) => {
@@ -76,6 +81,7 @@ export class CheckoutComponent implements AfterViewInit {
       next: () => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Create bill success'});
         this.createSuccess = true;
+        this.loadData();
       },
       error: () => {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Something wrong, Please try again'});
