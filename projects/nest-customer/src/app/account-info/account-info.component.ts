@@ -61,7 +61,6 @@ export class AccountInfoComponent implements AfterViewInit {
   ) {
 
     this.tabSelected = this.route.snapshot.queryParamMap.get('tab') ?? 'dashboard';
-    this.changeTab(this.tabSelected);
 
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -72,7 +71,13 @@ export class AccountInfoComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    template.init();
+    try {
+      template.init();
+    } catch (e){
+      console.log(e)
+    }
+    this.changeTab(this.tabSelected);
+
     this.getUserAvatar('account', this.user.avatar);
   }
 

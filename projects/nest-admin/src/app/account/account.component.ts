@@ -18,7 +18,7 @@ export class AccountComponent  implements AfterViewInit{
   userAvatars: { [key: number]: SafeUrl } = {};
   currentPage: number = 0;
   totalPages: number = 0;
-  
+
 
   constructor(
     private accountService: AccountService,
@@ -29,12 +29,13 @@ export class AccountComponent  implements AfterViewInit{
 
   ngAfterViewInit(){
     if (!this.accountService.isLoggedIn()) {
+      document.body.classList.add('abc');
       this.router.navigate(['/login']);
     } else {
       this.getAllUsers();
       template.init();
     }
-    
+
   }
 
   getAllUsers() {

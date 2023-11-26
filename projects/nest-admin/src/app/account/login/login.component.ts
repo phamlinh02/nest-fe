@@ -26,6 +26,9 @@ export class LoginComponent implements AfterViewInit{
 
   ngAfterViewInit() {
     template.init();
+    if (!this.accountService.isLoggedIn()) {
+      document.body.classList.add('not-login');
+    }
   }
 
   login() {
@@ -33,7 +36,7 @@ export class LoginComponent implements AfterViewInit{
       username: this.username,
       password: this.password,
     };
-  
+
     this.accountService.loginUser(payloadLogin).subscribe(
       (response) => {
         localStorage.setItem('token', response.accessToken);
@@ -43,12 +46,13 @@ export class LoginComponent implements AfterViewInit{
         if(userString){
           const userData = JSON.parse(userString).response;
           this.accountService.userRole = userData.roleName;
-        
+
           console.log('UserRole:', this.accountService.userRole);
         }
         // Kiểm tra quyền và chuyển hướng tùy thuộc vào quyền
         if (this.accountService.hasAdminOrDirectorRole()) {
           this.router.navigate(['/home']);
+          document.body.classList.remove('not-login');
         } else {
           this.errorMessage = 'Login failed, account does not have access rights!';
         }

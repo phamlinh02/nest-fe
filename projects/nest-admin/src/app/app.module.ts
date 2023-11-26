@@ -18,6 +18,7 @@ import {PaginatorModule} from "primeng/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoadingPageComponent} from "./loading-page/loading-page.component";
 import { StatisticProductComponent } from './statistical';
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
   declarations: [
@@ -45,15 +46,16 @@ import { StatisticProductComponent } from './statistical';
     RateDetailComponent,
     StatisticProductComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    PaginatorModule,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        PaginatorModule,
+        BrowserAnimationsModule,
+        ChartModule
+    ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
 })
