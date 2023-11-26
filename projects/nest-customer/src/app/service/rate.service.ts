@@ -37,5 +37,9 @@ export class RateService {
   deleteRate(rateId: number): Observable<any> {
     return this.http.delete(`${RATE_API}/delete/${rateId}`);
   }
- 
+
+  getTopRatedProducts(): Observable<any> {
+    return this.http.get(`${RATE_API}/get-top-rated-products`);
+  }
+
 }

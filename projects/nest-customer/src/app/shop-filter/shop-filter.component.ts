@@ -1,7 +1,7 @@
-import {AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../service/product.service';
-import {paths} from "../const";
+import { paths } from "../const";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 
@@ -14,7 +14,7 @@ declare const template: any;
 export class ShopFilterComponent implements AfterViewInit {
   title = 'nest-customer';
   searchResult: any[] = [];
-  showByCategory: any[] = []; 
+  showByCategory: any[] = [];
   searchKeyword: string = '';
   categoryId: number = 1;
   public readonly paths = paths;
@@ -27,22 +27,22 @@ export class ShopFilterComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.showProductByCategory();
     this.searchProduct();
     template.init();
-    
+
   }
 
-  showProductByCategory(){
+  showProductByCategory() {
     this.route.params.subscribe((params) => {
       this.searchKeyword = params['productName'];
       const categoryId = +params['categoryId'];
       if (!isNaN(categoryId)) {
         this.categoryId = categoryId; // Gán giá trị 'id' lấy từ URL vào biến 'productId'
-        this.productService.showProductsByCategoryPage(this.categoryId,this.currentPage, 8).subscribe(
+        this.productService.showProductsByCategoryPage(this.categoryId, this.currentPage, 8).subscribe(
           (data: any) => {
             this.showByCategory = data.response.content;
             this.totalPages = Math.ceil(data.response.totalElements / 8);
@@ -56,12 +56,12 @@ export class ShopFilterComponent implements AfterViewInit {
           }
         );
       }
-      
+
     });
   }
 
   searchProduct() {
-    this.productService.searchProductsByName(this.searchKeyword,this.currentPage, 8).subscribe(
+    this.productService.searchProductsByName(this.searchKeyword, this.currentPage, 8).subscribe(
       (data: any) => {
         this.searchResult = data.response.content;
         this.totalPages = Math.ceil(data.response.totalElements / 8);

@@ -1,13 +1,15 @@
-import { AfterViewInit, Component, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { paths } from "../const";
 import { OrderService } from "../service/order.service";
 import { ProductService } from "../service/product.service";
 import { CategoryService } from "../service/category.service";
 import { CartService } from '../service/cart.service';
+import { RateService } from '../service/rate.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { FavoriteService } from '../service/favorite.service';
+import { forkJoin } from 'rxjs';
 
 declare const template: any;
 
@@ -15,7 +17,7 @@ declare const template: any;
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnInit {
   title = 'nest-customer';
   paths = paths;
   products: any[] = [];
@@ -23,6 +25,7 @@ export class HomeComponent implements AfterViewInit {
   productRec: any[] = [];
   productSelling: any[] = [];
   productTrennding: any[] = [];
+  productRate: any[] = [];
   categories: any[] = [];
   cartItem: any[] = [];
   accountId: number = 0;
@@ -32,12 +35,14 @@ export class HomeComponent implements AfterViewInit {
   quantity: number = 1;
   productImage: { [key: number]: SafeUrl } = {};
   categoryImage: { [key: number]: SafeUrl } = {};
+  loading = false;
 
   constructor(
     private orderService: OrderService,
     private productService: ProductService,
     private categoryService: CategoryService,
     private cartService: CartService,
+    private rateService: RateService,
     private router: Router,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
@@ -45,9 +50,8 @@ export class HomeComponent implements AfterViewInit {
     private cd: ChangeDetectorRef
   ) {
   }
-  ngAfterViewInit() {
-    template.init();
 
+  ngOnInit(): void {
     //Lấy danh sách sản phẩm
     this.showProducts();
 
@@ -58,14 +62,20 @@ export class HomeComponent implements AfterViewInit {
 
     this.showTopSellingProducts();
 
-    // this.showMostSearchedProducts();
+    this.showMostSearchedProducts();
+
+    this.loading = true;
 
     this.orderService.getAllOrder({}).subscribe(response => {
       console.log(response);
     });
-
-    this.showProductsByCategory();
-    this.showTopPopularProduct();
+    forkJoin([this.showTopPopularProduct(), this.showProductsByCategory(), this.showTopRatedProducts()]).subscribe(() => {
+      this.loading = false;
+      template.topInit()
+    })
+  }
+  ngAfterViewInit() {
+    template.init()
   }
   showProducts() {
     this.productService.getAllProducts().subscribe((data: any) => {
@@ -211,18 +221,31 @@ export class HomeComponent implements AfterViewInit {
       });
   }
 
-  // showMostSearchedProducts() {
-  //   this.productService.getMostSearchedProducts().subscribe((data: any) => {
-  //     this.productTrennding = data.response;
-  //     this.productTrennding.forEach((product, index) => {
-  //       this.getProductImage('product', product.image, index);
-  //     });
-  //     console.log(this.productTrennding);
-  //   },
-  //     (error) => {
-  //       console.error('Lỗi khi tải danh sách sản phẩm: ', error);
-  //     });
-  // }
+  showMostSearchedProducts() {
+    this.productService.getMostSearchedProducts().subscribe((data: any) => {
+      this.productTrennding = data.response;
+      this.productTrennding.forEach((product, index) => {
+        this.getProductImage('product', product.image, index);
+      });
+      console.log(this.productTrennding);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showTopRatedProducts() {
+    this.rateService.getTopRatedProducts().subscribe((data: any) => {
+      this.productRate = data.response;
+      this.productRate.forEach((product, index) => {
+        this.getProductImage('product', product.image, index);
+      });
+      console.log(this.productRate);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
 
   addToComparison(product: any): void {
     const localStorageValue = localStorage.getItem('comparedProducts');
@@ -256,7 +279,6 @@ export class HomeComponent implements AfterViewInit {
           alert('The product has been added to your favorites list');
           console.log('Thêm sản phẩm vào danh sách yêu thích thành công');
           this.cd.detectChanges();
-
         },
         errorResponse => {
           alert('The product is already in the wish list!!!');
