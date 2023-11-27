@@ -26,7 +26,7 @@ export class AccountService {
 
   hasAdminOrDirectorRole(): boolean {
     console.log('UserRole in hasAdminOrDirectorRole:', this.userRole);
-    return this.userRole === 'ROLE_ADMIN' || this.userRole === 'ROLE_DIRECTOR';
+    return this.userRole === 'ROLE_ADMIN' || this.userRole === 'ROLE_DIRECTOR'|| this.userRole === 'ROLE_CUSTOMER';
   }
 
   isOwner(commentUserId: string): boolean {

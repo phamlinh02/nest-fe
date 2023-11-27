@@ -42,7 +42,7 @@ export class HomeComponent implements AfterViewInit {
   ) {
   }
   ngAfterViewInit() {
-    template.init();
+    
 
     //Lấy danh sách sản phẩm
     this.showProducts();
@@ -55,6 +55,7 @@ export class HomeComponent implements AfterViewInit {
     });
 
     this.showProductsByCategory();
+    template.init();
   }
   showProducts() {
     this.productService.getAllProducts().subscribe((data: any) => {
