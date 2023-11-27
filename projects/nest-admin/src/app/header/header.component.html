@@ -23,8 +23,7 @@
         <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
       </li>
       <li class="dropdown nav-item">
-        <a *ngIf="user" class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" *ngIf="userAvatar" [src]="userAvatar" alt="User" /></a>
-        <a *ngIf="!user" class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="assets/imgs/people/avatar-2.png" alt="User" /></a>
+        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="assets/imgs/people/avatar-2.png" alt="User" /></a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount" style="right: 0 !important; left: auto !important;">
           <a class="dropdown-item" [routerLink]="['/',paths.accountInfo]"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
           <div class="dropdown-divider"></div>
