@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { paths } from '../const';
+import { CategoryService } from "../service/category.service";
 
 declare let template: any;
 
@@ -10,8 +11,24 @@ declare let template: any;
 export class FooterComponent implements OnInit{
   title = 'nest-customer';
   paths = paths;
+  categories: any[] = [];
+
+  constructor(
+    private categoryService: CategoryService,
+  ){}
 
   ngOnInit(): void {
-    template.init();
+    this.showCategory();
   }
+
+  showCategory() {
+    this.categoryService.getAllCategoriesIsActive(0, 100).subscribe((data: any) => {
+      this.categories = data.response.content;
+      console.log(this.categories);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách danh mục sản phẩm: ', error);
+      });
+  }
+
 }

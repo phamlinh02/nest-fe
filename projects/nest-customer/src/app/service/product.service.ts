@@ -22,6 +22,10 @@ export class ProductService {
     return this.http.get<any[]>(`${PRODUCT_API}/get-all-active`);
   }
 
+  getAllProductsPage(page: number, size: number): Observable<any[]> {
+    return this.http.get<any[]>(`${PRODUCT_API}/get-all-active?page=${page}&size=${size}`);
+  }
+
   getProductById(id: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/get-product?id=${id}`);
   }
