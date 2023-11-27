@@ -30,6 +30,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
+import { AllProductComponent } from './all-product/all-product.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {MessageService} from "primeng/api";
     ProductDetailComponent,
     FavoriteComponent,
     ShopDealsComponent,
-    LoadingPageComponent
+    LoadingPageComponent,
+    AllProductComponent
   ],
     imports: [
         BrowserModule,
@@ -64,7 +66,7 @@ import {MessageService} from "primeng/api";
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule,
-        ToastModule,
+        ToastModule
     ],
   providers: [HttpClient, MessageService],
     exports: [

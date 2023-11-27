@@ -18,5 +18,6 @@ export const paths = {
   resetPass: 'reset-password',
   shopFilter : 'shop-filter',
   term: 'term',
-  invoice: 'invoice'
+  invoice: 'invoice',
+  allProducts: 'allProducts'
 }
