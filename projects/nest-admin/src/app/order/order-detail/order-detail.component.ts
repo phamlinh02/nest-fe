@@ -2,6 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {finalize} from "rxjs";
 import {OrderService} from "../../service/order.service";
+import { UploadsService } from '../../service/uploads.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
+interface ProductImageMap {
+  [productId: number]: SafeUrl;
+}
 
 @Component({
   selector: 'order-detail',
@@ -20,11 +26,15 @@ export class OrderDetailComponent implements OnInit {
     {code : 'PROCESSING', value : 'Processing'},
   ]
   statusSelected : any;
+  productImage: ProductImageMap = {};
+  accountAvatar: SafeUrl | undefined;
 
   constructor(
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private uploadsService: UploadsService,
+    private domSanitizer: DomSanitizer,
   ) {
     this.billId = this.route.snapshot.paramMap.get('slug');
   }
@@ -47,6 +57,15 @@ export class OrderDetailComponent implements OnInit {
         next: response => {
           this.orderDetail = response.response;
           this.statusSelected = this.orderDetail.bill.status;
+
+          if (this.orderDetail && this.orderDetail.account.avatar) {
+            this.getAccountAvatar('account', this.orderDetail.account.avatar);
+          }
+          this.orderDetail.billDetails.forEach((product: any) => {
+            this.orderDetail.billDetails.forEach((product: any) => {
+              this.getProductImage('product', product.productDTO.image, product.productDTO.id);
+            });
+        });
         },
         error: err => {
           alert(`Don't have this order`);
@@ -78,4 +97,19 @@ export class OrderDetailComponent implements OnInit {
         }
       })
   }
+  getProductImage(type: string, filename: string, productId: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.productImage[productId] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
+  }
+
+  getAccountAvatar(type: string, filename: string) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.accountAvatar = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
+  }
+
+
 }

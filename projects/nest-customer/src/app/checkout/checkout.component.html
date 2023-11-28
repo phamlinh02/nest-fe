@@ -386,7 +386,7 @@
               <tbody>
               <ng-container *ngFor="let item of orderDetails">
                 <tr>
-                  <td class="image product-thumbnail"><img src="assets/imgs/shop/product-1-1.jpg" alt="#"></td>
+                  <td class="image product-thumbnail"><img [src]="productImage[item.productId.id]" alt="#"></td>
                   <td>
                     <h6 class="w-160 mb-5"><span class="text-heading">{{item.productId.productName}}</span></h6>
                     <!--                    <div class="product-rate-cover">-->
@@ -397,7 +397,7 @@
                     <!--                      <span class="font-small ml-5 text-muted"> (4.0)</span>-->
                     <!--                    </div>-->
                     <div class="product-rate-cover">
-                      <span class="font-small ml-5 text-muted"> Price item {{item.productId.price}}</span>
+                      <span class="font-small ml-5 text-muted"> Price item ${{item.productId.price}}</span>
                     </div>
                   </td>
                   <td>

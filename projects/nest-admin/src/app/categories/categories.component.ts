@@ -93,6 +93,7 @@ export class CategoriesComponent implements AfterViewInit {
       (response) => {
         console.log('Updated successfully!', response);
         window.location.reload();
+        this.router.navigate(['/categories']);
       },
       (error) => {
         this.errorMessage = 'Product update failed, please check information...!';
@@ -113,6 +114,7 @@ export class CategoriesComponent implements AfterViewInit {
       (response) => {
         console.log('Category saved successfully!', response);
         window.location.reload();
+        
       },
       (error) => {
         this.errorMessage = 'Category save failed, please check information...!';

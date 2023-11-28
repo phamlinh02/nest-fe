@@ -49,7 +49,6 @@ export class LoginComponent implements AfterViewInit{
 
           console.log('UserRole:', this.accountService.userRole);
         }
-        // Kiểm tra quyền và chuyển hướng tùy thuộc vào quyền
         if (this.accountService.hasAdminOrDirectorRole()) {
           this.router.navigate(['/home']);
           document.body.classList.remove('not-login');
