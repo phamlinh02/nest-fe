@@ -13,35 +13,47 @@
                 <div class="col-lg-8">
                   <div class="row gx-3">
                     <div class="col-6 mb-3">
-                      <input class="form-control" name="id" [(ngModel)]="account.id" type="hidden" placeholder="Type here" />
+                      <input class="form-control" name="id" [(ngModel)]="account.id" type="hidden"
+                        placeholder="Type here" />
                       <label class="form-label">Full name</label>
-                      <input class="form-control" name="fullName" [(ngModel)]="account.fullName" type="text" placeholder="Type here" />
+                      <input class="form-control" name="fullName" [(ngModel)]="account.fullName" type="text"
+                        placeholder="Type here" />
                     </div>
                     <!-- col .// -->
                     <div class="col-6 mb-3">
                       <label class="form-label">Username</label>
-                      <input class="form-control" name="username" [(ngModel)]="account.username" type="text" placeholder="Type here" />
+                      <input class="form-control" name="username" [(ngModel)]="account.username" type="text"
+                        placeholder="Type here" />
                     </div>
                     <!-- col .// -->
                     <div class="col-lg-6 mb-3">
                       <label class="form-label">Email</label>
-                      <input class="form-control" type="email" name="email" [(ngModel)]="account.email" placeholder="example@mail.com" />
+                      <input class="form-control" type="email" name="email" [(ngModel)]="account.email"
+                        placeholder="example@mail.com" />
                     </div>
                     <!-- col .// -->
                     <div class="col-lg-6 mb-3">
                       <label class="form-label">Phone</label>
-                      <input class="form-control" type="tel" name="phone" [(ngModel)]="account.phone" placeholder="+1234567890" />
+                      <input class="form-control" type="tel" name="phone" [(ngModel)]="account.phone"
+                        placeholder="+1234567890" />
                     </div>
                     <!-- col .// -->
                     <div class="col-lg-12 mb-3">
                       <label class="form-label">Address</label>
-                      <input class="form-control" type="text" name="address" [(ngModel)]="account.address" placeholder="Type here" />
+                      <input class="form-control" type="text" name="address" [(ngModel)]="account.address"
+                        placeholder="Type here" />
+                    </div>
+                    <div class="mb-4">
+                      <label class="form-label">IsActive</label>
+                      <select class="form-select" name="isActive" [(ngModel)]="account.isActive">
+                        <option [value]="true" [selected]="account.isActive === true">Active</option>
+                        <option [value]="false" [selected]="account.isActive === false">Disabled</option>
+                      </select>
                     </div>
                     <div class="col-lg-12 mb-3">
                       <div class="mb-4">
                         <label class="form-label">Role Name</label>
                         <select class="form-select" name="roleName" [(ngModel)]="account.roleName">
-
                           <option *ngFor="let role of roles" [value]="role.roleName">{{role.roleName}}</option>
                         </select>
                       </div>
@@ -58,7 +70,7 @@
                       <label for="fileInput" class="btn btn-light rounded font-md">
                         <i class="icons material-icons md-backup font-md"></i> Upload
                       </label>
-                      <input type="file" id="fileInput"  (change)="onAvatarChange($event)" style="display: none;" />
+                      <input type="file" id="fileInput" (change)="onAvatarChange($event)" style="display: none;" />
                     </figcaption>
                   </figure>
                 </aside>
@@ -66,7 +78,8 @@
               </div>
               <!-- row.// -->
               <br />
-              <button class="btn btn-primary" style="margin-left: 20px;" type="submit" (click)="updateAccount()">Update Account</button>
+              <button class="btn btn-primary" style="margin-left: 20px;" type="submit" (click)="updateAccount()">Update
+                Account</button>
             </form>
             <!-- row.// -->
           </section>

@@ -1,0 +1,54 @@
+<section class="content-main">
+    <div class="content-header">
+      <div>
+        <h2 class="content-title card-title">Authority</h2>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-body">
+        <article class="itemlist text-center" *ngFor="let autho of authorities; let i = index">
+          <div class="row align-items-center">
+            <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+              <a class="itemside" [routerLink]="['/', paths.account,autho.accountId]">
+                <div class="left">
+                  <img [src]="userAvatars[i]" class="img-sm img-thumbnail" alt="Item" />
+                </div>
+                <div class="info">
+                  <h6 class="mb-0">{{ autho.username }}</h6>
+                </div>
+              </a>
+            </div>
+            <input type="hidden" name="id" [(ngModel)]="autho.id">
+            <div class="col-lg-2 col-sm-2 col-4 col-price">
+                <select class="form-select" name="roleId" [(ngModel)]="autho.roleId">
+                    <option *ngFor="let role of roles" [value]="role.id">{{ role.roleName }}</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                <!-- Disable nút Delete nếu sản phẩm không active -->
+                <button class="btn btn-sm font-sm btn-light rounded" (click)="updateAuthority()" style="margin-left: 10px;" > Update
+                </button>
+              </div>
+          </div>
+          <!-- row .// -->
+        </article>
+        <!-- itemlist  .// -->
+      </div>
+      <!-- card-body end// -->
+    </div>
+    <!-- card end// -->
+    <div class="pagination-area mt-15 mb-50">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-start">
+          <li class="page-item">
+            <a class="page-link" (click)="changePage(currentPage - 1)"><i class="material-icons md-chevron_left pt-1"></i></a>
+          </li>
+          <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of range(totalPages)"><a class="page-link" (click)="changePage(page)">{{ page + 1 }}</a></li>
+          <li class="page-item">
+            <a class="page-link" (click)="changePage(currentPage + 1)"><i class="material-icons md-chevron_right pt-1"></i></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  

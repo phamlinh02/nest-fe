@@ -72,7 +72,21 @@ export class AccountDetailComponent implements AfterViewInit{
     formData.append('address', this.account.address);
     formData.append('phone', this.account.phone);
     formData.append('roleName', this.account.roleName);
-  
+    formData.append('isActive', this.account.isActive);
+
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.accountService.userRole = userData.roleName;
+
+      console.log('UserRole:', this.accountService.userRole);
+    }
+  if (this.accountService.hasAdminRole() && this.account.roleName !== 'ROLE_CUSTOMER') {
+      alert('There is no permission to delete updates with the current role.');
+      console.error('Không có quyền cập nhật tài khoản với vai trò hiện tại.');
+      return;
+  }
+  else{
     this.accountService.updateUser(formData).subscribe(
       (response) => {
         console.log('Updated successfully!', response);
@@ -82,6 +96,19 @@ export class AccountDetailComponent implements AfterViewInit{
         this.errorMessage = 'Account update failed, please check information...!';
       }
     );
+  }
+
+  // if(this.accountService.hasDirectorRole()){
+  //   this.accountService.updateUser(formData).subscribe(
+  //     (response) => {
+  //       console.log('Updated successfully!', response);
+  //       window.location.reload();
+  //     },
+  //     (error) => {
+  //       this.errorMessage = 'Account update failed, please check information...!';
+  //     }
+  //   );
+  // }
   }
 
   showRoles() {

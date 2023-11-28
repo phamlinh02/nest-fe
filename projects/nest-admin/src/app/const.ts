@@ -10,5 +10,6 @@ export const paths = {
   forgetPass: 'forgetPass',
   accountInfo: 'accountInfo',
   changePass: 'changePass',
-  statisticProduct: 'statisticProduct'
+  statisticProduct: 'statisticProduct',
+  authority: 'authority'
 }

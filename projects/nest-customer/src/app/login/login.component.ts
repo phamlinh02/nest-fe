@@ -36,14 +36,17 @@ export class LoginComponent implements AfterViewInit {
       username: this.username,
       password: this.password,
     };
-
+  
     this.accountService.loginUser(payloadLogin).subscribe(
       (response) => {
-        localStorage.setItem('token', response.accessToken);
-        localStorage.setItem('user', JSON.stringify(response));
 
-        this.cartService.updateCart();
-        this.router.navigate(['/home']);
+          // Tài khoản hoạt động, tiến hành đăng nhập và các hành động khác
+          localStorage.setItem('token', response.accessToken);
+          localStorage.setItem('user', JSON.stringify(response));
+  
+          this.cartService.updateCart();
+          this.router.navigate(['/home']);
+
       },
       (error) => {
         this.errorMessage = 'Login unsuccessful. Please check your login information!';
