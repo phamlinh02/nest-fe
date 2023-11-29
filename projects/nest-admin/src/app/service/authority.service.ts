@@ -23,8 +23,10 @@ export class AuthorityService {
     return this.http.get(`${AUTHORITY_API}/get-all?page=${page}&size=${size}`);
   }
 
-  updateAuthority(authority: any): Observable<any> {
-    return this.http.post(`${AUTHORITY_API}/update`, authority);
+  updateAuthorityRole(authorityId: number, updateAuthorityDTO: any): Observable<any> {
+    const url = `${AUTHORITY_API}/update-role/${authorityId}`;
+    return this.http.post(url, updateAuthorityDTO, this.httpOptions);
   }
+
  
 }

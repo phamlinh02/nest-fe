@@ -22,7 +22,7 @@ export class AuthorityComponent implements AfterViewInit {
   totalPages: number = 0;
   updateData: { roleId: number }[] = [];
   roles: any[] = [];
-  authority: any = {};
+  userRole: string = '';
 
 
   constructor(
@@ -32,18 +32,28 @@ export class AuthorityComponent implements AfterViewInit {
     private router: Router,
     private authorityService: AuthorityService,
     private roleService: RoleService
-  ) { }
-
-  ngAfterViewInit() {
+  ) { 
     if (!this.accountService.isLoggedIn()) {
       document.body.classList.add('abc');
       this.router.navigate(['/login']);
-    } else {
+    }
+  }
+
+  ngAfterViewInit() {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.userRole = userData.roleName;
+    if(this.userRole === 'ROLE_ADMIN'){
+      alert('You do not have permission to access this page');
+      this.router.navigate(['/home']);
+    }
+    else {
       this.getAllAuthorities();
       this.showRoles();
       template.init();
     }
-
+  }
   }
 
   getAllAuthorities() {
@@ -77,23 +87,6 @@ export class AuthorityComponent implements AfterViewInit {
     return Array.from({ length: totalPages }, (_, i) => i);
   }
 
-  
-  updateAuthority() {
-    const formData = new FormData();
-  
-    formData.append('id', this.authority.id);
-    formData.append('roleId', this.authority.roleId);
-
-    this.authorityService.updateAuthority(formData).subscribe(
-      (response) => {
-        console.log('Updated successfully!', response);
-        window.location.reload();
-      },
-      (error) => {
-        console.log('Account update failed, please check information...!');
-      }
-    );
-  }
 
   showRoles() {
     this.roleService.getAllRolesIsActive().subscribe((data: any) => {
@@ -103,6 +96,20 @@ export class AuthorityComponent implements AfterViewInit {
       (error) => {
         console.error('Lỗi khi tải danh sách vai trò ', error);
       });
+  }
+
+  updateRole(authority: any) {
+    const updateAuthorityDTO = { roleId: authority.roleId };
+    this.authorityService.updateAuthorityRole(authority.id, updateAuthorityDTO).subscribe(
+      () => {
+        alert('Role updated successfully');
+        console.log('Role updated successfully');
+      },
+      (error) => {
+        alert('Error updating role');
+        console.error('Error updating role', error);
+      }
+    );
   }
 
 }
