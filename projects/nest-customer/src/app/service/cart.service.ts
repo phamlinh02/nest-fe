@@ -52,4 +52,8 @@ export class CartService {
         return this.http.put<any>(`${CART_API}/update?accountId=${accountId}`, cartItems, this.httpOptions);
     }
 
+    // getTop10ProductPopular(): Observable<any[]> {
+    //   return this.http.get<any[]>(`${CART_API}/top_popular`);
+    // }
+
 }
