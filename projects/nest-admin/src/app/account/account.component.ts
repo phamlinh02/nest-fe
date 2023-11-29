@@ -18,6 +18,7 @@ export class AccountComponent implements AfterViewInit {
   userAvatars: { [key: number]: SafeUrl } = {};
   currentPage: number = 0;
   totalPages: number = 0;
+  userRole: string = '';
 
 
   constructor(
@@ -73,18 +74,16 @@ export class AccountComponent implements AfterViewInit {
     const userString = localStorage.getItem('user');
     if (userString) {
       const userData = JSON.parse(userString).response;
-      this.accountService.userRole = userData.roleName;
+      this.userRole = userData.roleName;
 
-      console.log('UserRole:', this.accountService.userRole);
-    }
-    if (this.accountService.hasAdminRole()) {
-      // Check if the account to be deleted has the required role
+      console.log('UserRole:', this.userRole);
+    
+    if (this.userRole === 'ROLE_ADMIN') {
       this.accountService.getUserByUsername(accountId).subscribe(
         (accountData) => {
-          const accountRole = accountData.roleName;
-  
-          if (accountRole === 'ROLE_DIRECTOR') {
-            // Only delete the account if its role is ROLE_DIRECTOR
+          const accountRole = accountData.response.roleName;
+          console.log(accountRole);
+          if (accountRole === 'ROLE_CUSTOMER') {
             this.accountService.deleteAccount(accountId).subscribe(
               (response) => {
                 this.getAllUsers();
@@ -104,7 +103,7 @@ export class AccountComponent implements AfterViewInit {
         }
       );
     }
-    if(this.accountService.hasDirectorRole()){
+    if(this.userRole === 'ROLE_DIRECTOR'){
       this.accountService.deleteAccount(accountId).subscribe(
         (response) => {
           this.getAllUsers();
@@ -115,7 +114,7 @@ export class AccountComponent implements AfterViewInit {
         }
       );
     }
-
+  }
     
   }
 }

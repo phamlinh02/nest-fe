@@ -50,14 +50,6 @@
                         <option [value]="false" [selected]="account.isActive === false">Disabled</option>
                       </select>
                     </div>
-                    <div class="col-lg-12 mb-3">
-                      <div class="mb-4">
-                        <label class="form-label">Role Name</label>
-                        <select class="form-select" name="roleName" [(ngModel)]="account.roleName">
-                          <option *ngFor="let role of roles" [value]="role.roleName">{{role.roleName}}</option>
-                        </select>
-                      </div>
-                    </div>
                     <!-- col .// -->
                   </div>
                   <!-- row.// -->

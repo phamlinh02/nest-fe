@@ -49,6 +49,7 @@ export class AddProductComponent implements AfterViewInit{
     formData.append('description', this.product.description);
     formData.append('isActive', this.product.isActive);
     formData.append('categoryName', this.product.categoryName);
+    formData.append('endDate', this.product.endDate);
 
     if (this.productFile) {
       formData.append('productFile', this.productFile);
