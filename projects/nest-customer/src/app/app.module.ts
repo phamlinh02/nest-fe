@@ -31,6 +31,7 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-b
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
 import { AllProductComponent } from './all-product/all-product.component';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { AllProductComponent } from './all-product/all-product.component';
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule,
-        ToastModule
+        ToastModule,
+        CarouselModule
     ],
   providers: [HttpClient, MessageService],
     exports: [

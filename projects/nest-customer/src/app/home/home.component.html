@@ -190,7 +190,7 @@
                 <div class="product-img-action-wrap">
                   <div class="product-img product-img-zoom">
                     <a [routerLink]="['/', paths.productDetail, product.id]">
-                      <img class="default-img" [src]="productImage[i]"
+                      <img class="default-img" [src]="productImage[product.id]"
                         alt="{{ product.productName }}" />
                     </a>
                   </div>
@@ -316,7 +316,7 @@
       </div>
       <div class="row">
         <div class="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
-          <div class="banner-img style-2">
+          <div class="banner-img style-2" style="height: 480px;">
             <div class="banner-text">
               <h2 class="mb-100">Bring nature into your home</h2>
               <a [routerLink]="['/',paths.allProducts]" class="btn btn-xs">Shop Now <i class="fi-rs-arrow-small-right"></i></a>
@@ -326,236 +326,39 @@
         <div class="col-lg-9 col-md-12 wow animate__animated animate__fadeIn" data-wow-delay=".4s">
           <div class="tab-content" id="myTabContent-1">
             <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel" aria-labelledby="tab-one-1">
-              <div class="carausel-4-columns-cover arrow-center position-relative">
-                <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-arrows"></div>
-                <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns">
-                  <div class="product-cart-wrap">
+              <p-carousel [value]="topRateProducts" [numVisible]="4" [numScroll]="1">
+                <ng-template let-product [ngForOf]="topRateProducts" let-i="index" pTemplate="item" class="carousel">
+                  <div class="product-cart-wrap m-2">
                     <div class="product-img-action-wrap">
                       <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-13-1.png" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-13-2.jpg" alt />
+                        <a [routerLink]="['/', paths.productDetail, product.id]">
+                          <img class="default-img" [src]="productImage[product.id]" alt />
                         </a>
                       </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="hot">Save 15%</span>
-                      </div>
+                      <!-- Các nút hành động khác -->
                     </div>
                     <div class="product-content-wrap">
                       <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
+                        <a [routerLink]="['/',paths.shopFilter,'showByCategory', product.categoryId]">{{ product.categoryName }}</a>
                       </div>
-                      <h2><a href="shop-product-right.html">Seeds of Change
-                          Organic Quinoa, Brown</a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
+                      <h2><a [routerLink]="['/', paths.productDetail, product.id]">{{ product.productName }}</a></h2>
+                      <div class="product-rate-cover">
+                        <div class="product-rate d-inline-block">
+                          <div class="product-rating" [style.width]="calculateRatingWidth(product.averageRating)"></div>
+                        </div>
+                        <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                       </div>
                       <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
+                        <span>${{ product.price }}</span>
                       </div>
                       <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
+                        <!-- Phần hiển thị số lượng đã bán -->
                       </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
+                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart</a>
                     </div>
                   </div>
-                  <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-14-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-14-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="new">Save 35%</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">All Natural
-                          Italian-Style Chicken Meatballs</a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-15-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-15-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="sale">Sale</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">Angie’s
-                          Boomchickapop Sweet and womnies</a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-16-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-16-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="best">Best sale</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">Foster Farms Takeout
-                          Crispy Classic </a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!--End product Wrap-->
-                  <div class="product-cart-wrap">
-                    <div class="product-img-action-wrap">
-                      <div class="product-img product-img-zoom">
-                        <a href="shop-product-right.html">
-                          <img class="default-img" src="assets/imgs/shop/product-4-1.jpg" alt />
-                          <img class="hover-img" src="assets/imgs/shop/product-4-2.jpg" alt />
-                        </a>
-                      </div>
-                      <div class="product-action-1">
-                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal"
-                          data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i
-                            class="fi-rs-heart"></i></a>
-                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i
-                            class="fi-rs-shuffle"></i></a>
-                      </div>
-                      <div class="product-badges product-badges-position product-badges-mrg">
-                        <span class="hot">Save 15%</span>
-                      </div>
-                    </div>
-                    <div class="product-content-wrap">
-                      <div class="product-category">
-                        <a href="shop-grid-right.html">Hodo Foods</a>
-                      </div>
-                      <h2><a href="shop-product-right.html">Blue Diamond Almonds
-                          Lightly Salted</a></h2>
-                      <div class="product-rate d-inline-block">
-                        <div class="product-rating" style="width: 80%"></div>
-                      </div>
-                      <div class="product-price mt-10">
-                        <span>$238.85 </span>
-                        <span class="old-price">$245.8</span>
-                      </div>
-                      <div class="sold mt-15 mb-15">
-                        <div class="progress mb-5">
-                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <span class="font-xs text-heading"> Sold: 90/120</span>
-                      </div>
-                      <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To
-                        Cart</a>
-                    </div>
-                  </div>
-                  <!-- End product Wrap -->
-                </div>
-              </div>
+                </ng-template>
+              </p-carousel>
             </div>
             <!--End tab-pane-->
             <div class="tab-pane fade" id="tab-two-1" role="tabpanel" aria-labelledby="tab-two-1">
@@ -1040,23 +843,22 @@
           data-wow-delay="0">
           <h4 class="section-title style-1 mb-30 animated animated">Top Selling</h4>
           <div class="product-list-small animated animated">
-            <article class="row align-items-center hover-up" *ngFor="let product of productSelling, let i = index">
+            <article class="row align-items-center hover-up" *ngFor="let product of productSelling">
               <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img [src]="productImage[i]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail, product.id]"><img [src]="productImage[product.id]" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
-                  <a href="shop-product-right.html">{{product.productName}}</a>
+                  <a [routerLink]="['/',paths.productDetail,product.id]">{{product.productName}}</a>
                 </h6>
                 <div class="product-rate-cover">
                   <div class="product-rate d-inline-block">
-                    <div class="product-rating" style="width: 90%"></div>
+                    <div class="product-rating" [style.width]="calculateRatingWidth(product.averageRating)"></div>
                   </div>
-                  <span class="font-small ml-5 text-muted"> (4.0)</span>
+                  <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
                   <span>${{product.price}}</span>
-                  <span class="old-price">$33.8</span>
                 </div>
               </div>
             </article>
@@ -1068,21 +870,20 @@
           <div class="product-list-small animated animated">
             <article class="row align-items-center hover-up" *ngFor="let product of productTrending, let i = index">
               <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img [src]="productImage[i]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail, product.id]"><img [src]="productImage[product.id]" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
-                  <a href="shop-product-right.html">{{product.productName}}</a>
+                  <a [routerLink]="['/',paths.productDetail,product.id]">{{product.productName}}</a>
                 </h6>
                 <div class="product-rate-cover">
                   <div class="product-rate d-inline-block">
                     <div class="product-rating" [style.width]="calculateRatingWidth(product.averageRating)"></div>
                   </div>
-                  <span class="font-small ml-5 text-muted"> ({{product.totalRatings}}.0)</span>
+                  <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
                   <span>${{product.price}}</span>
-                  <span class="old-price">$33.8</span>
                 </div>
               </div>
             </article>
@@ -1096,21 +897,20 @@
           <div class="product-list-small animated animated">
             <article class="row align-items-center hover-up" *ngFor="let product of productRec, let i = index">
               <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img [src]="productImage[i]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail,product.id]"><img [src]="productImage[product.id]" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
-                  <a href="shop-product-right.html">{{product.productName}}</a>
+                  <a [routerLink]="['/',paths.productDetail,product.id]">{{product.productName}}</a>
                 </h6>
                 <div class="product-rate-cover">
                   <div class="product-rate d-inline-block">
-                    <div class="product-rating" style="width: 90%"></div>
+                    <div class="product-rating" [style.width]="calculateRatingWidth(product.averageRating)"></div>
                   </div>
-                  <span class="font-small ml-5 text-muted"> (4.0)</span>
+                  <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
                   <span>${{product.price}}</span>
-                  <span class="old-price">$33.8</span>
                 </div>
               </div>
             </article>
@@ -1123,21 +923,20 @@
           <div class="product-list-small animated animated">
             <article class="row align-items-center hover-up" *ngFor="let product of productRate, let i = index">
               <figure class="col-md-4 mb-0">
-                <a href="shop-product-right.html"><img [src]="productImage[i]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail,product.id]"><img [src]="productImage[product.id]" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
-                  <a href="shop-product-right.html">{{product.productName}}</a>
+                  <a [routerLink]="['/',paths.productDetail,product.id]">{{product.productName}}</a>
                 </h6>
                 <div class="product-rate-cover">
                   <div class="product-rate d-inline-block">
                     <div class="product-rating" [style.width]="calculateRatingWidth(product.averageRating)"></div>
                   </div>
-                  <span class="font-small ml-5 text-muted"> ({{product.totalRatings}}.0)</span>
+                  <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
                   <span>${{product.price}}</span>
-                  <span class="old-price">$33.8</span>
                 </div>
               </div>
             </article>
