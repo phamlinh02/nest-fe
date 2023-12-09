@@ -81,9 +81,9 @@
                   <div class="product-extra-link2">
                     <button (click)="addToCart(product.id)" type="submit" class="button button-add-to-cart"
                       style="vertical-align: top !important"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
-                    <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i
+                    <a aria-label="Add To Wishlist" (click)="addToWishlist(product.id)"  class="action-btn hover-up"><i
                         class="fi-rs-heart"></i></a>
-                    <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i
+                    <a aria-label="Compare" class="action-btn hover-up" (click)="addToComparison(product)"><i
                         class="fi-rs-shuffle"></i></a>
                   </div>
                 </div>
@@ -135,7 +135,7 @@
                               <div class="desc">
                                 <div class="d-flex justify-content-between mb-10">
                                   <div class="d-flex align-items-center">
-                                    <span class="font-xs text-muted">{{rate.rateDate}} </span>
+                                    <span class="font-xs text-muted">{{rate.rateDate | date}} </span>
                                   </div>
                                   <div class="product-rate d-inline-block m-2">
                                     <div class="product-rating" [style.width]="calculateRatingWidth(rate.star)"></div>
