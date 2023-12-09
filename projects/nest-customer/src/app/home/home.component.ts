@@ -23,7 +23,9 @@ export class HomeComponent implements AfterViewInit {
   products: any[] = [];
   categories: any[] = [];
   cartItem: any[] = [];
-  productRec: any[]=[];
+  producttop: any[] = [];
+  productRec: any[] = [];
+  productRecen: any[] = [];
   productTrending: any[] = [];
   productSelling: any[] = [];
   productRate: any[] = [];
@@ -70,6 +72,8 @@ export class HomeComponent implements AfterViewInit {
     this.showTopRatedProducts();
     this.showTopSellingProducts();
     this.showTopRateProducts();
+    this.showTopPopularProduct();
+    this.showRecentlyAdded();
     template.init();
   }
   showProducts() {
@@ -97,7 +101,7 @@ export class HomeComponent implements AfterViewInit {
     this.categoryService.getAllCategoriesIsActive(0, 100).subscribe((data: any) => {
       this.categories = data.response.content;
       this.categories.forEach((category, index) => {
-        this.getAllCategoryImage('category', category.imageCategory,index);
+        this.getAllCategoryImage('category', category.imageCategory, index);
       });
       console.log(this.categories);
     },
@@ -221,27 +225,40 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  // showTopPopularProduct() {
-  //   this.cartService.getTop10ProductPopular().subscribe((data: any) => {
-  //       this.producttop = data.response;
-  //       this.producttop.forEach((product, index) => {
-  //         this.getProductImage('product', product.image, index);
-  //       });
-  //       console.log(this.producttop);
-  //     },
-  //     (error) => {
-  //       console.error('Lỗi khi tải danh sách sản phẩm: ', error);
-  //     });
-  // }
+  showTopPopularProduct() {
+    this.cartService.getTop10ProductPopular().subscribe((data: any) => {
+      this.producttop = data.response;
+      this.producttop.forEach((product, index) => {
+        this.getProductImage('product', product.image, index);
+      });
+      console.log(this.producttop);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showRecentlyAdded() {
+    this.productService.getRecentlyAdded().subscribe((data: any) => {
+      this.productRecen = data.response;
+      this.productRecen.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productRec);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
 
   showRecentlyAddedProducts() {
     this.productService.getRecentlyAddedProducts().subscribe((data: any) => {
-        this.productRec = data.response;
-        this.productRec.forEach((product, index) => {
-          this.getProductImage('product', product.image, product.id);
-        });
-        console.log(this.productRec);
-      },
+      this.productRec = data.response;
+      this.productRec.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productRec);
+    },
       (error) => {
         console.error('Lỗi khi tải danh sách sản phẩm: ', error);
       });
@@ -249,12 +266,12 @@ export class HomeComponent implements AfterViewInit {
 
   showTopSellingProducts() {
     this.orderService.getTopSellingProducts().subscribe((data: any) => {
-        this.productSelling = data.response;
-        this.productSelling.forEach((product, index) => {
-          this.getProductImage('product', product.image, product.id);
-        });
-        console.log(this.productSelling);
-      },
+      this.productSelling = data.response;
+      this.productSelling.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productSelling);
+    },
       (error) => {
         console.error('Lỗi khi tải danh sách sản phẩm: ', error);
       });
@@ -262,12 +279,12 @@ export class HomeComponent implements AfterViewInit {
 
   showMostSearchedProducts() {
     this.productService.getMostSearchedProducts().subscribe((data: any) => {
-        this.productTrending = data.response;
-        this.productTrending.forEach((product, index) => {
-          this.getProductImage('product', product.image, product.id);
-        });
-        console.log(this.productTrending);
-      },
+      this.productTrending = data.response;
+      this.productTrending.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productTrending);
+    },
       (error) => {
         console.error('Lỗi khi tải danh sách sản phẩm: ', error);
       });
@@ -275,25 +292,25 @@ export class HomeComponent implements AfterViewInit {
 
   showTopRatedProducts() {
     this.productService.getTopRatedProducts(3).subscribe((data: any) => {
-        this.productRate = data.response;
-        this.productRate.forEach((product, index) => {
-          this.getProductImage('product', product.image, product.id);
-        });
-        console.log(this.productRate);
-      },
+      this.productRate = data.response;
+      this.productRate.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productRate);
+    },
       (error) => {
         console.error('Lỗi khi tải danh sách sản phẩm: ', error);
       });
   }
 
-  showTopRateProducts(){
+  showTopRateProducts() {
     this.productService.getTopRatedProducts(10).subscribe((data: any) => {
       this.topRateProducts = data.response;
 
-      this.topRateProducts.forEach((product,index) => {
+      this.topRateProducts.forEach((product, index) => {
         this.getProductImage('product', product.image, product.id);
       });
-      console.log('ProductTopRate: ',this.topRateProducts);
+      console.log('ProductTopRate: ', this.topRateProducts);
     },
       (error) => {
         console.error('Lỗi khi tải danh sách sản phẩm: ', error);

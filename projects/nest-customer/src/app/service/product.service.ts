@@ -45,11 +45,15 @@ export class ProductService {
     return this.http.get<any[]>(`${PRODUCT_API}/get-recently-added`);
   }
 
+  getRecentlyAdded(): Observable<any[]> {
+    return this.http.get<any[]>(`${PRODUCT_API}/get-recently`);
+  }
+
   getMostSearchedProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${PRODUCT_API}/get-most-searched-products`);
   }
 
-  getTopRatedProducts(limit:number): Observable<any[]> {
+  getTopRatedProducts(limit: number): Observable<any[]> {
     return this.http.get<any[]>(`${PRODUCT_API}/top-rated-products?limit=${limit}`);
   }
 }
