@@ -8,6 +8,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { FavoriteService } from '../service/favorite.service';
 import { ActivatedRoute} from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+import { CompareService } from '../service/compare.service';
 
 declare let template: any;
 
@@ -26,6 +28,7 @@ export class HeaderComponent implements AfterViewInit {
   totalValue: number = 0;
   totalProduct: number = 0;
   totalProductFavorite: number = 0;
+  totalComparedProducts: number = 0;
   productImage: { [key: number]: SafeUrl } = {};
   categoryImage: { [key: number]: SafeUrl } = {};
   categoryFile: File | null = null;
@@ -41,9 +44,19 @@ export class HeaderComponent implements AfterViewInit {
     private domSanitizer: DomSanitizer,
     private favoriteService: FavoriteService,
     private route: ActivatedRoute,
+    private compareService: CompareService
   ) {
     this.cartService.cartUpdated.subscribe(() => {
       this.showCartItem();
+    });
+    this.favoriteService.favoriteUpdated.subscribe(() => {
+      this.loadFavoriteProducts();
+    })
+    this.compareService.comparedProducts$.subscribe(products => {
+      this.totalComparedProducts = products.length;
+    });
+    this.compareService.comparedProductsChanged$.subscribe(() => {
+      this.updateTotalComparedProducts();
     });
   }
 
@@ -57,8 +70,14 @@ export class HeaderComponent implements AfterViewInit {
 
     this.loadFavoriteProducts();
 
-    
+    this.updateTotalComparedProducts();
 
+  }
+
+  updateTotalComparedProducts() {
+    this.compareService.comparedProducts$.subscribe(products => {
+      this.totalComparedProducts = products.length;
+    });
   }
 
   searchProductByName() {
@@ -166,10 +185,6 @@ export class HeaderComponent implements AfterViewInit {
     if (storedData !== null) {
       this.comparedProducts = JSON.parse(storedData);
     }
-  }
-
-  getComparisonCount(): number {
-    return this.comparedProducts.length;
   }
 
   loadFavoriteProducts() {

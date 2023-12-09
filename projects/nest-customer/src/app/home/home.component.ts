@@ -1,4 +1,4 @@
-import { AfterViewInit, Component,ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ChangeDetectorRef } from '@angular/core';
 import { paths } from "../const";
 import { OrderService } from "../service/order.service";
 import { ProductService } from "../service/product.service";
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { FavoriteService } from '../service/favorite.service';
+import { CompareService } from '../service/compare.service';
 
 declare const template: any;
 
@@ -34,6 +35,7 @@ export class HomeComponent implements AfterViewInit {
   productImage: { [key: number]: SafeUrl } = {};
   categoryImage: { [key: number]: SafeUrl } = {};
   topRateProducts: any[] = [];
+  comparedProducts: any[] = [];
 
   constructor(
     private orderService: OrderService,
@@ -45,7 +47,8 @@ export class HomeComponent implements AfterViewInit {
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
     private favoriteService: FavoriteService,
-    private cd: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private compareService: CompareService
   ) {
   }
   ngAfterViewInit() {
@@ -187,6 +190,7 @@ export class HomeComponent implements AfterViewInit {
       if (!comparedProducts.some((p: any) => p.id === product.id)) {
         comparedProducts.push(product);
         localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+        this.compareService.updateComparedProducts(comparedProducts);
         alert('Product added to comparison list');
       } else {
         alert('The product is already in the comparison list');
@@ -205,7 +209,6 @@ export class HomeComponent implements AfterViewInit {
           // Handle success
           alert('The product has been added to your favorites list');
           console.log('Thêm sản phẩm vào danh sách yêu thích thành công');
-          this.cd.detectChanges();
 
         },
         errorResponse => {
