@@ -37,8 +37,12 @@ export class ShopFilterComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
+    this.route.params.subscribe((params) => {
+      this.searchKeyword = params['productName'];
+     
+      this.searchProduct();
+    });
     this.showProductByCategory();
-    this.searchProduct();
     template.init();
     
   }
