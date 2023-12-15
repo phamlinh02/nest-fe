@@ -35,10 +35,6 @@ export class AccountInfoComponent implements AfterViewInit {
       title: 'Orders',
       code: 'order'
     }, {
-      icon: 'fi-rs-shopping-cart-check',
-      title: 'Track Your Order',
-      code: 'track-orders'
-    }, {
       icon: 'fi-rs-marker',
       title: 'My Address',
       code: 'address'
@@ -59,7 +55,9 @@ export class AccountInfoComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private orderService: OrderService
   ) {
-
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
     this.tabSelected = this.route.snapshot.queryParamMap.get('tab') ?? 'dashboard';
 
     const userData = localStorage.getItem('user');
@@ -69,8 +67,12 @@ export class AccountInfoComponent implements AfterViewInit {
       this.getUserAvatar('account', this.user.avatar);
     }
   }
+}
 
   ngAfterViewInit() {
+    if (!this.accountService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
     try {
       template.init();
     } catch (e){
@@ -80,6 +82,7 @@ export class AccountInfoComponent implements AfterViewInit {
 
     this.getUserAvatar('account', this.user.avatar);
   }
+}
 
   updateAccountByUser() {
     // Create a FormData object to send the form data with the avatar file

@@ -5,6 +5,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {OrderService} from "../service/order.service";
 import {paths} from "../const";
 import {Router} from "@angular/router";
+import { UploadsService } from '../service/uploads.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 declare const template: any;
 declare const Razorpay: any;
@@ -23,12 +25,15 @@ export class CheckoutComponent implements AfterViewInit {
   totalPrice: number = 0;
   createSuccess: boolean = false;
   payonline : boolean = false;
+  productImage: { [key: number]: SafeUrl } = {};
 
   constructor(
     private cartService: CartService,
     private orderService: OrderService,
     private messageService: MessageService,
     private router: Router,
+    private domSanitizer: DomSanitizer,
+    private uploadsService: UploadsService,
     private confirmationService: ConfirmationService
   ) {
   }
@@ -46,6 +51,7 @@ export class CheckoutComponent implements AfterViewInit {
           this.orderDetails = response.response;
           this.orderDetails.forEach((order: any) => {
             this.totalPrice += order.quantity * order.productId.price;
+            this.getProductImage('product', order.productId.image, order.productId.id);
           })
         })
     }
@@ -173,5 +179,12 @@ export class CheckoutComponent implements AfterViewInit {
       this.createSuccess = true;
       window.location.reload();
     })
+  }
+
+  getProductImage(type: string, filename: string, productId: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(imageData));
+      this.productImage[productId] = imageUrl;
+    });
   }
 }

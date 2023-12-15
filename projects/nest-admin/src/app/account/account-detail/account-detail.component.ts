@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { paths } from '../../const';
 import { Router } from '@angular/router';
 import { AccountService } from '../../service/account.service';
@@ -13,7 +13,7 @@ declare let template: any;
   selector: 'account-detail',
   templateUrl: './account-detail.component.html',
 })
-export class AccountDetailComponent implements AfterViewInit{
+export class AccountDetailComponent implements AfterViewInit {
   title = 'nest-customer';
   paths = paths;
   account: any = {};
@@ -22,6 +22,7 @@ export class AccountDetailComponent implements AfterViewInit{
   avatarFile: File | null = null;
   errorMessage: string = '';
   roles: any[] = [];
+  userRole: string = '';
 
   constructor(
     private accountService: AccountService,
@@ -30,16 +31,20 @@ export class AccountDetailComponent implements AfterViewInit{
     private route: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     private roleService: RoleService
-  ){
+  ) {
+    if (!this.accountService.isLoggedIn()) {
+      document.body.classList.add('abc');
+      this.router.navigate(['/login']);
+    }
   }
 
   ngAfterViewInit() {
-    template.init();
     this.showAccountById();
     this.showRoles();
+    template.init();
   }
 
-  showAccountById(){
+  showAccountById() {
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       if (!isNaN(id)) {
@@ -47,7 +52,8 @@ export class AccountDetailComponent implements AfterViewInit{
         this.accountService.getUserByUsername(this.accountId).subscribe(
           (data: any) => {
             this.account = data.response;
-            this.getUserAvatar('account',this.account.avatar);
+            this.checkAccessPermission();
+            this.getUserAvatar('account', this.account.avatar);
             console.log(this.account);
           },
           (error) => {
@@ -60,28 +66,42 @@ export class AccountDetailComponent implements AfterViewInit{
 
   updateAccount() {
     const formData = new FormData();
-  
+
     if (this.avatarFile) {
       formData.append('avatarFile', this.avatarFile);
     }
-  
+
     formData.append('id', this.account.id);
     formData.append('username', this.account.username);
     formData.append('email', this.account.email);
     formData.append('fullName', this.account.fullName);
     formData.append('address', this.account.address);
     formData.append('phone', this.account.phone);
-    formData.append('roleName', this.account.roleName);
-  
-    this.accountService.updateUser(formData).subscribe(
-      (response) => {
-        console.log('Updated successfully!', response);
-        window.location.reload();
-      },
-      (error) => {
-        this.errorMessage = 'Account update failed, please check information...!';
-      }
-    );
+    formData.append('isActive', this.account.isActive);
+
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.accountService.userRole = userData.roleName;
+
+      console.log('UserRole:', this.accountService.userRole);
+    }
+    if (this.accountService.hasAdminRole() && this.account.roleName !== 'ROLE_CUSTOMER') {
+      alert('There is no permission to delete updates with the current role.');
+      console.error('Không có quyền cập nhật tài khoản với vai trò hiện tại.');
+      return;
+    }
+    else {
+      this.accountService.updateUser(formData).subscribe(
+        (response) => {
+          console.log('Updated successfully!', response);
+          window.location.reload();
+        },
+        (error) => {
+          this.errorMessage = 'Account update failed, please check information...!';
+        }
+      );
+    }
   }
 
   showRoles() {
@@ -102,11 +122,26 @@ export class AccountDetailComponent implements AfterViewInit{
     }
   }
 
-  getUserAvatar(type: string,filename: string) {
-    this.uploadsService.getImage(type,filename).subscribe((imageData: Blob) => {
+  getUserAvatar(type: string, filename: string) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
   }
 
+  checkAccessPermission() {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.userRole = userData.roleName;
+      if (this.userRole === 'ROLE_ADMIN') {
+        {
+          if (this.account.roleName === 'ROLE_DIRECTOR') {
+            alert('You do not have permission to access this page.');
+            this.router.navigate(['/account']);
+          }
+        }
+      }
+    }
+  }
 }

@@ -16,6 +16,7 @@ export class LoginComponent implements AfterViewInit{
   errorMessage: string = '';
   paths = paths;
   rememberMe: boolean = false;
+  userRole: string = '';
 
 
   constructor(
@@ -41,21 +42,18 @@ export class LoginComponent implements AfterViewInit{
       (response) => {
         localStorage.setItem('token', response.accessToken);
         localStorage.setItem('user', JSON.stringify(response));
-
         const userString = localStorage.getItem('user');
         if(userString){
           const userData = JSON.parse(userString).response;
-          this.accountService.userRole = userData.roleName;
-
-          console.log('UserRole:', this.accountService.userRole);
-        }
-        // Kiểm tra quyền và chuyển hướng tùy thuộc vào quyền
-        if (this.accountService.hasAdminOrDirectorRole()) {
+          this.userRole = userData.roleName;
+        
+        if (this.userRole === 'ROLE_ADMIN' || this.userRole === 'ROLE_DIRECTOR') {
           this.router.navigate(['/home']);
           document.body.classList.remove('not-login');
         } else {
           this.errorMessage = 'Login failed, account does not have access rights!';
         }
+      }
       },
       (error) => {
         this.errorMessage = 'Login unsuccessful. Please check your login information!';

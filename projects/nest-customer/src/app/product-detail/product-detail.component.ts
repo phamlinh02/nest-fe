@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { RateService } from '../service/rate.service';
+import { FavoriteService } from '../service/favorite.service';
 
 declare let template: any;
 
@@ -44,7 +45,8 @@ export class ProductDetailComponent implements AfterViewInit{
     private router: Router,
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
-    private rateService: RateService
+    private rateService: RateService,
+    private favoriteService: FavoriteService,
   ) { 
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -276,6 +278,49 @@ export class ProductDetailComponent implements AfterViewInit{
         console.error('Error fetching all products: ', error);
       }
     );
+  }
+
+  addToComparison(product: any): void {
+    const localStorageValue = localStorage.getItem('comparedProducts');
+
+    if (localStorageValue === null) {
+      const comparedProducts = [product];
+      localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+      alert('Product added to comparison list');
+    } else {
+      const comparedProducts = JSON.parse(localStorageValue);
+
+      if (!comparedProducts.some((p: any) => p.id === product.id)) {
+        comparedProducts.push(product);
+        localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+        alert('Product added to comparison list');
+      } else {
+        alert('The product is already in the comparison list');
+      }
+    }
+  }
+
+  addToWishlist(productId: number): void {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      const accountId = userData.id;
+
+      this.favoriteService.addProductToFavorite({ accountId, productId }).subscribe(
+        successResponse => {
+          // Handle success
+          alert('The product has been added to your favorites list');
+          console.log('Thêm sản phẩm vào danh sách yêu thích thành công');
+
+        },
+        errorResponse => {
+          alert('The product is already in the wish list!!!');
+        }
+      );
+    } else {
+      this.router.navigate([`${paths.login}`]);
+      alert('Please login to add products to your favorites list!!!');
+    }
   }
 
 }

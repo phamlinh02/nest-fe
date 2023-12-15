@@ -1,13 +1,15 @@
-import { AfterViewInit, Component,ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ChangeDetectorRef } from '@angular/core';
 import { paths } from "../const";
 import { OrderService } from "../service/order.service";
 import { ProductService } from "../service/product.service";
 import { CategoryService } from "../service/category.service";
 import { CartService } from '../service/cart.service';
+import { RateService } from '../service/rate.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { FavoriteService } from '../service/favorite.service';
+import { CompareService } from '../service/compare.service';
 
 declare const template: any;
 
@@ -21,6 +23,12 @@ export class HomeComponent implements AfterViewInit {
   products: any[] = [];
   categories: any[] = [];
   cartItem: any[] = [];
+  producttop: any[] = [];
+  productRec: any[] = [];
+  productRecen: any[] = [];
+  productTrending: any[] = [];
+  productSelling: any[] = [];
+  productRate: any[] = [];
   accountId: number = 0;
   cartItems: any[] = [];
   categoryId: number = 1;
@@ -28,21 +36,25 @@ export class HomeComponent implements AfterViewInit {
   quantity: number = 1;
   productImage: { [key: number]: SafeUrl } = {};
   categoryImage: { [key: number]: SafeUrl } = {};
+  topRateProducts: any[] = [];
+  comparedProducts: any[] = [];
 
   constructor(
     private orderService: OrderService,
     private productService: ProductService,
     private categoryService: CategoryService,
     private cartService: CartService,
+    private rateService: RateService,
     private router: Router,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
     private favoriteService: FavoriteService,
-    private cd: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private compareService: CompareService
   ) {
   }
   ngAfterViewInit() {
-    template.init();
+
 
     //Lấy danh sách sản phẩm
     this.showProducts();
@@ -55,13 +67,21 @@ export class HomeComponent implements AfterViewInit {
     });
 
     this.showProductsByCategory();
+    this.showMostSearchedProducts();
+    this.showRecentlyAddedProducts();
+    this.showTopRatedProducts();
+    this.showTopSellingProducts();
+    this.showTopRateProducts();
+    this.showTopPopularProduct();
+    this.showRecentlyAdded();
+    template.init();
   }
   showProducts() {
     this.productService.getAllProducts().subscribe((data: any) => {
       this.products = data.response.content;
 
       this.products.forEach((product, index) => {
-        this.getProductImage('product', product.image, index);
+        this.getProductImage('product', product.image, product.id);
       });
       console.log(this.products);
     },
@@ -81,7 +101,7 @@ export class HomeComponent implements AfterViewInit {
     this.categoryService.getAllCategoriesIsActive(0, 100).subscribe((data: any) => {
       this.categories = data.response.content;
       this.categories.forEach((category, index) => {
-        this.getAllCategoryImage('category', category.imageCategory,index);
+        this.getAllCategoryImage('category', category.imageCategory, index);
       });
       console.log(this.categories);
     },
@@ -163,17 +183,18 @@ export class HomeComponent implements AfterViewInit {
 
   addToComparison(product: any): void {
     const localStorageValue = localStorage.getItem('comparedProducts');
-    
+
     if (localStorageValue === null) {
       const comparedProducts = [product];
       localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
       alert('Product added to comparison list');
     } else {
       const comparedProducts = JSON.parse(localStorageValue);
-      
+
       if (!comparedProducts.some((p: any) => p.id === product.id)) {
         comparedProducts.push(product);
         localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+        this.compareService.updateComparedProducts(comparedProducts);
         alert('Product added to comparison list');
       } else {
         alert('The product is already in the comparison list');
@@ -192,7 +213,6 @@ export class HomeComponent implements AfterViewInit {
           // Handle success
           alert('The product has been added to your favorites list');
           console.log('Thêm sản phẩm vào danh sách yêu thích thành công');
-          this.cd.detectChanges();
 
         },
         errorResponse => {
@@ -204,6 +224,99 @@ export class HomeComponent implements AfterViewInit {
       alert('Please login to add products to your favorites list!!!');
     }
   }
+
+  showTopPopularProduct() {
+    this.cartService.getTop10ProductPopular().subscribe((data: any) => {
+      this.producttop = data.response;
+      this.producttop.forEach((product, index) => {
+        this.getProductImage('product', product.image, index);
+      });
+      console.log(this.producttop);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showRecentlyAdded() {
+    this.productService.getRecentlyAdded().subscribe((data: any) => {
+      this.productRecen = data.response;
+      this.productRecen.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productRec);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showRecentlyAddedProducts() {
+    this.productService.getRecentlyAddedProducts().subscribe((data: any) => {
+      this.productRec = data.response;
+      this.productRec.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productRec);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showTopSellingProducts() {
+    this.orderService.getTopSellingProducts().subscribe((data: any) => {
+      this.productSelling = data.response;
+      this.productSelling.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productSelling);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showMostSearchedProducts() {
+    this.productService.getMostSearchedProducts().subscribe((data: any) => {
+      this.productTrending = data.response;
+      this.productTrending.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productTrending);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showTopRatedProducts() {
+    this.productService.getTopRatedProducts(3).subscribe((data: any) => {
+      this.productRate = data.response;
+      this.productRate.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log(this.productRate);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
+  showTopRateProducts() {
+    this.productService.getTopRatedProducts(10).subscribe((data: any) => {
+      this.topRateProducts = data.response;
+
+      this.topRateProducts.forEach((product, index) => {
+        this.getProductImage('product', product.image, product.id);
+      });
+      console.log('ProductTopRate: ', this.topRateProducts);
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
 }
- 
+
 

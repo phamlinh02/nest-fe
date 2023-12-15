@@ -36,6 +36,11 @@
                 <label class="form-label">Quantity</label>
                 <input type="text" placeholder="Quantity" name="quantity" [(ngModel)]="product.quantity" class="form-control" id="product_name" />
               </div>
+              <div class="mb-4 ">
+                <label class="form-label">EndDate</label>
+                <input type="date" placeholder="" name="endDate" [(ngModel)]="product.endDate"
+                      class="form-control" />
+              </div>
               <div class="mb-4">
                 <label class="form-label">IsActive</label>
                 <select class="form-select" name="isActive" [(ngModel)]="product.isActive">

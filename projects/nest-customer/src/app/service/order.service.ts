@@ -33,6 +33,10 @@ export class OrderService {
     return this.http.post(ORDER_API + `/create-bill`,request, httpOptions)
   }
 
+  getTopSellingProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${ORDER_API}/selling`);
+  }
+
   updateTransaction(request: any): Observable<any> {
     return this.http.post(ORDER_API + `/transaction-success`,request, httpOptions)
   }

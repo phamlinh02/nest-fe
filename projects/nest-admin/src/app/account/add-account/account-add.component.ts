@@ -71,7 +71,7 @@ export class AddAccountComponent implements AfterViewInit{
     formData.append('fullName', this.account.fullName);
     formData.append('address', this.account.address);
     formData.append('phone', this.account.phone);
-    formData.append('roleName', this.account.roleName);
+    formData.append('isActive', this.account.isActive);
 
     if (this.avatarFile) {
       formData.append('avatarFile', this.avatarFile);

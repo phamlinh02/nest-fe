@@ -1,0 +1,146 @@
+<main class="main">
+    <!-- Quick view -->
+  <div *ngFor="let product of products,let i = index">
+    <div class="modal fade custom-modal" [id]="'quickViewModal-' + product.id" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true" style="height: 100%;">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                          <div class="detail-gallery">
+                              <!-- MAIN SLIDES -->
+                              <div class="product-image-slider">
+                                  <figure class="border-radius-10" style="margin: 0 0 0 0 !important;">
+                                      <img [src]="productImage[i]" alt="{{ product.productName }}" style="width: 100%; height: 100%;"/>
+                                  </figure>
+                              </div>
+                          </div>
+                          <!-- End Gallery -->
+                      </div>
+                      <div class="col-md-6 col-sm-12 col-xs-12">  
+                          <div class="detail-info pr-30 pl-30">
+                              <h3 class="title-detail"><a [routerLink]="['/',paths.productDetail,product.id]" class="text-heading">{{product.productName}}</a></h3>
+                              <div class="product-detail-rating">
+                                  <div class="product-rate-cover text-end">
+                                      <div class="product-rate d-inline-block">
+                                          <div class="product-rating" [style.width]="calculateRatingWidth(product.averageRating)"></div>
+                                      </div>
+                                      <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
+                                  </div>
+                              </div>
+                              <div class="clearfix product-price-cover">
+                                  <div class="product-price primary-color float-left">
+                                      <span class="current-price text-brand">${{product.price}}</span>
+                                  </div>
+                              </div>
+                              <div class="detail-extralink mb-30" style="margin-bottom: 0px !important;">
+                                <div class="detail-qty border radius">
+                                  <a (click)="decreaseQuantity()" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                  <input [value]="quantity" id="quantity" type="number" name="quantity" class="qty-val"
+                                    (input)="updateQuantity($event)" min="1">
+                                  <a (click)="increaseQuantity()" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                </div>
+                                <div class="product-extra-link2">
+                                  <button (click)="addToCart(product.id)" type="submit" class="button button-add-to-cart"><i
+                                      class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                </div>
+                              </div>
+                              <div class="font-xs">
+                                  <ul style="font-size: 15px; margin-bottom: 0px !important; padding-left: 0px !important;">
+                                      <li class="mb-5" style="margin-bottom: 10px !important;">Type: <span class="text-brand">{{product.categoryName}}</span></li>
+                                      <li class="mb-5" style="margin-bottom: 0px !important;">Stock:<span class="text-brand"> {{product.quantity}} Items In Stock</span></li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <!-- Detail Info -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+  
+    <div class="page-header breadcrumb-wrap">
+      <div class="container">
+        <div class="breadcrumb">
+          <a [routerLink]="['/' + paths.home]" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+          <span></span> Products
+        </div>
+      </div>
+    </div>
+    <div class="container mb-30 mt-30">
+      <div class="row">
+        <div class="col-12">
+          <div class="shop-product-fillter">
+            <div class="totall-product">
+            </div>
+          </div>
+          <div class="row product-grid">
+            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6" *ngFor="let product of products,let i = index">
+              <div class="product-cart-wrap mb-30">
+                <div class="product-img-action-wrap">
+                  <div class="product-img product-img-zoom">
+                    <a [routerLink]="['/',paths.productDetail, product.id]">
+                      <img class="default-img" [src]="productImage[i]" alt="{{ product.productName }}" alt="" />
+                    </a>
+                  </div>
+                  <div class="product-action-1">
+                    <a (click)="addToWishlist(product.id)" aria-label="Add To Wishlist" class="action-btn">
+                      <i class="fi-rs-heart"></i>
+                    </a>
+                    <a aria-label="Compare" class="action-btn" (click)="addToComparison(product)"><i
+                        class="fi-rs-shuffle"></i></a>
+                    <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal"
+                      [attr.data-bs-target]="'#quickViewModal-' + product.id"><i class="fi-rs-eye"></i></a>
+                  </div>
+                </div>
+                <div class="product-content-wrap">
+                  <div class="product-category">
+                    <a >{{product.categoryName}}</a>
+                  </div>
+                  <h2><a [routerLink]="['/', paths.productDetail, product.id]">{{ product.productName }}</a></h2>
+                  <div class="product-rate-cover">
+                    <div class="product-rate d-inline-block">
+                      <div class="product-rating" [style.width]="calculateRatingWidth(product.averageRating)"></div>
+                    </div>
+                    <span class="font-small ml-5 text-muted"> ({{product.totalRatings}}.0)</span>
+                  </div>
+                  <div>
+                    <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>
+                  </div>
+                  <div class="product-card-bottom">
+                    <div class="product-price">
+                      <span>${{ product.price }}</span>
+                    </div>
+                    <div class="add-cart">
+                      <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end product card-->
+          </div>
+          <!--End Deals-->
+        </div>
+      </div>
+    </div>
+    <div class="pagination-area mt-15 mb-50">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-start">
+            <li class="page-item">
+              <a class="page-link" (click)="changePage(currentPage - 1)"><i class="fi-rs-arrow-small-left"></i></a>
+            </li>
+            <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of range(totalPages)"><a class="page-link" (click)="changePage(page)">{{ page + 1 }}</a></li>
+            <li class="page-item">
+              <a class="page-link" (click)="changePage(currentPage + 1)"><i class="fi-rs-arrow-small-right"></i></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+  </main>
+  

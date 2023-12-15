@@ -12,19 +12,19 @@ declare const template: any;
 
 @Component({
   selector: 'shop-filter',
-  templateUrl: './shop-filter.component.html',
+  templateUrl: './all-product.component.html',
 })
-export class ShopFilterComponent implements AfterViewInit {
+export class AllProductComponent implements AfterViewInit {
   title = 'nest-customer';
-  searchResult: any[] = [];
-  showByCategory: any[] = []; 
-  searchKeyword: string = '';
   categoryId: number = 1;
-  public readonly paths = paths;
+  paths = paths;
   productImage: { [key: number]: SafeUrl } = {};
   quantity: number = 1;
   accountId: number = 0;
   cartItems: any[] = [];
+  currentPage: number = 0;
+  totalPages: number = 0;
+  products: any[] = [];
 
   constructor(
     private productService: ProductService,
@@ -37,52 +37,25 @@ export class ShopFilterComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.route.params.subscribe((params) => {
-      this.searchKeyword = params['productName'];
-     
-      this.searchProduct();
-    });
-    this.showProductByCategory();
+    this.showProducts();
     template.init();
     
   }
 
-  showProductByCategory(){
-    this.route.params.subscribe((params) => {
-      this.searchKeyword = params['productName'];
-      const categoryId = +params['categoryId'];
-      if (!isNaN(categoryId)) {
-        this.categoryId = categoryId; // Gán giá trị 'id' lấy từ URL vào biến 'productId'
-        this.productService.showProductsByCategoryPage(this.categoryId).subscribe(
-          (data: any) => {
-            this.showByCategory = data.response.content;
-            this.showByCategory.forEach((product, index) => {
-              this.getProductImage('product', product.image, index);
-            });
-            console.log(this.searchResult);
-          },
-          (error) => {
-            console.error('Lỗi khi tải chi tiết sản phẩm: ', error);
-          }
-        );
-      }
-      
-    });
-  }
-
-  searchProduct() {
-    this.productService.searchProductsByName(this.searchKeyword).subscribe(
-      (data: any) => {
-        this.searchResult = data.response.content;
-        this.searchResult.forEach((product, index) => {
-          this.getProductImage('product', product.image, index);
-        });
-      },
+  showProducts() {
+    this.productService.getAllProductsPage(this.currentPage, 8).subscribe((data: any) => {
+      this.products = data.response.content;
+      this.totalPages = Math.ceil(data.response.totalElements / 8);
+      this.products.forEach((product, index) => {
+        this.getProductImage('product', product.image, index);
+      });
+      console.log(this.products);
+    },
       (error) => {
-        console.error('Lỗi khi tìm kiếm sản phẩm: ', error);
-      }
-    );
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
   }
+ 
 
   getProductImage(type: string, filename: string, index: number) {
     this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
@@ -176,6 +149,17 @@ export class ShopFilterComponent implements AfterViewInit {
         alert('The product is already in the comparison list');
       }
     }
+  }
+
+  changePage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.showProducts();
+    }
+  }
+
+  range(totalPages: number): number[] {
+    return Array.from({ length: totalPages }, (_, i) => i);
   }
 
 }

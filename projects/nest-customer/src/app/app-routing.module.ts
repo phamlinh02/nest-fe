@@ -22,6 +22,7 @@ import {ResetPasswordComponent} from "./reset-password/reset-password.component"
 import {ShopFilterComponent} from "./shop-filter/shop-filter.component";
 import {ShopDealsComponent} from "./shop-grid-right/shop-deals.component";
 import {TermServiceComponent} from "./term-service/term-service.component";
+import { AllProductComponent } from './all-product/all-product.component';
 
 const routes: Routes = [
   {
@@ -103,6 +104,10 @@ const routes: Routes = [
   {
     path: paths.shopGrid,
     component: ShopDealsComponent
+  },
+  {
+    path: paths.allProducts,
+    component: AllProductComponent
   },
   {
     path: paths.term,

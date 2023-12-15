@@ -8,6 +8,7 @@ import {OrderComponent, OrderDetailComponent} from "./order";
 import {RateComponent, RateDetailComponent} from "./rate";
 import {AccountComponent, AccountDetailComponent, LoginComponent, AddAccountComponent,RolesComponent, ForgetComponent, AccountInfoComponent, ChangePasswordComponent} from "./account";
 import { StatisticProductComponent } from './statistical';
+import { AuthorityComponent } from './authority/authority.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,10 @@ const routes: Routes = [
   {
     path: paths.statisticProduct,
     component: StatisticProductComponent
+  },
+  {
+    path: paths.authority, 
+    component: AuthorityComponent
   },
   {
     path: '**', redirectTo: paths.home, pathMatch: 'full'

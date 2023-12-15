@@ -14,6 +14,7 @@ export class ResetPasswordComponent implements OnInit {
   password: string = '';
   username: string = '';
   errorMessage: string = '';
+  paths = paths;
 
   constructor(
     private accountService: AccountService,

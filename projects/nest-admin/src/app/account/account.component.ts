@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { paths } from "../const";
 import { AccountService } from '../service/account.service';
 import { Router } from '@angular/router';
@@ -11,13 +11,14 @@ declare const template: any;
   selector: 'app-account',
   templateUrl: './account.component.html',
 })
-export class AccountComponent  implements AfterViewInit{
+export class AccountComponent implements AfterViewInit {
   title = 'nest-customer';
   accounts: any[] = [];
   paths = paths;
   userAvatars: { [key: number]: SafeUrl } = {};
   currentPage: number = 0;
   totalPages: number = 0;
+  userRole: string = '';
 
 
   constructor(
@@ -25,9 +26,9 @@ export class AccountComponent  implements AfterViewInit{
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
     private router: Router
-  ){}
+  ) { }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     if (!this.accountService.isLoggedIn()) {
       document.body.classList.add('abc');
       this.router.navigate(['/login']);
@@ -67,5 +68,53 @@ export class AccountComponent  implements AfterViewInit{
 
   range(totalPages: number): number[] {
     return Array.from({ length: totalPages }, (_, i) => i);
+  }
+
+  deleteAccount(accountId: number) {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString).response;
+      this.userRole = userData.roleName;
+
+      console.log('UserRole:', this.userRole);
+    
+    if (this.userRole === 'ROLE_ADMIN') {
+      this.accountService.getUserByUsername(accountId).subscribe(
+        (accountData) => {
+          const accountRole = accountData.response.roleName;
+          console.log(accountRole);
+          if (accountRole === 'ROLE_CUSTOMER') {
+            this.accountService.deleteAccount(accountId).subscribe(
+              (response) => {
+                this.getAllUsers();
+                console.log('Account đã được xóa thành công');
+              },
+              (error) => {
+                console.error('Lỗi khi xóa tài khoản', error);
+              }
+            );
+          } else {
+            alert('There is no permission to delete accounts with the current role.');
+            console.error('Không có quyền xóa tài khoản với vai trò hiện tại.');
+          }
+        },
+        (error) => {
+          console.error('Lỗi khi lấy thông tin tài khoản', error);
+        }
+      );
+    }
+    if(this.userRole === 'ROLE_DIRECTOR'){
+      this.accountService.deleteAccount(accountId).subscribe(
+        (response) => {
+          this.getAllUsers();
+          console.log('Account đã được xóa thành công');
+        },
+        (error) => {
+          console.error('Lỗi khi xóa tài khoản', error);
+        }
+      );
+    }
+  }
+    
   }
 }

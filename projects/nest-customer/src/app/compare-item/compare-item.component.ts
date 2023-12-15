@@ -4,6 +4,7 @@ import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
+import { CompareService } from '../service/compare.service';
 
 declare const template: any;
 
@@ -26,6 +27,7 @@ export class CompareItemComponent implements AfterViewInit{
     private domSanitizer: DomSanitizer,
     private cartService: CartService,
     private router: Router,
+    private compareService: CompareService
     ) {}
 
     ngAfterViewInit() {
@@ -60,10 +62,22 @@ export class CompareItemComponent implements AfterViewInit{
     removeFromComparison(productId: number) {
       const updatedComparedProducts = this.comparedProducts.filter((product) => product.id !== productId);
   
+      // Lưu danh sách sản phẩm so sánh mới vào localStorage
       localStorage.setItem('comparedProducts', JSON.stringify(updatedComparedProducts));
   
+      // Lấy chỉ số của sản phẩm cần xóa trong danh sách so sánh hiện tại
+      const removedProductIndex = this.comparedProducts.findIndex((product) => product.id === productId);
+  
+      // Xóa thông tin của sản phẩm khỏi mảng hình ảnh
+      if (removedProductIndex !== -1) {
+        delete this.productImage[removedProductIndex];
+      }
+  
+      // Cập nhật danh sách so sánh và thông báo về sự thay đổi
       this.comparedProducts = updatedComparedProducts;
+      this.compareService.updateComparedProducts(updatedComparedProducts);
     }
+  
 
     addToCart(productId: number) {
       const userString = localStorage.getItem('user');

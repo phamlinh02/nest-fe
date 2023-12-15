@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { paths } from '../const';
 
 declare const template: any;
+declare const $: any;
 
 @Component({
   selector: 'about-us',
@@ -13,6 +14,8 @@ export class AboutUsComponent implements AfterViewInit {
   paths = paths;
 
   ngAfterViewInit(): void {  
-    template.init();
+    $(document).ready(() => {
+      template.init();
+    });
   }
 }

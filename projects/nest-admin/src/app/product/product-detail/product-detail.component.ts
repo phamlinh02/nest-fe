@@ -29,7 +29,7 @@ export class ProductDetailComponent implements AfterViewInit {
     private uploadsService: UploadsService,
     private categoryService: CategoryService,
     private accountService: AccountService,
-    private router: Router,
+    private router: Router
   ) { }
 
   ngAfterViewInit() {
@@ -76,6 +76,7 @@ export class ProductDetailComponent implements AfterViewInit {
     formData.append('quantity', this.product.quantity);
     formData.append('isActive', this.product.isActive);
     formData.append('categoryName', this.product.categoryName);
+    formData.append('endDate',this.product.endDate);
 
     this.productService.updateProduct(formData).subscribe(
       (response) => {

@@ -5,11 +5,20 @@ import {Router} from '@angular/router';
 import {RateService} from '../service/rate.service';
 import {Chart, registerables} from 'chart.js';
 import {OrderService} from "../service/order.service";
+import { UploadsService } from '../service/uploads.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { paths } from '../const';
+import { ProductService } from '../service/product.service';
 // import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 // Chart.register(ChartAnnotation,...registerables);
 
 declare let template: any;
+
+interface Account {
+  id: number;
+  // Add other properties as needed
+}
 
 @Component({
   templateUrl: './home.component.html',
@@ -20,9 +29,15 @@ export class HomeComponent implements AfterViewInit {
   revenue: number = 0;
   orderQty: number = 0;
   data: any = {};
+  accounts: any[] = [];
   title = 'nest-customer';
   statisticsBill: any;
   latestBill: any;
+  latestUser: any;
+  statisticInfo: any = {};
+  statisticChart!: Chart;
+  userAvatars: { [key: number]: SafeUrl } = {};
+  paths = paths;
   filter = {
     status: '',
     date: new Date()
@@ -47,7 +62,11 @@ export class HomeComponent implements AfterViewInit {
     private accountService: AccountService,
     private router: Router,
     private rateService: RateService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private uploadsService: UploadsService,
+    private domSanitizer: DomSanitizer,
+    private productService: ProductService
+    
   ) {
 
   }
@@ -61,6 +80,8 @@ export class HomeComponent implements AfterViewInit {
       this.showRateStatistics();
       this.getStatisticsBill();
       this.getALlBill();
+      this.getAllUsers();
+      this.showStatisticProduct();
       template.init();
     }
   }
@@ -209,4 +230,90 @@ export class HomeComponent implements AfterViewInit {
       this.latestBill = res.response.content;
     })
   }
+  getAllUsers() {
+    this.accountService.get4Users().subscribe((data: any) => {
+      this.accounts = data.response.content;
+      const unsortedUsers = data.response.content;
+
+      // Sắp xếp danh sách theo id giảm dần
+      const sortedUsers = unsortedUsers.sort((a: Account, b: Account) => b.id - a.id);
+
+      // Chọn 3 người dùng đầu tiên sau khi sắp xếp
+      this.accounts = sortedUsers.slice(0, 7);
+      this.accounts.forEach((account, index) => {
+        this.getUserAvatar('account', account.avatar, index);
+      });
+      console.log(this.accounts);
+    }, (error) => {
+      console.error('Lỗi khi tải danh sách Users ', error);
+    });
+  }
+  getUserAvatar(type: string, filename: string, index: number) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
+      const imageUrl = URL.createObjectURL(imageData);
+      this.userAvatars[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
+  }
+
+  showStatisticProduct(){
+    this.productService.getStatisticProduct().subscribe((data: any) => {
+        this.statisticInfo = data.response;
+        this.statisticProductChart();
+      },
+        (error) => {
+          console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+        });
+  }
+
+  statisticProductChart() {
+    if (this.statisticInfo && this.statisticInfo.categoryStatistics) {
+      const categories: string[] = this.statisticInfo.categoryStatistics.map((category: any) => category.categoryName);
+      const totalProducts: number[] = this.statisticInfo.categoryStatistics.map((category: any) => category.totalProduct);
+      const totalStockQuantities: number[] = this.statisticInfo.categoryStatistics.map((category: any) => category.totalStockQuantity);
+  
+      // Giả sử bạn đã đăng ký Chart.js và các plugin cần thiết trong dự án của bạn
+  
+      // Tạo biểu đồ
+      this.statisticChart = new Chart('statisticChart', {
+        type: 'bar',
+        data: {
+          labels: categories,
+          datasets: [
+            {
+              label: 'Total Stock Quantity',
+              data: totalStockQuantities,
+              borderColor: '#F18D9E',
+              borderWidth: 2,
+              fill: false,
+              type: 'line',
+              yAxisID: 'stock',
+            },
+            {
+              label: 'Prouducts',
+              data: totalProducts,
+              backgroundColor: '#98DBC6',
+              borderColor: '#98DBC6',
+              borderWidth: 1,
+              yAxisID: 'products',
+            },
+            
+          ],
+        },
+        options: {
+          scales: {
+            products: {
+              type: 'linear',
+              position: 'left',
+            },
+            stock: {
+              type: 'linear',
+              position: 'right',
+            },
+          },
+        },
+      });
+    }
+  }
+ 
+
 }

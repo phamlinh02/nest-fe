@@ -33,8 +33,9 @@ export class FavoriteComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    template.init();
+    
     this.loadFavoriteProducts();
+    template.init();
     
   }
 

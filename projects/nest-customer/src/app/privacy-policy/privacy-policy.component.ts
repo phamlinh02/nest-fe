@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { paths } from '../const';
 
 @Component({
   selector: 'privacy-policy',
@@ -6,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class PrivacyPolicyComponent {
   title = 'nest-customer';
+  paths = paths;
 }

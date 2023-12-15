@@ -33,6 +33,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {CheckboxModule} from "primeng/checkbox";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import { AllProductComponent } from './all-product/all-product.component';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     ProductDetailComponent,
     FavoriteComponent,
     ShopDealsComponent,
-    LoadingPageComponent
+    LoadingPageComponent,
+    AllProductComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     CheckboxModule,
     ConfirmPopupModule,
     ConfirmDialogModule,
+    CarouselModule
   ],
   providers: [HttpClient, MessageService, ConfirmationService],
     exports: [

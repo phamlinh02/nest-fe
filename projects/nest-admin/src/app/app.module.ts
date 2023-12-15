@@ -12,6 +12,7 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {AccountComponent, AccountDetailComponent,AddAccountComponent, RolesComponent, ForgetComponent, AccountInfoComponent, ChangePasswordComponent} from "./account";
 import {OrderComponent, OrderDetailComponent} from "./order";
 import {ProductDetailComponent, ProductComponent, AddProductComponent} from "./product";
+import { AuthorityComponent } from './authority/authority.component';
 import {RateComponent, RateDetailComponent} from "./rate";
 import {LoginComponent} from "./account/login/login.component";
 import {PaginatorModule} from "primeng/paginator";
@@ -44,7 +45,8 @@ import {ChartModule} from "primeng/chart";
     AccountInfoComponent,
     ChangePasswordComponent,
     RateDetailComponent,
-    StatisticProductComponent
+    StatisticProductComponent,
+    AuthorityComponent
   ],
     imports: [
         BrowserModule,
