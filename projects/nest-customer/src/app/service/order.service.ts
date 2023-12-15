@@ -33,4 +33,8 @@ export class OrderService {
     return this.http.post(ORDER_API + `/create-bill`,request, httpOptions)
   }
 
+  updateTransaction(request: any): Observable<any> {
+    return this.http.post(ORDER_API + `/transaction-success`,request, httpOptions)
+  }
+
 }

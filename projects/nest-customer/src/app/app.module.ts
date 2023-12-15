@@ -29,7 +29,10 @@ import {LoadingPageComponent} from "./loading-page/loading-page.component";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastModule} from "primeng/toast";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {CheckboxModule} from "primeng/checkbox";
+import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -58,15 +61,18 @@ import {MessageService} from "primeng/api";
     ShopDealsComponent,
     LoadingPageComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        ToastModule,
-    ],
-  providers: [HttpClient, MessageService],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastModule,
+    CheckboxModule,
+    ConfirmPopupModule,
+    ConfirmDialogModule,
+  ],
+  providers: [HttpClient, MessageService, ConfirmationService],
     exports: [
         HeaderComponent,
         FooterComponent,

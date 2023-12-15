@@ -1616,12 +1616,12 @@ table.no-border {
 	font-size: 24px;
 	cursor: pointer;
   }
-  
+
   .rating span {
 	color: #ccc;
 	padding: 5px;
   }
-  
+
   .rating span:hover,
   .rating span.active {
 	color: #ffcc00;
@@ -1633,14 +1633,28 @@ table.no-border {
 	cursor: pointer;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	transition: background-color 0.3s; 
+	transition: background-color 0.3s;
   }
 
   .custom-file-upload:hover {
-	background-color: $color-brand; 
+	background-color: $color-brand;
 	color: white;
   }
-  
+
   .custom-file-upload input {
 	display: none;
+  }
+
+  .p-checkbox-box{
+    border: 2px solid #b9b9b9 !important;
+  }
+
+  .p-confirm-dialog{
+    .p-dialog-header{
+      padding: 15px;
+    }
+    .p-dialog-content{
+      padding: 15px;
+      gap: 20px;
+    }
   }
