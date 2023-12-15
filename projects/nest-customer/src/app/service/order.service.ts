@@ -37,4 +37,8 @@ export class OrderService {
     return this.http.get<any[]>(`${ORDER_API}/selling`);
   }
 
+  updateTransaction(request: any): Observable<any> {
+    return this.http.post(ORDER_API + `/transaction-success`,request, httpOptions)
+  }
+
 }

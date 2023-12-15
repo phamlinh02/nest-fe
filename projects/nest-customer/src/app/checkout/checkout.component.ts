@@ -1,7 +1,7 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {CartService} from "../service/cart.service";
 import {finalize} from "rxjs";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {OrderService} from "../service/order.service";
 import {paths} from "../const";
 import {Router} from "@angular/router";
@@ -9,6 +9,7 @@ import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 declare const template: any;
+declare const Razorpay: any;
 
 @Component({
   selector: 'app-checkout',
@@ -23,6 +24,7 @@ export class CheckoutComponent implements AfterViewInit {
   loading: boolean = false;
   totalPrice: number = 0;
   createSuccess: boolean = false;
+  payonline : boolean = false;
   productImage: { [key: number]: SafeUrl } = {};
 
   constructor(
@@ -32,6 +34,7 @@ export class CheckoutComponent implements AfterViewInit {
     private router: Router,
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -68,6 +71,27 @@ export class CheckoutComponent implements AfterViewInit {
     return !(this.account.address && this.account.phone && this.account.email && this.account.username && this.account.fullName)
   }
 
+  confirm(event: Event) {
+    if(!this.payonline) {
+      this.checkoutCart();
+      return;
+    }
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Are you sure to pay online this bill?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon:"none",
+      rejectIcon:"none",
+      rejectButtonStyleClass:"p-button-text",
+      accept: () => {
+        this.checkoutCart();
+      },
+      reject: () => {
+        this.payonline = false;
+      }
+    });
+  }
   checkoutCart() {
 
     if (this.checkInValidForm()) {
@@ -78,16 +102,27 @@ export class CheckoutComponent implements AfterViewInit {
     const billDetail = this.orderDetails.map((order: any) => {
       return {productId: order.productId.id, quantity: order.quantity}
     })
+    if(billDetail.length < 1) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Please choose product...'});
+      this.payonline = false;
+      return;
+    }
     const param = {
       account: this.account,
       bill: this.bill,
-      billDetails: billDetail
+      billDetails: billDetail,
+      payonline : this.payonline
     }
     this.orderService.createBill(param).subscribe({
-      next: () => {
-        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Create bill success'});
-        this.createSuccess = true;
-        this.loadData();
+      next: (res) => {
+        if (this.payonline){
+          const response = res.response;
+          this.openTransactionModal(response);
+        } else {
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Create bill success'});
+          this.createSuccess = true;
+          window.location.reload();
+        }
       },
       error: () => {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Something wrong, Please try again'});
@@ -99,6 +134,51 @@ export class CheckoutComponent implements AfterViewInit {
     if (!this.createSuccess) return;
 
     this.router.navigate(['/' + paths.accountInfo], {queryParams: {tab: 'order'}})
+  }
+
+  openTransactionModal(response: any) {
+    var options = {
+      order_id: response.orderId,
+      key: response.key,
+      amount: response.amount,
+      currency: response.currency,
+      name: 'NEST',
+      description: 'Payment of online shopping',
+      image: 'https://cdn.pixabay.com/photo/2023/01/22/13/46/swans-7736415_640.jpg',
+      handler: (res: any) => {
+        if(res!= null && res.razorpay_payment_id != null) {
+          this.processResponse(response.billId, res);
+        } else {
+          alert("Payment failed..")
+        }
+
+      },
+      prefill : {
+        name:'NEST',
+        email: 'NEST@GMAIL.COM',
+        contact: '90909090'
+      },
+      notes: {
+        address: 'Online Shopping'
+      },
+      theme: {
+        color: '#F37254'
+      }
+    };
+
+    var razorPayObject = new Razorpay(options);
+    razorPayObject.open();
+  }
+
+  processResponse(billId: any, res : any){
+    this.orderService.updateTransaction({
+      id : billId,
+      paymentId: res.razorpay_payment_id
+    }).subscribe(() =>{
+      this.messageService.add({severity: 'success', summary: 'Success', detail: 'Create bill success'});
+      this.createSuccess = true;
+      window.location.reload();
+    })
   }
 
   getProductImage(type: string, filename: string, productId: number) {

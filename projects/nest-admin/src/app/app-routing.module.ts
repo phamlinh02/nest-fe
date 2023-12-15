@@ -57,31 +57,31 @@ const routes: Routes = [
     component: RolesComponent
   },
   {
-    path: `${paths.account}/add`, 
+    path: `${paths.account}/add`,
     component: AddAccountComponent
   },
   {
-    path: `${paths.account}/:id`, 
+    path: `${paths.account}/:id`,
     component: AccountDetailComponent
   },
   {
-    path: `${paths.forgetPass}`, 
+    path: `${paths.forgetPass}`,
     component: ForgetComponent
   },
   {
-    path: `${paths.accountInfo}`, 
+    path: `${paths.accountInfo}`,
     component: AccountInfoComponent
   },
   {
-    path: paths.login, 
+    path: paths.login,
     component: LoginComponent
   },
   {
-    path: paths.changePass, 
+    path: paths.changePass,
     component: ChangePasswordComponent
   },
   {
-    path: paths.statisticProduct, 
+    path: paths.statisticProduct,
     component: StatisticProductComponent
   },
   {
@@ -94,7 +94,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes , {
+    scrollPositionRestoration: "top",
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
