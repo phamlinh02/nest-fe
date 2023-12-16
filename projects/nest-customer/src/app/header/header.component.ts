@@ -10,6 +10,7 @@ import { FavoriteService } from '../service/favorite.service';
 import { ActivatedRoute} from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { CompareService } from '../service/compare.service';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare let template: any;
 
@@ -44,7 +45,8 @@ export class HeaderComponent implements AfterViewInit {
     private domSanitizer: DomSanitizer,
     private favoriteService: FavoriteService,
     private route: ActivatedRoute,
-    private compareService: CompareService
+    private compareService: CompareService,
+    private token: TokenStorageService
   ) {
     this.cartService.cartUpdated.subscribe(() => {
       this.showCartItem();
@@ -103,10 +105,9 @@ export class HeaderComponent implements AfterViewInit {
 
   //Hiển thị thông tin giỏ hàng
   showCartItem() {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
+      this.accountId = userString.id;
 
       // Gọi phương thức để lấy danh sách sản phẩm trong giỏ hàng dựa trên accountId
       this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
@@ -155,9 +156,7 @@ export class HeaderComponent implements AfterViewInit {
   //Kiểm tra trạng thái đăng nhập
 
   logout() {
-    // Xóa thông tin người dùng khỏi localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    this.token.signOut();
 
     localStorage.removeItem('comparedProducts');
     this.comparedProducts.length = 0;
@@ -188,10 +187,9 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   loadFavoriteProducts() {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-    const userData = JSON.parse(userString).response;
-    this.accountId = userData.id;
+    this.accountId = userString.id;
 
     this.favoriteService.getFavoriteProducts(this.accountId).subscribe(
       (data: any) => {
@@ -216,7 +214,7 @@ onCategoryChange(event: any) {
   this.router.navigate([`${paths.shopFilter}/showByCategory/${categoryId}`], { relativeTo: this.route });
 }
 isLoggedIn(): boolean {
-  return !!localStorage.getItem('user'); // Return `true` if 'user' exists in localStorage
+  return this.token.isLoggedIn(); // Return `true` if 'user' exists in localStorage
 }
 
 }

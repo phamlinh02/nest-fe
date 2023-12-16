@@ -4,6 +4,7 @@ import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare const template: any;
 
@@ -25,14 +26,14 @@ export class CartComponent implements AfterViewInit {
     private cartService: CartService,
     private router: Router,
     private uploadsService: UploadsService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private token: TokenStorageService
   ) { }
   ngAfterViewInit() {
     
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
+      this.accountId = userString.id;
       this.cartService.getAllCarts(this.accountId).subscribe((data: any) => {
         this.cartItems = data.response; // Giả sử dữ liệu trả về có cấu trúc phù hợp
         this.cartItems.forEach((cartItem, index) => {
@@ -49,6 +50,10 @@ export class CartComponent implements AfterViewInit {
         (error) => {
           console.error('Lỗi khi tải danh sách sản phẩm trong giỏ hàng: ', error);
         });
+    }
+    else{
+      alert('Please log in to view shopping cart list!!!');
+      this.router.navigate(['/login']);
     }
     template.init();
   }
@@ -68,10 +73,9 @@ export class CartComponent implements AfterViewInit {
   }
 
   remove(accountId: number) {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
+      this.accountId = userString.id;
       this.cartService.remove(accountId).subscribe(
         response => {
           console.log(`Sản phẩm với id ${accountId} đã được xóa khỏi giỏ hàng`);
@@ -99,10 +103,9 @@ export class CartComponent implements AfterViewInit {
   }
 
   updateCart() {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
+      this.accountId = userString.id;
       this.cartService.update(this.accountId, this.cartItems).subscribe(
         successResponse => {
           console.log('Update sản phẩm thành công');

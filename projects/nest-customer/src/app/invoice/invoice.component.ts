@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {paths} from "../const";
 import {MessageService} from "primeng/api";
 import {finalize} from "rxjs";
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare const template: any;
 
@@ -25,19 +26,20 @@ export class InvoiceComponent implements AfterViewInit {
     private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router,
-    private messageService : MessageService
+    private messageService : MessageService,
+    private token: TokenStorageService
   ) {
     this.billId = this.route.snapshot.paramMap.get('slug') ?? '';
   }
 
   ngAfterViewInit() {
     template.init();
-    this.account = localStorage.getItem('user');
+    this.account = this.token.getUser();
     if (!this.account || !this.billId) {
       this.router.navigate([paths.home]);
     }
 
-    this.account = JSON.parse(this.account).response;
+    this.account = this.token.getUser();
     this.loadData();
   }
 

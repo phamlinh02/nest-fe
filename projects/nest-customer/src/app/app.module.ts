@@ -35,6 +35,7 @@ import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import { AllProductComponent } from './all-product/all-product.component';
 import { CarouselModule } from 'primeng/carousel';
+import { authInterceptorProviders } from './hefper/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,7 @@ import { CarouselModule } from 'primeng/carousel';
     ConfirmDialogModule,
     CarouselModule
   ],
-  providers: [HttpClient, MessageService, ConfirmationService],
+  providers: [HttpClient, MessageService, ConfirmationService,authInterceptorProviders],
     exports: [
         HeaderComponent,
         FooterComponent,

@@ -3,6 +3,7 @@ import { AccountService } from '../service/account.service';
 import { Router } from '@angular/router';
 import { paths } from '../const';
 import { CartService } from '../service/cart.service';
+import { TokenStorageService } from '../service/token-storage.service';
 
 
 declare const template: any;
@@ -25,6 +26,7 @@ export class LoginComponent implements AfterViewInit {
     private accountService: AccountService,
     private router: Router,
     private cartService: CartService,
+    private token: TokenStorageService
   ) { }
 
   ngAfterViewInit() {
@@ -38,11 +40,11 @@ export class LoginComponent implements AfterViewInit {
     };
   
     this.accountService.loginUser(payloadLogin).subscribe(
-      (response) => {
+      data => {
 
           // Tài khoản hoạt động, tiến hành đăng nhập và các hành động khác
-          localStorage.setItem('token', response.accessToken);
-          localStorage.setItem('user', JSON.stringify(response));
+          this.token.saveToken(data.response.token);
+          this.token.saveUser(data.response);
   
           this.cartService.updateCart();
           this.router.navigate(['/home']);

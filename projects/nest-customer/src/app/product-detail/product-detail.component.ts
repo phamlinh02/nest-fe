@@ -8,6 +8,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { RateService } from '../service/rate.service';
 import { FavoriteService } from '../service/favorite.service';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare let template: any;
 
@@ -47,11 +48,12 @@ export class ProductDetailComponent implements AfterViewInit{
     private uploadsService: UploadsService,
     private rateService: RateService,
     private favoriteService: FavoriteService,
+    private token: TokenStorageService
   ) { 
-    const userData = localStorage.getItem('user');
+    const userData = this.token.getUser();
     if (userData) {
-      this.user = JSON.parse(userData).response;
-      console.log(userData);
+      this.user = this.token.getUser();
+      console.log(this.user);
     }
   }
   ngAfterViewInit() {  
@@ -157,7 +159,7 @@ export class ProductDetailComponent implements AfterViewInit{
   }
   //Tạo đánh giá
   saveRate(){
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if(userString){
     const formData = new FormData();
     formData.append('productId', this.productId.toString());
@@ -301,9 +303,9 @@ export class ProductDetailComponent implements AfterViewInit{
   }
 
   addToWishlist(productId: number): void {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
+      const userData = this.token.getUser();
       const accountId = userData.id;
 
       this.favoriteService.addProductToFavorite({ accountId, productId }).subscribe(
