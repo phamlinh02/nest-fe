@@ -7,6 +7,7 @@ import {paths} from "../const";
 import {Router} from "@angular/router";
 import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare const template: any;
 declare const Razorpay: any;
@@ -34,15 +35,16 @@ export class CheckoutComponent implements AfterViewInit {
     private router: Router,
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private token: TokenStorageService
   ) {
   }
 
   loadData() {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
       this.loading = true;
-      this.account = JSON.parse(userString).response;
+      this.account = userString;
       this.cartService.getAllCarts(this.account.id)
         .pipe(finalize(() => {
           this.loading = false;
@@ -121,7 +123,7 @@ export class CheckoutComponent implements AfterViewInit {
         } else {
           this.messageService.add({severity: 'success', summary: 'Success', detail: 'Create bill success'});
           this.createSuccess = true;
-          window.location.reload();
+          // window.location.reload();
         }
       },
       error: () => {

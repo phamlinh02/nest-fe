@@ -6,6 +6,7 @@ import { UploadsService } from '../../service/uploads.service';
 import { CategoryService } from '../../service/category.service';
 import { AccountService } from '../../service/account.service';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 declare let template: any;
 
@@ -29,7 +30,8 @@ export class ProductDetailComponent implements AfterViewInit {
     private uploadsService: UploadsService,
     private categoryService: CategoryService,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) { }
 
   ngAfterViewInit() {
@@ -51,6 +53,7 @@ export class ProductDetailComponent implements AfterViewInit {
         this.productService.getProductById(this.productId).subscribe(
           (data: any) => {
             this.product = data.response;
+            this.product.endDate = this.datePipe.transform(this.product.endDate, 'yyyy-MM-dd');
             this.getProductImage('product', this.product.image);
             console.log(this.product);
           },
@@ -76,7 +79,14 @@ export class ProductDetailComponent implements AfterViewInit {
     formData.append('quantity', this.product.quantity);
     formData.append('isActive', this.product.isActive);
     formData.append('categoryName', this.product.categoryName);
-    formData.append('endDate',this.product.endDate);
+    if (!(this.product.endDate instanceof Date)) {
+      // Chuyển đổi thành đối tượng Date nếu là chuỗi
+      this.product.endDate = new Date(this.product.endDate);
+    }
+  
+    // Chuyển đổi ngày thành chuỗi theo định dạng "yyyy-MM-dd"
+    const endDateString = this.formatDate(this.product.endDate);
+    formData.append('endDate', endDateString);
 
     this.productService.updateProduct(formData).subscribe(
       (response) => {
@@ -113,5 +123,13 @@ export class ProductDetailComponent implements AfterViewInit {
       this.productImage = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
   }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+  
 
 }

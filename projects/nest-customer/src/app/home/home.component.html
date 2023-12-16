@@ -12,7 +12,7 @@
                   <!-- MAIN SLIDES -->
                   <div class="product-image-slider">
                     <figure class="border-radius-10" style="margin: 0 0 0 0 !important;">
-                      <img [src]="productImage[i]" alt="{{ product.productName }}" style="width: 100%; height: 100%;" />
+                      <img [src]="getImageProductUrl(product.image)" alt="{{ product.productName }}" style="width: 100%; height: 100%;" />
                     </figure>
                   </div>
                 </div>
@@ -111,7 +111,7 @@
           <div *ngFor="let category of categories, let i = index" class="card-2 col-1 "
             style="background-color: white; border:2px solid #3BB77E; margin: 0px 10px 10px 10px;">
             <figure class="img-hover-scale overflow-hidden">
-              <a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]"><img [src]="categoryImage[i]"
+              <a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]"><img [src]="getImageCategoryUrl(category.imageCategory)"
                   style="height: 70px;" /></a>
             </figure>
             <h6><a [routerLink]="['/',paths.shopFilter,'showByCategory',category.id]">{{category.name}}</a></h6>
@@ -194,7 +194,7 @@
                 <div class="product-img-action-wrap">
                   <div class="product-img product-img-zoom">
                     <a [routerLink]="['/', paths.productDetail, product.id]">
-                      <img class="default-img" [src]="productImage[product.id]" alt="{{ product.productName }}" />
+                      <img class="default-img" [src]="getImageProductUrl(product.image)" alt="{{ product.productName }}" />
                     </a>
                   </div>
                   <div class="product-action-1">
@@ -221,7 +221,7 @@
                     <span class="font-small ml-5 text-muted"> ({{product.totalRatings}}.0)</span>
                   </div>
                   <div>
-                    <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>
+                    <span class="font-small text-muted">By <a>NestFood</a></span>
                   </div>
                   <div class="product-card-bottom">
                     <div class="product-price">
@@ -247,7 +247,7 @@
                 <div class="product-img-action-wrap">
                   <div class="product-img product-img-zoom">
                     <a [routerLink]="['/', paths.productDetail, product.id]">
-                      <img class="default-img" [src]="productImage[i]" alt="{{ product.productName }}" />
+                      <img class="default-img" [src]="getImageProductUrl(product.image)" alt="{{ product.productName }}" />
                     </a>
                   </div>
                   <div class="product-action-1">
@@ -274,7 +274,7 @@
                     <span class="font-small ml-5 text-muted"> (4.0)</span>
                   </div>
                   <div>
-                    <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>
+                    <span class="font-small text-muted">By <a>NestFood</a></span>
                   </div>
                   <div class="product-card-bottom">
                     <div class="product-price">
@@ -337,7 +337,7 @@
                     <div class="product-img-action-wrap">
                       <div class="product-img product-img-zoom">
                         <a [routerLink]="['/', paths.productDetail, product.id]">
-                          <img class="default-img" [src]="productImage[product.id]" alt />
+                          <img class="default-img" [src]="getImageProductUrl(product.image)" alt />
                         </a>
                       </div>
                       <!-- Các nút hành động khác -->
@@ -376,7 +376,7 @@
                     <div class="product-img-action-wrap">
                       <div class="product-img product-img-zoom">
                         <a [routerLink]="['/', paths.productDetail, product.id]">
-                          <img class="default-img" [src]="productImage[product.id]" alt />
+                          <img class="default-img" [src]="getImageProductUrl(product.image)" alt />
                         </a>
                       </div>
                       <!-- Các nút hành động khác -->
@@ -414,7 +414,7 @@
                     <div class="product-img-action-wrap">
                       <div class="product-img product-img-zoom">
                         <a [routerLink]="['/', paths.productDetail, product.id]">
-                          <img class="default-img" [src]="productImage[product.id]" alt />
+                          <img class="default-img" [src]="getImageProductUrl(product.image)" alt />
                         </a>
                       </div>
                       <!-- Các nút hành động khác -->
@@ -463,7 +463,7 @@
           <div class="product-list-small animated animated">
             <article class="row align-items-center hover-up" *ngFor="let product of productSelling">
               <figure class="col-md-4 mb-0">
-                <a [routerLink]="['/',paths.productDetail, product.id]"><img [src]="productImage[product.id]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail, product.id]"><img [src]="getImageProductUrl(product.image)" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
@@ -488,7 +488,7 @@
           <div class="product-list-small animated animated">
             <article class="row align-items-center hover-up" *ngFor="let product of productTrending, let i = index">
               <figure class="col-md-4 mb-0">
-                <a [routerLink]="['/',paths.productDetail, product.id]"><img [src]="productImage[product.id]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail, product.id]"><img [src]="getImageProductUrl(product.image)" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
@@ -515,7 +515,7 @@
           <div class="product-list-small animated animated">
             <article class="row align-items-center hover-up" *ngFor="let product of productRec, let i = index">
               <figure class="col-md-4 mb-0">
-                <a [routerLink]="['/',paths.productDetail,product.id]"><img [src]="productImage[product.id]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail,product.id]"><img [src]="getImageProductUrl(product.image)" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>
@@ -541,7 +541,7 @@
           <div class="product-list-small animated animated">
             <article class="row align-items-center hover-up" *ngFor="let product of productRate, let i = index">
               <figure class="col-md-4 mb-0">
-                <a [routerLink]="['/',paths.productDetail,product.id]"><img [src]="productImage[product.id]" alt /></a>
+                <a [routerLink]="['/',paths.productDetail,product.id]"><img [src]="getImageProductUrl(product.image)" alt /></a>
               </figure>
               <div class="col-md-8 mb-0">
                 <h6>

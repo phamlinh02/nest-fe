@@ -20,6 +20,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoadingPageComponent} from "./loading-page/loading-page.component";
 import { StatisticProductComponent } from './statistical';
 import {ChartModule} from "primeng/chart";
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import {ChartModule} from "primeng/chart";
         BrowserAnimationsModule,
         ChartModule
     ],
-  providers: [HttpClient],
+  providers: [HttpClient,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

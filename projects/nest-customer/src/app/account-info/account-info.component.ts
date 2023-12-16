@@ -5,7 +5,7 @@ import {AccountService} from '../service/account.service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {UploadsService} from '../service/uploads.service';
 import {OrderService} from "../service/order.service";
-
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare const template: any;
 
@@ -53,16 +53,17 @@ export class AccountInfoComponent implements AfterViewInit {
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
     private route: ActivatedRoute,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private token: TokenStorageService
   ) {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
     this.tabSelected = this.route.snapshot.queryParamMap.get('tab') ?? 'dashboard';
 
-    const userData = localStorage.getItem('user');
+    const userData = this.token.getUser();
     if (userData) {
-      this.user = JSON.parse(userData).response;
+      this.user = userData;
       console.log(userData);
       this.getUserAvatar('account', this.user.avatar);
     }
@@ -70,7 +71,7 @@ export class AccountInfoComponent implements AfterViewInit {
 }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
     try {

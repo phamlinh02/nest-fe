@@ -5,6 +5,7 @@ import { paths } from "../const";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { CartService } from '../service/cart.service';
+import { TokenStorageService } from '../service/token-storage.service';
 
 
 declare let template: any;
@@ -28,6 +29,7 @@ export class FavoriteComponent implements AfterViewInit {
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
     private cartService: CartService,
+    private token: TokenStorageService
   ) {
 
   }
@@ -40,10 +42,9 @@ export class FavoriteComponent implements AfterViewInit {
   }
 
   loadFavoriteProducts() {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
+      this.accountId = userString.id;
 
       this.favoriteService.getFavoriteProducts(this.accountId).subscribe(
         (data: any) => {
@@ -58,6 +59,10 @@ export class FavoriteComponent implements AfterViewInit {
         }
       );
     } 
+    else{
+      alert('Please log in to view your favorite products list!!!');
+      this.router.navigate(['/login']);
+    }
 
   }
 
@@ -87,10 +92,9 @@ export class FavoriteComponent implements AfterViewInit {
     );
   }
   addToCart(productId: number) {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
+      this.accountId = userString.id;
 
       this.cartService.addToCart(this.accountId, productId, this.quantity).subscribe(
         successResponse => {

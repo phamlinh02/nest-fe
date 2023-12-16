@@ -43,9 +43,9 @@ export class AllProductComponent implements AfterViewInit {
   }
 
   showProducts() {
-    this.productService.getAllProductsPage(this.currentPage, 8).subscribe((data: any) => {
+    this.productService.getAllProductsPage(this.currentPage, 20).subscribe((data: any) => {
       this.products = data.response.content;
-      this.totalPages = Math.ceil(data.response.totalElements / 8);
+      this.totalPages = Math.ceil(data.response.totalElements / 20);
       this.products.forEach((product, index) => {
         this.getProductImage('product', product.image, index);
       });
