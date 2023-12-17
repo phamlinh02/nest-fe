@@ -30,12 +30,15 @@ export class ProductService {
     return this.http.get<any[]>(`${PRODUCT_API}/statistic-product`);
   }
 
+  getStatisticPro(): Observable<any[]> {
+    return this.http.get<any[]>(`${PRODUCT_API}/statistic`);
+  }
   getProductById(id: number): Observable<any> {
     return this.http.get(`${PRODUCT_API}/get-product?id=${id}`);
   }
 
   createProduct(product: any): Observable<any> {
-    return this.http.post(`${PRODUCT_API}/save`,product);
+    return this.http.post(`${PRODUCT_API}/save`, product);
   }
 
   updateProduct(product: any): Observable<any> {
