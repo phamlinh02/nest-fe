@@ -22,6 +22,7 @@ import { StatisticProductComponent } from './statistical';
 import {ChartModule} from "primeng/chart";
 import { DatePipe } from '@angular/common';
 import { authInterceptorProviders } from './hefper/auth.interceptor';
+import {CalendarModule} from "primeng/calendar";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { authInterceptorProviders } from './hefper/auth.interceptor';
         ReactiveFormsModule,
         PaginatorModule,
         BrowserAnimationsModule,
-        ChartModule
+        ChartModule,
+        CalendarModule
     ],
   providers: [HttpClient,DatePipe,authInterceptorProviders],
   bootstrap: [AppComponent]

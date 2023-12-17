@@ -68,7 +68,7 @@ export class HomeComponent implements AfterViewInit {
     private domSanitizer: DomSanitizer,
     private productService: ProductService,
     private token: TokenStorageService
-    
+
   ) {
 
   }
@@ -225,7 +225,7 @@ export class HomeComponent implements AfterViewInit {
     }
     const header = {
       size: 10,
-      number: 0
+      page: 0
     }
     if (!param.status) delete param.status
     this.orderService.getAllOrder(param, header).subscribe((res) => {
@@ -272,9 +272,9 @@ export class HomeComponent implements AfterViewInit {
       const categories: string[] = this.statisticInfo.categoryStatistics.map((category: any) => category.categoryName);
       const totalProducts: number[] = this.statisticInfo.categoryStatistics.map((category: any) => category.totalProduct);
       const totalStockQuantities: number[] = this.statisticInfo.categoryStatistics.map((category: any) => category.totalStockQuantity);
-  
+
       // Giả sử bạn đã đăng ký Chart.js và các plugin cần thiết trong dự án của bạn
-  
+
       // Tạo biểu đồ
       this.statisticChart = new Chart('statisticChart', {
         type: 'bar',
@@ -298,7 +298,7 @@ export class HomeComponent implements AfterViewInit {
               borderWidth: 1,
               yAxisID: 'products',
             },
-            
+
           ],
         },
         options: {
@@ -316,6 +316,6 @@ export class HomeComponent implements AfterViewInit {
       });
     }
   }
- 
+
 
 }

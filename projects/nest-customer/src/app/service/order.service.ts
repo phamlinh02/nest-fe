@@ -41,4 +41,8 @@ export class OrderService {
     return this.http.post(ORDER_API + `/transaction-success`,request, httpOptions)
   }
 
+  cancelBill(bill : any): Observable<any> {
+    return this.http.post(ORDER_API + `/update`,bill, httpOptions)
+  }
+
 }

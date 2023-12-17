@@ -99,15 +99,15 @@ button.submit, button[type='submit'] {
 
 
 .btn, .button {
-	display: inline-block !important;
+	display: inline-block ;
 	border: 1px solid transparent;
 	font-size: 14px !important;
 	font-weight: 700 !important;
 	padding: 12px 30px !important;
 	border-radius: 4px !important;
-	color: #fff !important;
-	border: 1px solid transparent !important;
-	background-color: $color-brand !important;
+	color: #fff;
+	border: 1px solid transparent ;
+	background-color: $color-brand ;
 	cursor: pointer !important;
 	transition: all 300ms linear 0s !important;
 	letter-spacing: 0.5px;
