@@ -7,7 +7,8 @@ import { UploadsService } from '../service/uploads.service';
 import { FavoriteService } from '../service/favorite.service';
 import { Router } from '@angular/router';
 import { CartService } from '../service/cart.service';
-
+import { TokenStorageService } from '../service/token-storage.service';
+import { CompareService } from '../service/compare.service';
 declare const template: any;
 
 @Component({
@@ -34,6 +35,8 @@ export class ShopFilterComponent implements AfterViewInit {
     private favoriteService: FavoriteService,
     private router: Router,
     private cartService: CartService,
+    private token: TokenStorageService,
+    private compareService: CompareService
   ) {}
 
   ngAfterViewInit() {
@@ -92,10 +95,10 @@ export class ShopFilterComponent implements AfterViewInit {
   }
 
   addToWishlist(productId: number): void {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      const accountId = userData.id;
+     
+      const accountId = userString.id;
 
       this.favoriteService.addProductToFavorite({ accountId, productId }).subscribe(
         successResponse => {
@@ -129,15 +132,14 @@ export class ShopFilterComponent implements AfterViewInit {
   }
 
   addToCart(productId: number) {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountId = userData.id;
+      this.accountId = userString.id;
 
       this.cartService.addToCart(this.accountId, productId, this.quantity).subscribe(
         successResponse => {
           // Xử lý khi thành công
-          alert('Sản phẩm đã được thêm vào giỏ hàng');
+          alert('The product has been added to cart!!');
           console.log('Thêm sản phẩm thành công');
           this.cartItems = this.cartItems.filter(item => item.id !== productId);
           this.cartService.updateCart();
@@ -150,7 +152,7 @@ export class ShopFilterComponent implements AfterViewInit {
       );
     } else {
       this.router.navigate([`${paths.login}`]);
-      alert('Vui lòng login để tiếp tục mua sắm !!!');
+      alert('Please login to continue shopping!!!');
     }
   }
 
@@ -160,17 +162,18 @@ export class ShopFilterComponent implements AfterViewInit {
   }
   addToComparison(product: any): void {
     const localStorageValue = localStorage.getItem('comparedProducts');
-    
+
     if (localStorageValue === null) {
       const comparedProducts = [product];
       localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
       alert('Product added to comparison list');
     } else {
       const comparedProducts = JSON.parse(localStorageValue);
-      
+
       if (!comparedProducts.some((p: any) => p.id === product.id)) {
         comparedProducts.push(product);
         localStorage.setItem('comparedProducts', JSON.stringify(comparedProducts));
+        this.compareService.updateComparedProducts(comparedProducts);
         alert('Product added to comparison list');
       } else {
         alert('The product is already in the comparison list');
