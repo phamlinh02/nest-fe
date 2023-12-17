@@ -12,8 +12,15 @@
                  (ngModelChange)="onSearchOrder()"
           />
         </div>
+        <div class="col-lg-4 col-md-6 me-auto">
+          <p-calendar class="mr-20" [(ngModel)]="filter.fromDate" appendTo="body"
+                      (ngModelChange)="loadData()"
+          ></p-calendar><p-calendar [(ngModel)]="filter.toDate" appendTo="body"
+                      (ngModelChange)="loadData()"
+          ></p-calendar>
+        </div>
         <div class="col-lg-2 col-6 col-md-3">
-          <p-dropdown [options]="['Completed', 'Pending', 'Canceled', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
+          <p-dropdown [options]="['Completed', 'Pending', 'Cancelled', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
                       (onChange)="onSearchOrder()" appendTo="body"
           ></p-dropdown>
         </div>
@@ -31,6 +38,7 @@
             <th scope="col">Total</th>
             <th scope="col">Status</th>
             <th scope="col">Date</th>
+            <th scope="col">Payment Status</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
           </thead>
@@ -43,6 +51,7 @@
               <td>{{item.sumPriceBill}}</td>
               <td><span class="badge rounded-pill status-{{item.status.toLocaleLowerCase()}}">{{item.status}}</span></td>
               <td>{{item.orderDate | date}}</td>
+              <td>{{item.paymentId ? 'Paid' : 'Unpaid'}}</td>
               <td class="text-end">
                 <a [routerLink]="item.id" class="btn btn-md rounded font-sm">Detail</a>
                 <div class="dropdown">
@@ -73,7 +82,7 @@
         <ng-container *ngFor="let page of listPage">
           <li class="page-item"
               [class.active]="pageIndex + 1 == page"
-          ><a class="page-link" href="#">{{page < 10 ? '0' + page : page}}</a></li>
+          ><a class="page-link" (click)="changePage(page)">{{page < 10 ? '0' + page : page}}</a></li>
         </ng-container>
       </ul>
     </nav>

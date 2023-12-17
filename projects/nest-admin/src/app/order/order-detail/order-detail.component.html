@@ -38,7 +38,7 @@
                                     <span class="icon icon-sm rounded-circle bg-primary-light">
                                       <img [src]="accountAvatar" alt="" style="border-radius: 50%;">
                                     </span>
-                                    
+
             <div class="text">
               <h6 class="mb-1">Customer</h6>
               <p class="mb-1">
@@ -60,7 +60,8 @@
               <p class="mb-1">
                 Shipping: {{orderDetail.account.address}} <br />
                 Pay method: card <br />
-                Status: {{orderDetail.bill.status}}
+                Status: {{orderDetail.bill.status}} <br/>
+                Payment Status: {{orderDetail.bill.paymentId ? 'Paid' : 'Unpaid'}}
               </p>
             </div>
           </article>

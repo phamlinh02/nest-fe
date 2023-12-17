@@ -16,10 +16,14 @@ export class OrderComponent implements OnInit {
   listPage: any = [];
   filter: {
     searchName: string,
-    status: string
+    status: string,
+    fromDate : Date,
+    toDate : Date
   } = {
     searchName: '',
-    status: ''
+    status: '',
+    toDate : new Date,
+    fromDate : new Date
   }
 
   constructor(
@@ -36,14 +40,24 @@ export class OrderComponent implements OnInit {
     } else {
       this.loadData();
     }
-    
+
   }
 
-  loadData() {
-    const param = {}
-    this.orderService.getAllOrder(param).subscribe((response) => {
+  loadData(param : any = {}, header: any = {
+    size : 10,
+    page: 0
+  } ) {
+    if(this.filter.fromDate && this.filter.toDate){
+      param = {
+        ...param,
+        fromDate : this.filter.fromDate,
+        toDate : this.filter.toDate
+      }
+    }
+    this.orderService.getAllOrder(param, header).subscribe((response) => {
       this.listOrder = this.listOrderFilter = response.response.content;
       this.paging = response.response;
+      this.listPage = [];
       for (let i = 0; i < this.paging.totalPages; i++) {
         this.listPage.push(i + 1)
       }
@@ -51,15 +65,28 @@ export class OrderComponent implements OnInit {
   }
 
   onSearchOrder() {
-    this.listOrderFilter = this.listOrder.filter((order: any) =>
-      ((order.username.toLocaleLowerCase().includes(this.filter.searchName.toLocaleLowerCase())) ||
-        (order.fullName.toLocaleLowerCase().includes(this.filter.searchName.toLocaleLowerCase())) ||
-        (order.email.toLocaleLowerCase().includes(this.filter.searchName.toLocaleLowerCase())) ||
-        (order.id == this.filter.searchName.toLocaleLowerCase())
-      ) &&
-      ((this.filter.status != '' && this.filter.status.toLocaleLowerCase() == order.status.toLocaleLowerCase()) ||
-        this.filter.status.toLocaleLowerCase() == 'show all' || this.filter.searchName == ''
+    let list = this.listOrder;
+    if(this.filter.searchName != ''){
+      list = list.filter((order : any) =>
+        ((order.username.toLowerCase().includes(this.filter.searchName.toLowerCase())) ||
+          (order.fullName.toLowerCase().includes(this.filter.searchName.toLowerCase())) ||
+          (order.email.toLowerCase().includes(this.filter.searchName.toLowerCase())) ||
+          (order.id.toString().includes(this.filter.searchName.toLowerCase()))
+        )
       )
-    )
+    }
+    if(this.filter.status != '' && this.filter.status.toLowerCase() != 'show all'){
+      list = list.filter((order : any) =>this.filter.status.toLowerCase() === order.status.toLowerCase())
+    }
+    this.listOrderFilter = list;
+  }
+
+  changePage(page : number){
+    this.pageIndex = page -1;
+    const header = {
+      size: 10,
+      page: page - 1
+    }
+    this.loadData({}, header);
   }
 }

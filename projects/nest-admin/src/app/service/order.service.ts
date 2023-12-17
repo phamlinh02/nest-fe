@@ -24,7 +24,7 @@ export class OrderService {
   getAllOrder(order: any, header ?: any): Observable<any> {
     let url = '/get-all';
     if(header){
-      url += `?size=${header.size}&number=${header.number}`;
+      url += `?size=${header.size}&page=${header.page}`;
     }
     return this.http.post(ORDER_API + url, order, httpOptions)
   }
