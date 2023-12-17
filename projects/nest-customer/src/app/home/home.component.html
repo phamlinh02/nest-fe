@@ -32,7 +32,7 @@
                   </div>
                   <div class="clearfix product-price-cover">
                     <div class="product-price primary-color float-left">
-                      <span class="current-price text-brand">${{product.price}}</span>
+                      <span class="current-price text-brand">${{product.price | number : '1.0-3'}}</span>
                     </div>
                   </div>
                   <div class="detail-extralink mb-30" style="margin-bottom: 0px !important;">
@@ -225,7 +225,7 @@
                   </div>
                   <div class="product-card-bottom">
                     <div class="product-price">
-                      <span>${{ product.price }}</span>
+                      <span>${{ product.price | number : '1.0-3'}}</span>
                     </div>
                     <div class="add-cart">
                       <a class="add" (click)="addToCart(product.id)"><i class="fi-rs-shopping-cart mr-5"></i>Add</a>
@@ -278,7 +278,7 @@
                   </div>
                   <div class="product-card-bottom">
                     <div class="product-price">
-                      <span>{{ product.price }}</span>
+                      <span>{{ product.price | number : '1.0-3'}}</span>
                       <span class="old-price">$32.8</span>
                     </div>
                     <div class="add-cart">
@@ -355,7 +355,7 @@
                         <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                       </div>
                       <div class="product-price mt-10">
-                        <span>${{ product.price }}</span>
+                        <span>${{ product.price | number : '1.0-3'}}</span>
                       </div>
                       <div class="sold mt-15 mb-15">
                         <!-- Phần hiển thị số lượng đã bán -->
@@ -394,7 +394,7 @@
                         <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                       </div>
                       <div class="product-price mt-10">
-                        <span>${{ product.price }}</span>
+                        <span>${{ product.price | number : '1.0-3'}}</span>
                       </div>
                       <div class="sold mt-15 mb-15">
                         <!-- Phần hiển thị số lượng đã bán -->
@@ -432,7 +432,7 @@
                         <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                       </div>
                       <div class="product-price mt-10">
-                        <span>${{ product.price }}</span>
+                        <span>${{ product.price | number : '1.0-3'}}</span>
                       </div>
                       <div class="sold mt-15 mb-15">
                         <!-- Phần hiển thị số lượng đã bán -->
@@ -476,7 +476,7 @@
                   <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
-                  <span>${{product.price}}</span>
+                  <span>${{product.price | number : '1.0-3'}}</span>
                 </div>
               </div>
             </article>
@@ -501,7 +501,7 @@
                   <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
-                  <span>${{product.price}}</span>
+                  <span>${{product.price | number : '1.0-3'}}</span>
                 </div>
               </div>
             </article>
@@ -528,7 +528,7 @@
                   <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
-                  <span>${{product.price}}</span>
+                  <span>${{product.price | number : '1.0-3'}}</span>
                 </div>
               </div>
             </article>
@@ -554,7 +554,7 @@
                   <span class="font-small ml-5 text-muted"> ({{product.totalRatings}} reviews)</span>
                 </div>
                 <div class="product-price">
-                  <span>${{product.price}}</span>
+                  <span>${{product.price | number : '1.0-3'}}</span>
                 </div>
               </div>
             </article>

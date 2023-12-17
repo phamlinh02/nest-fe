@@ -90,9 +90,9 @@
                     <div class="info">{{item.productDTO.productName}}</div>
                   </a>
                 </td>
-                <td>{{item.price}}</td>
+                <td>{{item.price | number : '1.0-3'}}</td>
                 <td>{{item.quantity}}</td>
-                <td class="text-end">{{item.price * item.quantity}}</td>
+                <td class="text-end">{{(item.price * item.quantity) | number : '1.0-3'}}</td>
               </tr>
               </tbody>
             </table>

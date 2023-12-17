@@ -63,9 +63,9 @@
                           <small>{{item.productDTO.description}}</small>
                         </div>
                       </td>
-                      <td class="text-center">${{item.price}}</td>
+                      <td class="text-center">${{item.price | number : '1.0-3'}}</td>
                       <td class="text-center">{{item.quantity}}</td>
-                      <td class="text-right">${{item.quantity * item.price}}</td>
+                      <td class="text-right">${{(item.quantity * item.price) | number : '1.0-3'}}</td>
                     </tr>
 
                   </ng-container>

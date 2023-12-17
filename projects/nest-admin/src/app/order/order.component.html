@@ -20,7 +20,7 @@
           ></p-calendar>
         </div>
         <div class="col-lg-2 col-6 col-md-3">
-          <p-dropdown [options]="['Completed', 'Pending', 'Cancelled', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
+          <p-dropdown [options]="['New','Processing','Completed', 'Pending', 'Cancelled', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
                       (onChange)="onSearchOrder()" appendTo="body"
           ></p-dropdown>
         </div>

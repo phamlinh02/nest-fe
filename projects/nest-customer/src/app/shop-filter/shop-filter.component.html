@@ -18,7 +18,7 @@
                         </div>
                         <!-- End Gallery -->
                     </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">  
+                    <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="detail-info pr-30 pl-30">
                             <h3 class="title-detail"><a [routerLink]="['/',paths.productDetail,product.id]" class="text-heading">{{product.productName}}</a></h3>
                             <div class="product-detail-rating">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="clearfix product-price-cover">
                                 <div class="product-price primary-color float-left">
-                                    <span class="current-price text-brand">${{product.price}}</span>
+                                    <span class="current-price text-brand">${{product.price | number : '1.0-3'}}</span>
                                 </div>
                             </div>
                             <div class="detail-extralink mb-30" style="margin-bottom: 0px !important;">
@@ -80,7 +80,7 @@
                           </div>
                           <!-- End Gallery -->
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">  
+                      <div class="col-md-6 col-sm-12 col-xs-12">
                           <div class="detail-info pr-30 pl-30">
                               <h3 class="title-detail"><a [routerLink]="['/',paths.productDetail,product.id]" class="text-heading">{{product.productName}}</a></h3>
                               <div class="product-detail-rating">
@@ -93,7 +93,7 @@
                               </div>
                               <div class="clearfix product-price-cover">
                                   <div class="product-price primary-color float-left">
-                                      <span class="current-price text-brand">${{product.price}}</span>
+                                      <span class="current-price text-brand">${{product.price | number : '1.0-3'}}</span>
                                   </div>
                               </div>
                               <div class="detail-extralink mb-30" style="margin-bottom: 0px !important;">
@@ -174,7 +174,7 @@
                 </div>
                 <div class="product-card-bottom">
                   <div class="product-price">
-                    <span>${{ product.price }}</span>
+                    <span>${{ product.price | number : '1.0-3'}}</span>
                   </div>
                   <div class="add-cart">
                     <a class="add" (click)="addToCart(product.id)"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
@@ -217,7 +217,7 @@
                 </div>
                 <div class="product-card-bottom">
                   <div class="product-price">
-                    <span>${{ product.price }}</span>
+                    <span>${{ product.price | number : '1.0-3'}}</span>
                   </div>
                   <div class="add-cart">
                     <a class="add" (click)="addToCart(product.id)"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>

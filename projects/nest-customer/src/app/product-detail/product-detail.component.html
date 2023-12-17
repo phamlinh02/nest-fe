@@ -65,7 +65,7 @@
                 </div>
                 <div class="clearfix product-price-cover">
                   <div class="product-price primary-color float-left">
-                    <span class="current-price text-brand">${{ product.price }}</span>
+                    <span class="current-price text-brand">${{ product.price | number : '1.0-3'}}</span>
                   </div>
                 </div>
                 <div class="short-desc mb-30">
@@ -246,7 +246,7 @@
                         <span> </span>
                       </div>
                       <div class="product-price">
-                        <span>${{relatedProduct.price}} </span>
+                        <span>${{relatedProduct.price | number : '1.0-3'}} </span>
                       </div>
                     </div>
                   </div>
@@ -291,7 +291,7 @@
                   </div>
                   <div class="clearfix product-price-cover">
                     <div class="product-price primary-color float-left">
-                      <span class="current-price text-brand">${{relatedProduct.price}}</span>
+                      <span class="current-price text-brand">${{relatedProduct.price | number : '1.0-3'}}</span>
                     </div>
                   </div>
                   <div class="detail-extralink mb-30" style="margin-bottom: 0px !important;">

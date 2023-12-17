@@ -85,7 +85,7 @@
                       </div>
                       <div class="shopping-cart-title" style="width: 150px;">
                         <h4><a href="shop-product-right.html">{{item.productId.productName}}</a></h4>
-                        <h4><span>{{item.quantity}} × </span>{{item.productId.price}}$</h4>
+                        <h4><span>{{item.quantity}} × </span>{{item.productId.price | number : '1.0-3'}}$</h4>
                       </div>
                       <div class="shopping-cart-delete">
                         <a (click)="removeCartItem(item.id)"><i class="fi-rs-cross-small"></i></a>

@@ -23,7 +23,7 @@
               </div>
             </a>
           </div>
-          <div class="col-lg-2 col-sm-2 col-4 col-price"><span>${{product.price}}</span></div>
+          <div class="col-lg-2 col-sm-2 col-4 col-price"><span>${{product.price | number : '1.0-3'}}</span></div>
           <div class="col-lg-1 col-sm-2 col-4 col-status">
             <ng-container *ngIf="product.isActive; else disabledBadge">
               <span class="badge rounded-pill alert-success">Active</span>

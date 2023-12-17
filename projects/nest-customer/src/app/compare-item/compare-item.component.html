@@ -30,7 +30,7 @@
               <tr class="pr_price">
                 <td class="text-muted font-sm fw-600 font-heading">Price</td>
                 <td *ngFor="let product of comparedProducts" class="product_price">
-                  <h4 class="price text-brand">${{ product.price }}</h4>
+                  <h4 class="price text-brand">${{ product.price | number : '1.0-3'}}</h4>
                 </td>
               </tr>
                <tr class="pr_rating">

@@ -397,14 +397,14 @@
                     <!--                      <span class="font-small ml-5 text-muted"> (4.0)</span>-->
                     <!--                    </div>-->
                     <div class="product-rate-cover">
-                      <span class="font-small ml-5 text-muted"> Price item ${{item.productId.price}}</span>
+                      <span class="font-small ml-5 text-muted"> Price item ${{item.productId.price | number : '1.0-3'}}</span>
                     </div>
                   </td>
                   <td>
                     <h6 class="text-muted pl-20 pr-20">x {{item.quantity}}</h6>
                   </td>
                   <td>
-                    <h4 class="text-brand">${{item.quantity * item.productId.price}}</h4>
+                    <h4 class="text-brand">${{(item.quantity * item.productId.price) | number : '1.0-3'}}</h4>
                   </td>
                 </tr>
               </ng-container>

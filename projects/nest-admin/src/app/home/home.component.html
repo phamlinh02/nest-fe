@@ -121,14 +121,15 @@
         <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
         </div>
         <div class="col-md-4 col-6">
-          <p-calendar class="mr-20" [(ngModel)]="filter.fromDate" appendTo="body"
-            (ngModelChange)="getALlBill()"></p-calendar><p-calendar [(ngModel)]="filter.toDate" appendTo="body"
+          <p-calendar class="mr-20" [(ngModel)]="filter.fromDate" appendTo="body" [dateFormat]="'dd/mm/yy'"
+            (ngModelChange)="getALlBill()"></p-calendar
+          ><p-calendar [(ngModel)]="filter.toDate" appendTo="body" [dateFormat]="'dd/mm/yy'"
             (ngModelChange)="getALlBill()"></p-calendar>
         </div>
         <div class="col-md-2 col-6">
           <div class="custom_select">
-            <p-dropdown [options]="['Completed', 'Pending', 'Canceled', 'Show All']" [(ngModel)]="filter.status"
-              placeholder="Filter by status" (onChange)="getALlBill()" appendTo="body"></p-dropdown>
+            <p-dropdown [options]="['New','Processing','Completed', 'Pending', 'Cancelled', 'Show All']" [(ngModel)]="filter.status"
+              placeholder="Filter by status" (onChange)="filterStatus()" appendTo="body"></p-dropdown>
           </div>
         </div>
       </div>
@@ -145,20 +146,22 @@
                 <th class="align-middle" scope="col">Total Price</th>
                 <th class="align-middle" scope="col">Total Quantity</th>
                 <th class="align-middle" scope="col">Customer</th>
+                <th class="align-middle" scope="col">Payment status</th>
                 <th class="align-middle" scope="col">View Details</th>
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let item of latestBill">
+              <ng-container *ngFor="let item of latestBillOrder">
                 <tr>
                   <td><a href="#" class="fw-bold">#{{item.id}}</a></td>
-                  <td>{{item.status}}</td>
+                  <td>{{item.status | titlecase}}</td>
                   <td>{{item.orderDate | date : 'dd-MM-yyyy hh:mm:ss'}}</td>
                   <td>{{item.sumPriceBill}}</td>
                   <td>
                     <span class="badge badge-pill badge-soft-success">{{item.countOrder}}</span>
                   </td>
-                  <td><i class="material-icons md-payment font-xxl text-muted mr-5"></i> {{item.username}}</td>
+                  <td> {{item.username}}</td>
+                  <td> {{item.paymentId ? 'Paid' : 'Unpaid'}}</td>
                   <td>
                     <a [routerLink]="['/order/' + item.id]" class="btn btn-xs"> View details</a>
                   </td>
