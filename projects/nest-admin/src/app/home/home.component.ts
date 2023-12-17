@@ -1,10 +1,11 @@
-import {AfterViewInit, Component} from '@angular/core';
-import {ReportService} from "../service/report.service";
-import {AccountService} from '../service/account.service';
-import {Router} from '@angular/router';
-import {RateService} from '../service/rate.service';
-import {Chart, registerables} from 'chart.js';
-import {OrderService} from "../service/order.service";
+import { AfterViewInit, Component } from '@angular/core';
+import { ReportService } from "../service/report.service";
+import { AccountService } from '../service/account.service';
+import { Router } from '@angular/router';
+import { RateService } from '../service/rate.service';
+import { CategoryService } from '../service/category.service';
+import { Chart, registerables } from 'chart.js';
+import { OrderService } from "../service/order.service";
 import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { paths } from '../const';
@@ -29,6 +30,7 @@ export class HomeComponent implements AfterViewInit {
   order: number = 0;
   revenue: number = 0;
   orderQty: number = 0;
+  statisticCate: number = 0;
   data: any = {};
   accounts: any[] = [];
   title = 'nest-customer';
@@ -62,6 +64,7 @@ export class HomeComponent implements AfterViewInit {
   constructor(
     private reportService: ReportService,
     private accountService: AccountService,
+    private categoryService: CategoryService,
     private router: Router,
     private rateService: RateService,
     private orderService: OrderService,
@@ -85,6 +88,7 @@ export class HomeComponent implements AfterViewInit {
       this.getALlBill();
       this.getAllUsers();
       this.showStatisticProduct();
+      this.showStatictCategory();
       template.init();
     }
   }
@@ -166,7 +170,7 @@ export class HomeComponent implements AfterViewInit {
         datasets: [
           {
             label: 'Total Bill',
-            data: [0,0,0,0,0,0,0,0,0,0,0,0],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             fill: true,
             borderColor: 'blue',
             tension: 0.1,
@@ -174,7 +178,7 @@ export class HomeComponent implements AfterViewInit {
           },
           {
             label: 'New Bill',
-            data: [0,0,0,0,0,0,0,0,0,0,0,0],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             fill: true,
             borderColor: 'pink',
             tension: 0.1,
@@ -182,7 +186,7 @@ export class HomeComponent implements AfterViewInit {
           },
           {
             label: 'Cancel Bill',
-            data: [0,0,0,0,0,0,0,0,0,0,0,0],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             fill: true,
             borderColor: 'red',
             tension: 0.1,
@@ -190,7 +194,7 @@ export class HomeComponent implements AfterViewInit {
           },
           {
             label: 'Complete BIll',
-            data: [0,0,0,0,0,0,0,0,0,0,0,0],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             fill: true,
             borderColor: 'green',
             tension: 0.1,
@@ -199,19 +203,19 @@ export class HomeComponent implements AfterViewInit {
         ]
       }
 
-      this.statisticsBill.totalBill.forEach((total : any) => {
+      this.statisticsBill.totalBill.forEach((total: any) => {
         const month = new Date(total.orderDate).getMonth();
-         ++this.data.datasets[0].data[month]
+        ++this.data.datasets[0].data[month]
       })
-      this.statisticsBill.newBill.forEach((total : any) => {
+      this.statisticsBill.newBill.forEach((total: any) => {
         const month = new Date(total.orderDate).getMonth();
         ++this.data.datasets[1].data[month]
       })
-      this.statisticsBill.cancelBill.forEach((total : any) => {
+      this.statisticsBill.cancelBill.forEach((total: any) => {
         const month = new Date(total.orderDate).getMonth();
         ++this.data.datasets[2].data[month]
       })
-      this.statisticsBill.completeBill.forEach((total : any) => {
+      this.statisticsBill.completeBill.forEach((total: any) => {
         const month = new Date(total.orderDate).getMonth();
         ++this.data.datasets[3].data[month]
       })
@@ -256,16 +260,26 @@ export class HomeComponent implements AfterViewInit {
       this.userAvatars[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
   }
-
-  showStatisticProduct(){
-    this.productService.getStatisticProduct().subscribe((data: any) => {
-        this.statisticInfo = data.response;
-        this.statisticProductChart();
-      },
-        (error) => {
-          console.error('Lỗi khi tải danh sách sản phẩm: ', error);
-        });
+  showStatictCategory() {
+    this.categoryService.getStatisticCategory().subscribe((data: any) => {
+      this.statisticCate = data.response;
+      this.statisticProductChart();
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
   }
+
+  showStatisticProduct() {
+    this.productService.getStatisticProduct().subscribe((data: any) => {
+      this.statisticInfo = data.response;
+      this.statisticProductChart();
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
+  }
+
 
   statisticProductChart() {
     if (this.statisticInfo && this.statisticInfo.categoryStatistics) {
@@ -316,11 +330,10 @@ export class HomeComponent implements AfterViewInit {
       });
     }
   }
-
-  filterStatus(){
+  filterStatus() {
     this.latestBillOrder = this.latestBill;
-    if(this.filter.status != '' && this.filter.status.toLowerCase() != 'show all'){
-      this.latestBillOrder = this.latestBill.filter((order : any) =>this.filter.status.toLowerCase() === order.status.toLowerCase())
+    if (this.filter.status != '' && this.filter.status.toLowerCase() != 'show all') {
+      this.latestBillOrder = this.latestBill.filter((order: any) => this.filter.status.toLowerCase() === order.status.toLowerCase())
     }
   }
 

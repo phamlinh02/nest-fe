@@ -10,7 +10,7 @@
       <div class="card card-body mb-4">
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-primary-light"><i
-            class="text-primary material-icons md-monetization_on"></i></span>
+              class="text-primary material-icons md-monetization_on"></i></span>
           <div class="text">
             <h6 class="mb-1 card-title">Revenue</h6>
             <span>${{revenue}}</span>
@@ -23,7 +23,7 @@
       <div class="card card-body mb-4">
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-success-light"><i
-            class="text-success material-icons md-local_shipping"></i></span>
+              class="text-success material-icons md-local_shipping"></i></span>
           <div class="text">
             <h6 class="mb-1 card-title">Orders</h6>
             <span>{{order}}</span>
@@ -36,11 +36,11 @@
       <div class="card card-body mb-4">
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-warning-light"><i
-            class="text-warning material-icons md-qr_code"></i></span>
+              class="text-warning material-icons md-qr_code"></i></span>
           <div class="text">
             <h6 class="mb-1 card-title">Products</h6>
-            <span>{{productQty}}</span>
-            <span class="text-sm"> In 19 Categories </span>
+            <span>{{statisticInfo}}</span>
+            <span class="text-sm">{{statisticCate}} Category </span>
           </div>
         </article>
       </div>
@@ -49,7 +49,7 @@
       <div class="card card-body mb-4">
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-info-light"><i
-            class="text-info material-icons md-shopping_basket"></i></span>
+              class="text-info material-icons md-shopping_basket"></i></span>
           <div class="text">
             <h6 class="mb-1 card-title">Monthly Earning</h6>
             <span>{{orderQty}}</span>
@@ -71,7 +71,8 @@
         <div class="col-lg-12">
           <div class="card mb-4">
             <article class="card-body">
-              <a [routerLink]="['/',paths.statisticProduct]"><h5 class="card-title">Number of Products by Category</h5>
+              <a [routerLink]="['/',paths.statisticProduct]">
+                <h5 class="card-title">Number of Products by Category</h5>
               </a>
               <div class="card mb-4">
                 <canvas id="statisticChart" width="400" height="150"></canvas>
@@ -97,9 +98,9 @@
             <h5 class="card-title">New Members</h5>
             <div class="new-member-list">
               <div class="d-flex align-items-center justify-content-between mb-4"
-                   *ngFor="let user of accounts;let i = index">
+                *ngFor="let user of accounts;let i = index">
                 <div class="d-flex align-items-center">
-                  <img [src]="userAvatars[i]" alt="" class="avatar"/>
+                  <img [src]="userAvatars[i]" alt="" class="avatar" />
                   <div>
                     <h6>{{user.username}}</h6>
                     <p class="text-muted font-xs">{{user.email}}</p>
@@ -121,17 +122,13 @@
         </div>
         <div class="col-md-4 col-6">
           <p-calendar class="mr-20" [(ngModel)]="filter.fromDate" appendTo="body"
-                      (ngModelChange)="getALlBill()"
-          ></p-calendar>
-          <p-calendar [(ngModel)]="filter.toDate" appendTo="body"
-                      (ngModelChange)="getALlBill()"
-          ></p-calendar>
+            (ngModelChange)="getALlBill()"></p-calendar><p-calendar [(ngModel)]="filter.toDate" appendTo="body"
+            (ngModelChange)="getALlBill()"></p-calendar>
         </div>
         <div class="col-md-2 col-6">
           <div class="custom_select">
-            <p-dropdown [options]="['PROCESSING', 'CANCELLED','COMPLETED','PENDING','NEW', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
-                        (onChange)="filterStatus()" appendTo="body"
-            ></p-dropdown>
+            <p-dropdown [options]="['Completed', 'Pending', 'Canceled', 'Show All']" [(ngModel)]="filter.status"
+              placeholder="Filter by status" (onChange)="getALlBill()" appendTo="body"></p-dropdown>
           </div>
         </div>
       </div>
@@ -141,34 +138,32 @@
         <div class="table-responsive">
           <table class="table align-middle table-nowrap mb-0">
             <thead class="table-light">
-            <tr>
-              <th class="align-middle" scope="col">Order ID</th>
-              <th class="align-middle" scope="col">Status</th>
-              <th class="align-middle" scope="col">Date</th>
-              <th class="align-middle" scope="col">Total Price</th>
-              <th class="align-middle" scope="col">Total Quantity</th>
-              <th class="align-middle" scope="col">Customer</th>
-              <th class="align-middle" scope="col">Payment status</th>
-              <th class="align-middle" scope="col">View Details</th>
-            </tr>
+              <tr>
+                <th class="align-middle" scope="col">Order ID</th>
+                <th class="align-middle" scope="col">Status</th>
+                <th class="align-middle" scope="col">Date</th>
+                <th class="align-middle" scope="col">Total Price</th>
+                <th class="align-middle" scope="col">Total Quantity</th>
+                <th class="align-middle" scope="col">Customer</th>
+                <th class="align-middle" scope="col">View Details</th>
+              </tr>
             </thead>
             <tbody>
-            <ng-container *ngFor="let item of latestBillOrder">
-              <tr>
-                <td><a href="#" class="fw-bold">#{{item.id}}</a></td>
-                <td>{{item.status}}</td>
-                <td>{{item.orderDate | date : 'dd-MM-yyyy hh:mm:ss'}}</td>
-                <td>{{item.sumPriceBill}}</td>
-                <td>
-                  <span class="badge badge-pill badge-soft-success">{{item.countOrder}}</span>
-                </td>
-                <td> {{item.username}}</td>
-                <td> {{item.paymentId ? 'Paid' : 'Unpaid'}}</td>
-                <td>
-                  <a [routerLink]="['/order/' + item.id]" class="btn btn-xs"> View details</a>
-                </td>
-              </tr>
-            </ng-container>
+              <ng-container *ngFor="let item of latestBill">
+                <tr>
+                  <td><a href="#" class="fw-bold">#{{item.id}}</a></td>
+                  <td>{{item.status}}</td>
+                  <td>{{item.orderDate | date : 'dd-MM-yyyy hh:mm:ss'}}</td>
+                  <td>{{item.sumPriceBill}}</td>
+                  <td>
+                    <span class="badge badge-pill badge-soft-success">{{item.countOrder}}</span>
+                  </td>
+                  <td><i class="material-icons md-payment font-xxl text-muted mr-5"></i> {{item.username}}</td>
+                  <td>
+                    <a [routerLink]="['/order/' + item.id]" class="btn btn-xs"> View details</a>
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>

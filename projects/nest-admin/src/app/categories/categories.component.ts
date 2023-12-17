@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { CategoryService } from '../service/category.service';
 import { paths } from '../const';
 import { ActivatedRoute } from '@angular/router';
@@ -35,7 +35,7 @@ export class CategoriesComponent implements AfterViewInit {
     private accountService: AccountService,
     private router: Router,
     private token: TokenStorageService
-  ){}
+  ) { }
 
   ngAfterViewInit() {
     if (!this.token.isLoggedIn()) {
@@ -45,7 +45,7 @@ export class CategoriesComponent implements AfterViewInit {
       this.showCategories();
       this.showCategoryById();
     }
-    
+
   }
 
   showCategories() {
@@ -53,7 +53,7 @@ export class CategoriesComponent implements AfterViewInit {
       this.categories = data.response.content;
       this.totalPages = Math.ceil(data.response.totalElements / 5);
       this.categories.forEach((category, index) => {
-        this.getAllCategoryImage('category', category.imageCategory,index);
+        this.getAllCategoryImage('category', category.imageCategory, index);
       });
       console.log(this.categories);
     },
@@ -62,7 +62,7 @@ export class CategoriesComponent implements AfterViewInit {
       });
   }
 
-  showCategoryById(){
+  showCategoryById() {
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       if (!isNaN(id)) {
@@ -70,7 +70,7 @@ export class CategoriesComponent implements AfterViewInit {
         this.categoryService.getCategoryId(this.categoryId).subscribe(
           (data: any) => {
             this.category = data.response;
-            this.getCategoryImage('category',this.category.imageCategory);
+            this.getCategoryImage('category', this.category.imageCategory);
           },
           (error) => {
             console.error('Lỗi khi tải chi tiết account: ', error);
@@ -82,15 +82,15 @@ export class CategoriesComponent implements AfterViewInit {
 
   updateCategory() {
     const formData = new FormData();
-  
+
     if (this.categoryFile) {
       formData.append('categoryFile', this.categoryFile);
     }
-  
+
     formData.append('id', this.category.id);
     formData.append('name', this.category.name);
     formData.append('isActive', this.category.isActive);
-  
+
     this.categoryService.updateCategory(formData).subscribe(
       (response) => {
         console.log('Updated successfully!', response);
@@ -116,7 +116,7 @@ export class CategoriesComponent implements AfterViewInit {
       (response) => {
         console.log('Category saved successfully!', response);
         window.location.reload();
-        
+
       },
       (error) => {
         this.errorMessage = 'Category save failed, please check information...!';
@@ -139,8 +139,8 @@ export class CategoriesComponent implements AfterViewInit {
     });
   }
 
-  getCategoryImage(type: string,filename: string) {
-    this.uploadsService.getImage(type,filename).subscribe((imageData: Blob) => {
+  getCategoryImage(type: string, filename: string) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.categoryImageDetail = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
