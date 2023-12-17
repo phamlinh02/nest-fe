@@ -17,11 +17,13 @@ export class OrderComponent implements OnInit {
   filter: {
     searchName: string,
     status: string,
-    date : Date
+    fromDate : Date,
+    toDate : Date
   } = {
     searchName: '',
     status: '',
-    date : new Date
+    toDate : new Date,
+    fromDate : new Date
   }
 
   constructor(
@@ -45,10 +47,11 @@ export class OrderComponent implements OnInit {
     size : 10,
     page: 0
   } ) {
-    if(this.filter.date){
+    if(this.filter.fromDate && this.filter.toDate){
       param = {
         ...param,
-        orderDate : this.filter.date
+        fromDate : this.filter.fromDate,
+        toDate : this.filter.toDate
       }
     }
     this.orderService.getAllOrder(param, header).subscribe((response) => {

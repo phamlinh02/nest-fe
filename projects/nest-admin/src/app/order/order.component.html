@@ -13,7 +13,9 @@
           />
         </div>
         <div class="col-lg-4 col-md-6 me-auto">
-          <p-calendar [(ngModel)]="filter.date" appendTo="body"
+          <p-calendar class="mr-20" [(ngModel)]="filter.fromDate" appendTo="body"
+                      (ngModelChange)="loadData()"
+          ></p-calendar><p-calendar [(ngModel)]="filter.toDate" appendTo="body"
                       (ngModelChange)="loadData()"
           ></p-calendar>
         </div>
