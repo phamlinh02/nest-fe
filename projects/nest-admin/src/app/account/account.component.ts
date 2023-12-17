@@ -4,6 +4,7 @@ import { AccountService } from '../service/account.service';
 import { Router } from '@angular/router';
 import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare const template: any;
 
@@ -25,11 +26,12 @@ export class AccountComponent implements AfterViewInit {
     private accountService: AccountService,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private token: TokenStorageService
   ) { }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       document.body.classList.add('abc');
       this.router.navigate(['/login']);
     } else {
@@ -71,10 +73,9 @@ export class AccountComponent implements AfterViewInit {
   }
 
   deleteAccount(accountId: number) {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.userRole = userData.roleName;
+      this.userRole = userString.roleName;
 
       console.log('UserRole:', this.userRole);
     

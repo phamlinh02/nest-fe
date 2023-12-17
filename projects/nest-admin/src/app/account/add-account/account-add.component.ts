@@ -6,6 +6,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../../service/uploads.service';
 import { ActivatedRoute } from '@angular/router';
 import { RoleService } from '../../service/role.service';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare let template: any;
 
@@ -29,12 +30,13 @@ export class AddAccountComponent implements AfterViewInit{
     private uploadsService: UploadsService,
     private route: ActivatedRoute,
     private domSanitizer: DomSanitizer,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private token: TokenStorageService
   ){
   }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       template.init();

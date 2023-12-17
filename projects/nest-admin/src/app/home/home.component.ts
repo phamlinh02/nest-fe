@@ -9,6 +9,7 @@ import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { paths } from '../const';
 import { ProductService } from '../service/product.service';
+import { TokenStorageService } from '../service/token-storage.service';
 // import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 // Chart.register(ChartAnnotation,...registerables);
@@ -65,7 +66,8 @@ export class HomeComponent implements AfterViewInit {
     private orderService: OrderService,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
-    private productService: ProductService
+    private productService: ProductService,
+    private token: TokenStorageService
     
   ) {
 
@@ -73,7 +75,7 @@ export class HomeComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     console.log('home page')
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       this.showReport();

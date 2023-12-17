@@ -21,6 +21,7 @@ import {LoadingPageComponent} from "./loading-page/loading-page.component";
 import { StatisticProductComponent } from './statistical';
 import {ChartModule} from "primeng/chart";
 import { DatePipe } from '@angular/common';
+import { authInterceptorProviders } from './hefper/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { DatePipe } from '@angular/common';
         BrowserAnimationsModule,
         ChartModule
     ],
-  providers: [HttpClient,DatePipe],
+  providers: [HttpClient,DatePipe,authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

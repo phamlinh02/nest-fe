@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { RoleService } from '../service/role.service';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare const template: any;
 
@@ -31,19 +32,19 @@ export class AuthorityComponent implements AfterViewInit {
     private domSanitizer: DomSanitizer,
     private router: Router,
     private authorityService: AuthorityService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private token : TokenStorageService
   ) { 
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       document.body.classList.add('abc');
       this.router.navigate(['/login']);
     }
   }
 
   ngAfterViewInit() {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.userRole = userData.roleName;
+      this.userRole = userString.roleName;
     if(this.userRole === 'ROLE_ADMIN'){
       alert('You do not have permission to access this page');
       this.router.navigate(['/home']);

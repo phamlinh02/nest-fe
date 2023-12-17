@@ -4,6 +4,7 @@ import { AccountService } from '../../service/account.service';
 import { UploadsService } from '../../service/uploads.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare const template: any;
 
@@ -26,14 +27,14 @@ export class AccountInfoComponent  implements AfterViewInit{
     private route: ActivatedRoute,
     private router: Router,
     private domSanitizer: DomSanitizer,
+    private token: TokenStorageService
   ){
-    const userData = localStorage.getItem('user');
-    if (!this.accountService.isLoggedIn()) {
+    const userData = this.token.getUser();
+    if (!this.token.isLoggedIn()) {
         this.router.navigate(['/login']);
     }else{
     if (userData) {
-      this.user = JSON.parse(userData).response;
-      this.getUserAvatar('account', this.user.avatar); 
+      this.getUserAvatar('account', userData.avatar); 
       console.log(userData);
     }
     }

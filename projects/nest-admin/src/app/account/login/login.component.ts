@@ -2,6 +2,7 @@ import {AfterViewInit, Component} from '@angular/core';
 import { AccountService } from '../../service/account.service';
 import { Router } from '@angular/router';
 import { paths } from '../../const';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare let template: any;
 
@@ -22,12 +23,13 @@ export class LoginComponent implements AfterViewInit{
   constructor(
     private accountService: AccountService,
     private router: Router,
+    private token: TokenStorageService
   ){
   }
 
   ngAfterViewInit() {
     template.init();
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       document.body.classList.add('not-login');
     }
   }
@@ -39,13 +41,13 @@ export class LoginComponent implements AfterViewInit{
     };
 
     this.accountService.loginUser(payloadLogin).subscribe(
-      (response) => {
-        localStorage.setItem('token', response.accessToken);
-        localStorage.setItem('user', JSON.stringify(response));
-        const userString = localStorage.getItem('user');
+      data => {
+        this.token.saveToken(data.response.token);
+        this.token.saveUser(data.response);
+
+        const userString = this.token.getUser();
         if(userString){
-          const userData = JSON.parse(userString).response;
-          this.userRole = userData.roleName;
+          this.userRole = userString.roleName;
         
         if (this.userRole === 'ROLE_ADMIN' || this.userRole === 'ROLE_DIRECTOR') {
           this.router.navigate(['/home']);

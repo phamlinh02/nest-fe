@@ -4,6 +4,7 @@ import {finalize} from "rxjs";
 import {OrderService} from "../../service/order.service";
 import { UploadsService } from '../../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 interface ProductImageMap {
   [productId: number]: SafeUrl;
@@ -35,6 +36,7 @@ export class OrderDetailComponent implements OnInit {
     private router: Router,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
+    private token : TokenStorageService
   ) {
     this.billId = this.route.snapshot.paramMap.get('slug');
   }
