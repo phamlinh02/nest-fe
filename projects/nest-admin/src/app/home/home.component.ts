@@ -41,7 +41,8 @@ export class HomeComponent implements AfterViewInit {
   paths = paths;
   filter = {
     status: '',
-    date: new Date()
+    fromDate: new Date(),
+    toDate: new Date()
   }
   month = {
     1: 'January',
@@ -220,14 +221,15 @@ export class HomeComponent implements AfterViewInit {
 
   getALlBill() {
     let param: any = {
-      status: this.filter.status,
-      orderDate: this.filter.date
+      status: this.filter.status.toUpperCase(),
+      fromDate: this.filter.fromDate,
+      toDate: this.filter.toDate
     }
     const header = {
       size: 10,
       page: 0
     }
-    if (!param.status) delete param.status
+    if (!param.status || param.status.toLowerCase() === 'show all') delete param.status
     this.orderService.getAllOrder(param, header).subscribe((res) => {
       this.latestBill = res.response.content;
     })
