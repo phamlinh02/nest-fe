@@ -16,7 +16,7 @@ declare let template: any;
   selector: 'product-detail',
   templateUrl: './product-detail.component.html',
 })
-export class ProductDetailComponent implements AfterViewInit{
+export class ProductDetailComponent implements AfterViewInit {
   title = 'nest-customer';
   product: any = {};
   productId: number = 1;
@@ -49,14 +49,14 @@ export class ProductDetailComponent implements AfterViewInit{
     private rateService: RateService,
     private favoriteService: FavoriteService,
     private token: TokenStorageService
-  ) { 
+  ) {
     const userData = this.token.getUser();
     if (userData) {
       this.user = this.token.getUser();
       console.log(this.user);
     }
   }
-  ngAfterViewInit() {  
+  ngAfterViewInit() {
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       if (!isNaN(id)) {
@@ -64,8 +64,8 @@ export class ProductDetailComponent implements AfterViewInit{
         this.productService.getProductById(this.productId).subscribe(
           (data: any) => {
             this.product = data.response;
-            this.getProductImage('product',this.product.image);
-            console.log('Sản phẩm:',this.product);
+            this.getProductImage('product', this.product.image);
+            console.log('Sản phẩm:', this.product);
             this.showRatesByProductId(this.productId);
             this.showRelatedProductsByPriceRange(this.productId, this.product.price);
           },
@@ -79,11 +79,11 @@ export class ProductDetailComponent implements AfterViewInit{
       this.rate.accountId = this.user.id;
     }
     template.init();
-    
+
   }
 
-  getProductImage(type: string,filename: string) {
-    this.uploadsService.getImage(type,filename).subscribe((imageData: Blob) => {
+  getProductImage(type: string, filename: string) {
+    this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {
       const imageUrl = URL.createObjectURL(imageData);
       this.productImage = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
@@ -119,7 +119,7 @@ export class ProductDetailComponent implements AfterViewInit{
         .addToCart(this.accountId, productId, this.quantity)
         .subscribe(
           (successResponse) => {
-            alert('Sản phẩm đã được thêm vào giỏ hàng');
+            alert('The product has been added to your favorites list');
             console.log('Thêm sản phẩm thành công');
             this.cartItems = this.cartItems.filter((item) => item.id !== productId);
             this.cartService.updateCart();
@@ -158,30 +158,30 @@ export class ProductDetailComponent implements AfterViewInit{
     return percentage + '%';
   }
   //Tạo đánh giá
-  saveRate(){
+  saveRate() {
     const userString = this.token.getUser();
-    if(userString){
-    const formData = new FormData();
-    formData.append('productId', this.productId.toString());
-    formData.append('accountId', this.user.id.toString());
-    formData.append('star', this.rate.star.toString());
-    formData.append('comment', this.rate.comment);
+    if (userString) {
+      const formData = new FormData();
+      formData.append('productId', this.productId.toString());
+      formData.append('accountId', this.user.id.toString());
+      formData.append('star', this.rate.star.toString());
+      formData.append('comment', this.rate.comment);
 
-    if (this.rateFile) {
-      formData.append('rateFile', this.rateFile);
-    }
-
-    this.rateService.saveRate(formData).subscribe(
-      (data: any) => {
-        alert('Evaluation of success!');
-        this.showRatesByProductId(this.productId);
-      },
-      (error) => {
-        console.error('Lỗi khi gửi đánh giá: ', error);
+      if (this.rateFile) {
+        formData.append('rateFile', this.rateFile);
       }
-    );
+
+      this.rateService.saveRate(formData).subscribe(
+        (data: any) => {
+          alert('Evaluation of success!');
+          this.showRatesByProductId(this.productId);
+        },
+        (error) => {
+          console.error('Lỗi khi gửi đánh giá: ', error);
+        }
+      );
     }
-    else{
+    else {
       alert('Please log in to rate a product!');
       this.router.navigate([`${paths.login}`]);
 
@@ -254,7 +254,7 @@ export class ProductDetailComponent implements AfterViewInit{
   calculatePercentage(star: number): string {
     if (this.totalRate === 0) {
       return '0.00';
-    }    
+    }
     const percentage = (this.productRates.filter(rate => rate.star === star).length / this.totalRate) * 100;
     return percentage.toFixed(2);
   }
@@ -263,7 +263,7 @@ export class ProductDetailComponent implements AfterViewInit{
     const priceRange = 2; // Define your price range
     const lowerBound = price - priceRange;
     const upperBound = price + priceRange;
-  
+
     this.productService.getAllProducts().subscribe(
       (data: any) => {
         const products = data.response.content; // Access the 'content' property
@@ -273,7 +273,7 @@ export class ProductDetailComponent implements AfterViewInit{
         this.recommendedProducts.forEach((product, index) => {
           this.getRelatedProductImage('product', product.image, index);
         });
-  
+
         console.log('Related Products:', this.recommendedProducts);
       },
       (error) => {
