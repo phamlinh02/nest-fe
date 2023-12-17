@@ -34,7 +34,7 @@ export class HomeComponent implements AfterViewInit {
   title = 'nest-customer';
   statisticsBill: any;
   latestBill: any;
-  latestUser: any;
+  latestBillOrder: any;
   statisticInfo: any = {};
   statisticChart!: Chart;
   userAvatars: { [key: number]: SafeUrl } = {};
@@ -221,7 +221,6 @@ export class HomeComponent implements AfterViewInit {
 
   getALlBill() {
     let param: any = {
-      status: this.filter.status.toUpperCase(),
       fromDate: this.filter.fromDate,
       toDate: this.filter.toDate
     }
@@ -229,9 +228,8 @@ export class HomeComponent implements AfterViewInit {
       size: 10,
       page: 0
     }
-    if (!param.status || param.status.toLowerCase() === 'show all') delete param.status
     this.orderService.getAllOrder(param, header).subscribe((res) => {
-      this.latestBill = res.response.content;
+      this.latestBill = this.latestBillOrder = res.response.content;
     })
   }
   getAllUsers() {
@@ -316,6 +314,13 @@ export class HomeComponent implements AfterViewInit {
           },
         },
       });
+    }
+  }
+
+  filterStatus(){
+    this.latestBillOrder = this.latestBill;
+    if(this.filter.status != '' && this.filter.status.toLowerCase() != 'show all'){
+      this.latestBillOrder = this.latestBill.filter((order : any) =>this.filter.status.toLowerCase() === order.status.toLowerCase())
     }
   }
 
