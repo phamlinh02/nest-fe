@@ -119,7 +119,7 @@ export class ProductDetailComponent implements AfterViewInit {
         .addToCart(this.accountId, productId, this.quantity)
         .subscribe(
           (successResponse) => {
-            alert('The product has been added to your favorites list');
+            alert('The product has been added to cart');
             console.log('Thêm sản phẩm thành công');
             this.cartItems = this.cartItems.filter((item) => item.id !== productId);
             this.cartService.updateCart();
@@ -130,7 +130,7 @@ export class ProductDetailComponent implements AfterViewInit {
         );
     } else {
       this.router.navigate([`${paths.login}`]);
-      alert('Vui lòng đăng nhập để tiếp tục mua sắm !!!');
+      alert('Please, Login before use to function');
     }
   }
   //Hiển thị đánh giá theo id sản phẩm

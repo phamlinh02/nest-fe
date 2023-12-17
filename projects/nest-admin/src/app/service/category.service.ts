@@ -21,7 +21,9 @@ export class CategoryService {
   getAllCategoriesIsActive(page: number, size: number): Observable<any[]> {
     return this.http.get<any[]>(CATEGORY_API + `/get-all-active?page=${page}&size=${size}`);
   }
-
+  getStatisticCategory(): Observable<any[]> {
+    return this.http.get<any[]>(`${CATEGORY_API}/statistic-category`);
+  }
   getAllCategories(page: number, size: number): Observable<any[]> {
     return this.http.get<any[]>(`${CATEGORY_API}/get-all?page=${page}&size=${size}`);
   }
@@ -34,7 +36,7 @@ export class CategoryService {
   }
 
   createCategory(category: any): Observable<any> {
-    return this.http.post(`${CATEGORY_API}/save`,category);
+    return this.http.post(`${CATEGORY_API}/save`, category);
   }
 
   deleteCategory(categoryId: number): Observable<any> {
