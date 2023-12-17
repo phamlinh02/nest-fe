@@ -130,7 +130,7 @@
         <div class="col-md-2 col-6">
           <div class="custom_select">
             <p-dropdown [options]="['PROCESSING', 'CANCELLED','COMPLETED','PENDING','NEW', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
-                        (onChange)="getALlBill()" appendTo="body"
+                        (onChange)="filterStatus()" appendTo="body"
             ></p-dropdown>
           </div>
         </div>
@@ -152,7 +152,7 @@
             </tr>
             </thead>
             <tbody>
-            <ng-container *ngFor="let item of latestBill">
+            <ng-container *ngFor="let item of latestBillOrder">
               <tr>
                 <td><a href="#" class="fw-bold">#{{item.id}}</a></td>
                 <td>{{item.status}}</td>
