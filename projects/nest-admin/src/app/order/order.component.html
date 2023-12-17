@@ -12,8 +12,13 @@
                  (ngModelChange)="onSearchOrder()"
           />
         </div>
+        <div class="col-lg-4 col-md-6 me-auto">
+          <p-calendar [(ngModel)]="filter.date" appendTo="body"
+                      (ngModelChange)="loadData()"
+          ></p-calendar>
+        </div>
         <div class="col-lg-2 col-6 col-md-3">
-          <p-dropdown [options]="['Completed', 'Pending', 'Canceled', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
+          <p-dropdown [options]="['Completed', 'Pending', 'Cancelled', 'Show All']" [(ngModel)]="filter.status" placeholder="Filter by status"
                       (onChange)="onSearchOrder()" appendTo="body"
           ></p-dropdown>
         </div>
@@ -73,7 +78,7 @@
         <ng-container *ngFor="let page of listPage">
           <li class="page-item"
               [class.active]="pageIndex + 1 == page"
-          ><a class="page-link" href="#">{{page < 10 ? '0' + page : page}}</a></li>
+          ><a class="page-link" (click)="changePage(page)">{{page < 10 ? '0' + page : page}}</a></li>
         </ng-container>
       </ul>
     </nav>
