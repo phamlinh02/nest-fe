@@ -45,7 +45,10 @@ export class AccountInfoComponent implements AfterViewInit {
     }
   ];
 
-  public listOrder: any = []
+  public listOrder: any = [];
+  public listPage : any = [];
+  paging: any;
+  pageIndex: number = 0;
 
   constructor(
     private router: Router,
@@ -137,16 +140,32 @@ export class AccountInfoComponent implements AfterViewInit {
     this.tabSelected = tab;
     this.router.navigate([paths.accountInfo], {queryParams: {tab: tab}, queryParamsHandling: "merge"})
     if (tab == 'order') {
-      this.getAllBill();
+      this.getAllBill({
+        size : 10,
+        page : 0
+      });
     }
   }
 
-  getAllBill() {
-    const param = {
-      accountId: this.user.id ?? 2
+  getAllBill(param : any) {
+     param = {
+       ...param,
+      accountId: this.user.id
     }
     this.orderService.getAllOrder(param).subscribe((response) => {
       this.listOrder = response.response.content;
+      this.paging = response.response;
+      this.listPage = [];
+      for (let i = 0; i < this.paging.totalPages; i++) {
+        this.listPage.push(i + 1)
+      }
+    })
+  }
+  changePage(page : number){
+    this.pageIndex = page -1;
+    this.getAllBill({
+      size : 10,
+      page : this.pageIndex
     })
   }
 }

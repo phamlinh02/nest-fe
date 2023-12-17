@@ -66,6 +66,7 @@
                             <th>Date</th>
                             <th>Status</th>
                             <th>Total</th>
+                            <th>Payment Status</th>
                             <th>Actions</th>
                           </tr>
                           </thead>
@@ -76,12 +77,25 @@
                               <td>{{item.orderDate | date}}</td>
                               <td>{{item.status | titlecase}}</td>
                               <td>${{item.sumPriceBill}} for {{item.countOrder}} item</td>
+                              <td>{{item.paymentId ? 'Paid' : 'Unpaid'}}</td>
                               <td><a [routerLink]="['/' + paths.invoice +'/' + item.id]" class="btn-small d-block">View</a></td>
                             </tr>
                           </ng-container>
                           </tbody>
                         </table>
                       </div>
+                      <div class="pagination-area mt-15 mb-50">
+                        <nav aria-label="Page navigation example">
+                          <ul class="pagination justify-content-start">
+                            <ng-container *ngFor="let page of listPage">
+                              <li class="page-item"
+                                  [class.active]="pageIndex + 1 == page"
+                              ><a class="page-link" (click)="changePage(page)">{{page < 10 ? '0' + page : page}}</a></li>
+                            </ng-container>
+                          </ul>
+                        </nav>
+                      </div>
+
                     </div>
                   </div>
                 </div>

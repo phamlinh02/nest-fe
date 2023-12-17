@@ -22,7 +22,14 @@ export class OrderService {
   }
 
   getAllOrder(order: any): Observable<any> {
-    return this.http.post(ORDER_API + '/get-all', order, httpOptions)
+    let url = '/get-all';
+    if(!!order.size){
+      url += `?size=${order.size}`
+    }
+    if(!!order.page){
+      url += `&page=${order.page}`
+    }
+    return this.http.post(ORDER_API + url, order, httpOptions)
   }
 
   getBillDetail(id: number): Observable<any> {
