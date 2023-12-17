@@ -27,6 +27,7 @@ interface Account {
 })
 export class HomeComponent implements AfterViewInit {
   productQty: number = 0;
+  statisticPro: number = 0;
   order: number = 0;
   revenue: number = 0;
   orderQty: number = 0;
@@ -89,6 +90,7 @@ export class HomeComponent implements AfterViewInit {
       this.getAllUsers();
       this.showStatisticProduct();
       this.showStatictCategory();
+      this.showStatisticPro();
       template.init();
     }
   }
@@ -259,6 +261,14 @@ export class HomeComponent implements AfterViewInit {
       const imageUrl = URL.createObjectURL(imageData);
       this.userAvatars[index] = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
     });
+  }
+  showStatisticPro() {
+    this.productService.getStatisticPro().subscribe((data: any) => {
+      this.statisticPro = data.response;
+    },
+      (error) => {
+        console.error('Lỗi khi tải danh sách sản phẩm: ', error);
+      });
   }
   showStatictCategory() {
     this.categoryService.getStatisticCategory().subscribe((data: any) => {
