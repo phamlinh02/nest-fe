@@ -77,7 +77,7 @@
                 </table>
               </div>
             </div>
-            <div *ngIf="bill.status === 'NEW'" class="d-flex justify-content-end"
+            <div *ngIf="bill.status === 'NEW' && !!bill?.paymentId" class="d-flex justify-content-end"
             [style]="{'padding' : '0 150px 40px'}">
               <button class="btn btn-danger" (click)="openModalCancel()">Cancel Bill</button>
             </div>

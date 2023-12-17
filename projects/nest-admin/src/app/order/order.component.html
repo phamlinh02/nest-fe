@@ -38,6 +38,7 @@
             <th scope="col">Total</th>
             <th scope="col">Status</th>
             <th scope="col">Date</th>
+            <th scope="col">Payment Status</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
           </thead>
@@ -50,6 +51,7 @@
               <td>{{item.sumPriceBill}}</td>
               <td><span class="badge rounded-pill status-{{item.status.toLocaleLowerCase()}}">{{item.status}}</span></td>
               <td>{{item.orderDate | date}}</td>
+              <td>{{item.paymentId ? 'Paid' : 'Unpaid'}}</td>
               <td class="text-end">
                 <a [routerLink]="item.id" class="btn btn-md rounded font-sm">Detail</a>
                 <div class="dropdown">

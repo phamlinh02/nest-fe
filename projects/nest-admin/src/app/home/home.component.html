@@ -148,6 +148,7 @@
               <th class="align-middle" scope="col">Total Price</th>
               <th class="align-middle" scope="col">Total Quantity</th>
               <th class="align-middle" scope="col">Customer</th>
+              <th class="align-middle" scope="col">Payment status</th>
               <th class="align-middle" scope="col">View Details</th>
             </tr>
             </thead>
@@ -161,7 +162,8 @@
                 <td>
                   <span class="badge badge-pill badge-soft-success">{{item.countOrder}}</span>
                 </td>
-                <td><i class="material-icons md-payment font-xxl text-muted mr-5"></i> {{item.username}}</td>
+                <td> {{item.username}}</td>
+                <td> {{item.paymentId ? 'Paid' : 'Unpaid'}}</td>
                 <td>
                   <a [routerLink]="['/order/' + item.id]" class="btn btn-xs"> View details</a>
                 </td>
