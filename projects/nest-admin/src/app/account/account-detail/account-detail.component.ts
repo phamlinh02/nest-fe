@@ -6,6 +6,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../../service/uploads.service';
 import { ActivatedRoute } from '@angular/router';
 import { RoleService } from '../../service/role.service';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare let template: any;
 
@@ -30,9 +31,10 @@ export class AccountDetailComponent implements AfterViewInit {
     private uploadsService: UploadsService,
     private route: ActivatedRoute,
     private domSanitizer: DomSanitizer,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private token : TokenStorageService
   ) {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       document.body.classList.add('abc');
       this.router.navigate(['/login']);
     }
@@ -79,16 +81,16 @@ export class AccountDetailComponent implements AfterViewInit {
     formData.append('phone', this.account.phone);
     formData.append('isActive', this.account.isActive);
 
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.accountService.userRole = userData.roleName;
+      this.accountService.userRole = userString.roleName;
 
       console.log('UserRole:', this.accountService.userRole);
     }
     if (this.accountService.hasAdminRole() && this.account.roleName !== 'ROLE_CUSTOMER') {
       alert('There is no permission to delete updates with the current role.');
       console.error('Không có quyền cập nhật tài khoản với vai trò hiện tại.');
+      window.location.reload();
       return;
     }
     else {
@@ -130,10 +132,9 @@ export class AccountDetailComponent implements AfterViewInit {
   }
 
   checkAccessPermission() {
-    const userString = localStorage.getItem('user');
+    const userString = this.token.getUser();
     if (userString) {
-      const userData = JSON.parse(userString).response;
-      this.userRole = userData.roleName;
+      this.userRole = userString.roleName;
       if (this.userRole === 'ROLE_ADMIN') {
         {
           if (this.account.roleName === 'ROLE_DIRECTOR') {

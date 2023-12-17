@@ -2,6 +2,7 @@ import {AfterViewInit, Component} from '@angular/core';
 import { AccountService } from '../../service/account.service';
 import { Router } from '@angular/router';
 import { paths } from '../../const';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare let template: any;
 
@@ -20,11 +21,12 @@ export class ChangePasswordComponent implements AfterViewInit{
   constructor(
     private accountService: AccountService,
     private router: Router,
+    private token : TokenStorageService
   ){
   }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
         this.router.navigate(['/login']);
       } else {
         template.init();
@@ -60,8 +62,7 @@ export class ChangePasswordComponent implements AfterViewInit{
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    this.token.signOut();
   }
 
   

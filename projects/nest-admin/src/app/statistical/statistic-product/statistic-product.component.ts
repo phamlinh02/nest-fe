@@ -7,6 +7,7 @@ import { paths } from "../../const";
 import { UploadsService } from '../../service/uploads.service';
 import { Chart,registerables } from 'chart.js';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 
 Chart.register(ChartAnnotation,...registerables);
@@ -37,11 +38,11 @@ export class StatisticProductComponent implements AfterViewInit {
     private accountService: AccountService,
     private productService: ProductService,
     private uploadsService: UploadsService,
-
+    private token: TokenStorageService
   ) { }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       template.init();

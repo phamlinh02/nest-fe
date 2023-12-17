@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { paths } from '../../const';
 import { AccountService } from '../../service/account.service';
 import { Router } from '@angular/router';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare let template: any;
 
@@ -24,14 +25,20 @@ export class RolesComponent implements AfterViewInit{
     private roleService: RoleService,
     private route: ActivatedRoute,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private token : TokenStorageService
   ){
 
   }
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
-    } else {
+    }
+    if(this.token.getUser().roleName !== 'ROLE_DIRECTOR'){
+      alert('You do not have access to the role!!!');
+      this.router.navigate(['/home']);
+    }
+    else {
       template.init();
       this.showRoles();
       this.showRoleById();
@@ -114,6 +121,8 @@ export class RolesComponent implements AfterViewInit{
       }
     );
   }
+
+ 
 
 
 }

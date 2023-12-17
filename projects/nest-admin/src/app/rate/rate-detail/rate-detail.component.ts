@@ -7,6 +7,7 @@ import { CategoryService } from '../../service/category.service';
 import { AccountService } from '../../service/account.service';
 import { Router } from '@angular/router';
 import { RateService } from '../../service/rate.service';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare let template: any;
 
@@ -33,10 +34,11 @@ export class RateDetailComponent implements AfterViewInit {
     private accountService: AccountService,
     private router: Router,
     private rateService: RateService,
+    private token: TokenStorageService
   ) { }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       template.init();

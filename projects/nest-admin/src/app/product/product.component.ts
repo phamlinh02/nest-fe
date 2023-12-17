@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UploadsService } from '../service/uploads.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AccountService } from '../service/account.service';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare const template: any;
 
@@ -27,11 +28,12 @@ export class ProductComponent implements AfterViewInit {
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
     private accountService: AccountService,
+    private token: TokenStorageService
   ) {
   }
   ngAfterViewInit() {
 
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       this.showProducts();

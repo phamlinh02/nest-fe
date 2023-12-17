@@ -7,6 +7,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { paths } from '../const';
 import { Chart,registerables } from 'chart.js';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
+import { TokenStorageService } from '../service/token-storage.service';
 
 Chart.register(ChartAnnotation,...registerables);
 
@@ -31,10 +32,11 @@ export class RateComponent implements AfterViewInit {
     private router: Router,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
+    private token: TokenStorageService
   ) { }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       template.init();

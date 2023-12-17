@@ -6,6 +6,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { UploadsService } from '../service/uploads.service';
 import { AccountService } from '../service/account.service';
 import { Router } from '@angular/router';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare let template: any;
 
@@ -32,11 +33,12 @@ export class CategoriesComponent implements AfterViewInit {
     private domSanitizer: DomSanitizer,
     private uploadsService: UploadsService,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private token: TokenStorageService
   ){}
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       template.init();

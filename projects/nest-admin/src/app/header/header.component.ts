@@ -3,6 +3,7 @@ import { paths } from '../const';
 import { AccountService } from '../service/account.service';
 import { UploadsService } from '../service/uploads.service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare let template: any;
 
@@ -20,10 +21,11 @@ export class HeaderComponent implements AfterViewInit{
     private accountService: AccountService,
     private uploadsService: UploadsService,
     private domSanitizer: DomSanitizer,
+    private token: TokenStorageService
   ){
-    const userData = localStorage.getItem('user');
+    const userData = this.token.getUser();
     if (userData) {
-      this.user = JSON.parse(userData).response;
+      this.user = userData;
       this.getUserAvatar('account', this.user.avatar);
       console.log(userData);
     }
@@ -37,9 +39,7 @@ export class HeaderComponent implements AfterViewInit{
 
   logout() {
     // Xóa thông tin người dùng khỏi localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    // Xóa thông tin giỏ hàng
+    this.token.signOut();
   }
   getUserAvatar(type: string, filename: string) {
     this.uploadsService.getImage(type, filename).subscribe((imageData: Blob) => {

@@ -7,6 +7,7 @@ import { CategoryService } from '../../service/category.service';
 import { AccountService } from '../../service/account.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { TokenStorageService } from '../../service/token-storage.service';
 
 declare let template: any;
 
@@ -31,11 +32,12 @@ export class ProductDetailComponent implements AfterViewInit {
     private categoryService: CategoryService,
     private accountService: AccountService,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private token: TokenStorageService
   ) { }
 
   ngAfterViewInit() {
-    if (!this.accountService.isLoggedIn()) {
+    if (!this.token.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
       template.init();
